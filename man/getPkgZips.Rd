@@ -5,23 +5,29 @@
 \title{Download zip-compressed Windows binaries from a renv.lock file}
 \usage{
 getPkgZips(
-  lockfile_path,
+  lockfile_path = NULL,
+  supplement = NULL,
+  override_lock = FALSE,
   r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"),
   backupRrel = "4.4",
-  cellarDir
+  outDir
 )
 }
 \arguments{
 \item{lockfile_path}{Path to renv.lock file}
 
+\item{supplement}{Nested list of packages to supplement or use in place of a renv.lock file}
+
+\item{override_lock}{Logical. Default is FALSE. If set to TRUE and the same package is named in both the renv.lock and the supplement, the version called in the supplement will override the renv.lock}
+
 \item{r_rels_vect}{A character vector of R minor releases}
 
 \item{backupRrel}{A string of the R minor-release to use if preferred package version cannot be found under any of the minor releases specified in `r_rels_vect`}
 
-\item{cellarDir}{Path to renv-cellar}
+\item{outDir}{Path to output directory for package zips}
 }
 \value{
-Returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
+In addition to downloading the specified packages into the outDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
 }
 \description{
 A function that locates and downloads Windows binaries (.zip) from CRAN based on packages specified in a renv.lock file.
@@ -31,7 +37,9 @@ In the case that the package version is not found under any of the R minor relea
 }
 \examples{
 \dontrun{
-pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", cellarDir = "path/to/renv-cellar")
+# Format supp in this way:
+supp <- list(Packages = list(devtools = list(Package = "devtools", Version = "2.5.1"), duckdb = list(Package = "duckdb", Version = "1.5.2")))
+pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outDir = "path/to/outDir")
 }
 
 }
