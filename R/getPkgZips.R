@@ -26,7 +26,6 @@
 #' @import httr
 #' @importFrom stats setNames
 #' @importFrom utils download.file
-
 getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir ) {
 
   if (is.null(lockfile_path) & is.null(supplement)) {
