@@ -25,14 +25,17 @@ test_that(
       path = outputDir
     ) |>
       expect_in(
-        c("results_DP-A", "results_DP-B", "results_DP-C")
+        c("results_DP-A",
+          "results_DP-B",
+          "results_DP-C")
       )
 
     unlink(
       outputDir,
       recursive = TRUE
     )
-})
+
+  })
 
 test_that(
   "Error if folder does't contain .zip files", {
@@ -95,7 +98,9 @@ test_that(
       path = outputDir
     ) |>
       expect_in(
-        c("DED_DP-A", "DED_DP-B", "DED_DP-C")
+        c("DED_DP-A",
+          "DED_DP-B",
+          "DED_DP-C")
       )
 
     unlink(
@@ -134,7 +139,9 @@ test_that(
       path = outputDir
     ) |>
       expect_in(
-        c("results_DP-A", "results_DP-B", "results_DP-C")
+        c("results_DP-A",
+          "results_DP-B",
+          "results_DP-C")
       )
 
     unlink(
@@ -143,4 +150,3 @@ test_that(
     )
 
   })
-
