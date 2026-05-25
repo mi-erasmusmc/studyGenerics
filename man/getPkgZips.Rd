@@ -33,7 +33,7 @@ In addition to downloading the specified packages into the outDir, returns a lis
 A function that locates and downloads Windows binaries (.zip) from CRAN based on packages specified in a renv.lock file.
 }
 \details{
-In the case that the package version is not found under any of the R minor releases, the package will be downloaded from the specified `backupRrel` regardless of package version specified in renv.lock
+If the package version is not found under any of the R minor releases, the package will be downloaded from the specified `backupRrel` regardless of package version specified in renv.lock
 }
 \examples{
 \dontrun{
