@@ -22,7 +22,10 @@
 #' @importFrom glue glue
 #'
 #' @export
-createResultsDir <- function(outputDir, dbname) {
+createResultsDir <- function(
+    outputDir,
+    dbname
+    ) {
   # Set folder location for results ----
   ParallelLogger::logInfo("Setting location for results")
   if (is.null(outputDir)) {
