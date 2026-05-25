@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(StudyToolBelt)
+library(studyGenerics)
 
-test_check("StudyToolBelt")
+test_check("studyGenerics")

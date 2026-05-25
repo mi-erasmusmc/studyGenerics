@@ -4,7 +4,7 @@
 \alias{unZipStudyFiles}
 \title{`unZipStudyFiles()` extract results for importing}
 \usage{
-unZipStudyFiles(path, pattern, negate = FALSE, recursive = FALSE, outputDir)
+unZipStudyFiles(path, pattern, negate = FALSE, recursive = TRUE, outputDir)
 }
 \arguments{
 \item{path}{The path to the directory where the .zip files are located}
