@@ -49,11 +49,9 @@ test_that("arrangeCdmlabels returns required acronyma in order", {
     "IQVIA US - AmbEMR",
     "IQVIA US - PMTX+"
   )
-  arrangeCdmlabels(labels = labels) |>
-    expect_equal(labels) |>
+  arrangeCdmNames(labels = labels) |>
     expect_error()
 
-  # Retrieving all labels
   expect_error({
     arrangeCdmNames()
   })
