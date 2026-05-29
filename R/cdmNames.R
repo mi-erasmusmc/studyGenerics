@@ -1,15 +1,15 @@
 #' `assertCdmNames()` verifies if data partner's names are correct and display an error if incorrect
 #'
-#' @param labels A character vector to filter specific cdm_names
+#' @param labelsA character vector of data partners acronyms
 #'
-#' @returns Invisible if labels are incorrect
+#' @returns Invisible if labels are correct
 #' @importFrom checkmate assertCharacter
 #' @importFrom cli cli_abort
 #' @importFrom glue glue glue_collapse
 #' @export
 #'
 #' @examples
-#' # Filter a group of acryonims
+#' # Assert if acronyms are correct
 #' labels <- c(
 #'   "BCR",
 #'   "IQVIA LPD Belgium",
@@ -41,9 +41,10 @@ assertCdmNames <- function(labels, expected) {
     }
   }
 
-#' `arrangeCdmNames()` retrieves data partners acronyms arranged by country alphabetical order
+#' `arrangeCdmNames()` verifies if data partner's acronyms are valie
+#' and returns a vector ordered by country alphabetical order
 #'
-#' @param labels A character vector to filter specific cdm_names
+#' @param labels A character vector of data partners acronyms
 #'
 #' @returns A character vector
 #' @importFrom checkmate assertCharacter
@@ -51,17 +52,16 @@ assertCdmNames <- function(labels, expected) {
 #' @export
 #'
 #' @examples
-#' # Filter a group of acryonims
+#' # Verifies acronyms are valid and sorts them in the correct order
 #' labels <- c(
 #'   "BCR",
-#'   "IQVIA LPD Belgium",
+#'   "IQVIA US - PMTX+",
 #'   "IQVIA US - AmbEMR",
-#'   "IQVIA US - PMTX+"
+#'   "IQVIA LPD Belgium",
 #' )
 #' arrangeCdmNames(labels = labels)
 arrangeCdmNames <- function(labels) {
   assertCdmNames(labels)
-  checkmate::assertCharacter(labels)
   cdmNames <- cdmNames()
   cdmNames[cdmNames %in% labels]
 }

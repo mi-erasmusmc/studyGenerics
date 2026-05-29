@@ -1,6 +1,5 @@
 test_that("assertCdmNames works", {
-
-  # Filter a group of acryonims
+  # Assert a group of acryonims
   labels <- c(
     "BCR",
     "IQVIA LPD Belgium",
@@ -10,7 +9,6 @@ test_that("assertCdmNames works", {
   )
   assertCdmNames(labels = labels) |>
     expect_invisible()
-
   # Error acronim do not match
   labels <- c(
     "BCRX", # Mispelled acronym
@@ -21,16 +19,10 @@ test_that("assertCdmNames works", {
   )
   assertCdmNames(labels = labels) |>
     expect_error()
-
-  # Retrieving all labels
-  expect_error({
-    assertCdmNames()
-  })
 })
 
-test_that("arrangeCdmlabels returns required acronyma in order", {
-
-  # Filter a group of acryonims
+test_that("assertCdmNames against expected acronyms", {
+  # Assert a group of acryonims
   labels <- c(
     "BCR",
     "IQVIA LPD Belgium",
@@ -38,9 +30,54 @@ test_that("arrangeCdmlabels returns required acronyma in order", {
     "IQVIA US - AmbEMR",
     "IQVIA US - PMTX+"
   )
-  arrangeCdmNames(labels = labels) |>
-    expect_equal(labels)
+  expected <- c(
+    "BCR",
+    "IQVIA LPD Belgium",
+    "NLHR@UiO:PERINATAL"
+  )
+  assertCdmNames(
+    labels = labels,
+    expected = expected
+  ) |>
+    expect_error()
+  # Incorrect acronym
+  labels <- c(
+    "BCRX", # Mispelled acronym
+    "IQVIA LPD Belgium",
+    "NLHR@UiO:PERINATAL",
+    "IQVIA US - AmbEMR",
+    "IQVIA US - PMTX+"
+  )
+  expected <- c(
+    "BCR",
+    "IQVIA LPD Belgium",
+    "NLHR@UiO:PERINATAL",
+    "IQVIA US - AmbEMR",
+    "IQVIA US - PMTX+"
+  )
+  assertCdmNames(
+    labels = labels,
+    expected = expected
+  ) |>
+    expect_error()
+})
 
+test_that("arrangeCdmNames returns required acronyma in order", {
+  labels <- c(
+    "IQVIA US - PMTX+",
+    "IQVIA LPD Belgium",
+    "NLHR@UiO:PERINATAL",
+    "IQVIA US - AmbEMR",
+    "BCR"
+  )
+  arrangeCdmNames(labels = labels) |>
+    expect_equal(c(
+      "BCR",
+      "IQVIA LPD Belgium",
+      "NLHR@UiO:PERINATAL",
+      "IQVIA US - AmbEMR",
+      "IQVIA US - PMTX+"
+    ))
   # Error acronim do not match
   labels <- c(
     "BCRX", # Mispelled acronym
@@ -49,18 +86,14 @@ test_that("arrangeCdmlabels returns required acronyma in order", {
     "IQVIA US - AmbEMR",
     "IQVIA US - PMTX+"
   )
-  arrangeCdmlabels(labels = labels) |>
-    expect_equal(labels) |>
+  arrangeCdmNames(labels = labels) |>
     expect_error()
-
-  # Retrieving all labels
   expect_error({
     arrangeCdmNames()
   })
 })
 
 test_that("cdmNames retrieves all acronyms", {
-
   cdmNames() |>
     expect_equal(c(
       "BCR",
@@ -112,7 +145,4 @@ test_that("cdmNames retrieves all acronyms", {
       "IQVIA US - AmbEMR",
       "IQVIA US - PMTX+"
     ))
-
 })
-
-
