@@ -48,11 +48,12 @@ test_that(
       tempdir(),
       "results"
     )
+    dbname <- "TEST-CDM"
 
     # -- FUN
     results_loc <- createResultsDir(
       outputDir,
-      dbname = "TEST-CDM"
+      dbname = dbname
     )
 
     # -- test
