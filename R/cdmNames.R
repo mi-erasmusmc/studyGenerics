@@ -1,7 +1,7 @@
 #' `assertCdmNames()` verifies if data partner's names are correct and display an error if incorrect
 #'
-#' @param labelsA character vector of data partners acronyms
-#'
+#' @param labels A character vector of data partner acronyms
+#' @param expected A character vector of expected data partner acronyms. If omitted, the package's built-in CDM names are used.
 #' @returns Invisible if labels are correct
 #' @importFrom checkmate assertCharacter
 #' @importFrom cli cli_abort
