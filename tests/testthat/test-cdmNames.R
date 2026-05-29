@@ -62,7 +62,7 @@ test_that("assertCdmNames against expected acronyms", {
     expect_error()
 })
 
-test_that("arrangeCdmNames returns required acronyma in order", {
+test_that("arrangeCdmNames returns required acronyms in order", {
   labels <- c(
     "IQVIA US - PMTX+",
     "IQVIA LPD Belgium",
