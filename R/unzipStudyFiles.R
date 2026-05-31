@@ -23,6 +23,9 @@ unZipStudyFiles <- function(
     outputDir
 ) {
   path <- normalizePath(path)
+  if (!dir.exists(outputDir)) {
+    dir.create(outputDir)
+  }
   outputDir <- normalizePath(outputDir)
   checkmate::assertDirectoryExists(path)
   checkmate::assertLogical(recursive)
@@ -55,10 +58,6 @@ unZipStudyFiles <- function(
     )
     zip_files <- zip_files[index_files]
   }
-
-  if (!dir.exists(outputDir)) {
-    dir.create(outputDir)
-    }
 
   for (i in 1:length(zip_files)) {
     zip::unzip(
