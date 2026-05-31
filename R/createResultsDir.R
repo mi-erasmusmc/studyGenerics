@@ -23,7 +23,7 @@
 #'
 #' @export
 createResultsDir <- function(
-    outputDir,
+    outputDir = NULL,
     dbname
     ) {
   # Set folder location for results ----
@@ -36,6 +36,7 @@ createResultsDir <- function(
       dir.create(outputDir)
       checkmate::assertDirectoryExists(outputDir)
     } else {
+      outputDir <- normalizePath(outputDir)
       checkmate::assertDirectoryExists(outputDir)
     }
   }
