@@ -57,8 +57,8 @@ assertCdmNames <- function(labels, expected) {
 #'   "BCR",
 #'   "IQVIA US - PMTX+",
 #'   "IQVIA US - AmbEMR",
-#'   "IQVIA LPD Belgium",
 #'   "IQVIA LPD Belgium"
+#'   )
 #' arrangeCdmNames(labels = labels)
 arrangeCdmNames <- function(labels) {
   assertCdmNames(labels)
