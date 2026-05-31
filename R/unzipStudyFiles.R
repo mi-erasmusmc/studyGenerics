@@ -22,7 +22,8 @@ unZipStudyFiles <- function(
     recursive = TRUE,
     outputDir
 ) {
-
+  path <- normalizePath(path)
+  outputDir <- normalizePath(outputDir)
   checkmate::assertDirectoryExists(path)
   checkmate::assertLogical(recursive)
 
