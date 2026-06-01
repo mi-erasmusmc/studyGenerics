@@ -26,9 +26,6 @@
 #' @import httr
 #' @importFrom stats setNames
 #' @importFrom utils download.file
-supp <- list(Packages = list(devtools = list(Package = "devtools", Version = "2.5.4"),
-                             duckdb = list(Package = "duckdb", Version = "1.5.3")))
-test <- getPkgZips(lockfile_path = NULL, supplement = supp, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir = "~/testLibrary/" )
 getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir ) {
 
   if (is.null(lockfile_path) & is.null(supplement)) {
