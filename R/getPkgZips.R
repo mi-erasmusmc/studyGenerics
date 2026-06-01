@@ -26,6 +26,9 @@
 #' @import httr
 #' @importFrom stats setNames
 #' @importFrom utils download.file
+supp <- list(Packages = list(devtools = list(Package = "devtools", Version = "2.5.4"),
+                             duckdb = list(Package = "duckdb", Version = "1.5.3")))
+test <- getPkgZips(lockfile_path = NULL, supplement = supp, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir = "~/testLibrary/" )
 getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir ) {
 
   if (is.null(lockfile_path) & is.null(supplement)) {
@@ -72,8 +75,17 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
     pkgsVers_list <- supplement
   }
 
-  for (pkg in pkgs) {
+  # Vector of all package names
+  pkg_vector <- names(pkgsVers_list$Packages) <- names(pkgsVers_list$Packages)
+
+  # Initiate empty list to store requirements/dependencies into
+  requirements <- list(Packages = list())
+
+  # Search for specified package dependencies
+  for (pkg in   pkg_vector <- names(pkgsVers_list$Packages)) {
+
     if (!is.null(pkgsVers_list[["Packages"]][[pkg]][["Requirements"]])) { # if a Requirements vector exist (like in a lockfile)
+
       reqs <- trimws(pkgsVers_list[["Packages"]][[pkg]][["Requirements"]]) # pull vector of requirements
 
       for (req in reqs) { # for each req
@@ -91,14 +103,13 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
     }
   }
 
+  # Update the list, should now include all package, supplemental packages, and specified requirements
   pkgsVers_list$Packages <- c(pkgsVers_list$Packages, requirements[["Packages"]])
-
-  # Check for dependcies and append them to the pkgsVers_list
 
   # Set up ----
   pkg_results <- list() # initiate list to store package information (version, URL, R-version, etc.)
 
-  pkg_vector <- names(pkgsVers_list$Packages) # pull vector of all packages from pkgsVers_list
+  pkg_vector <- names(pkgsVers_list$Packages) # pull vector of all packages from pkgsVers_list, overrides the previous versio used before searching for requirements
 
   # Searching URLs and downloading ----
   for (pkg in pkg_vector) {
