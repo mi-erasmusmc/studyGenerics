@@ -4,11 +4,11 @@
 \alias{createResultsDir}
 \title{Create directory for analysis results}
 \usage{
-createResultsDir(outputDir, dbname)
+createResultsDir(outputDir = NULL, dbname)
 }
 \arguments{
 \item{outputDir}{Character string. The path to the main output folder.
-If NULL, defaults to the current working directory.}
+If NULL, defaults to the current working directory. Default NULL.}
 
 \item{dbname}{Character string. The name of the database, used to suffix
 the results folder (e.g., "results_dbname").}

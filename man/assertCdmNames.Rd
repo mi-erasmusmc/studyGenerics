@@ -7,7 +7,9 @@
 assertCdmNames(labels, expected)
 }
 \arguments{
-\item{labelsA}{character vector of data partners acronyms}
+\item{labels}{A character vector of data partner acronyms}
+
+\item{expected}{A character vector of expected data partner acronyms. If omitted, the package's built-in CDM names are used.}
 }
 \value{
 Invisible if labels are correct
