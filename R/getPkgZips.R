@@ -7,16 +7,16 @@
 #' @param override_lock Logical. Default is FALSE. If set to TRUE and the same package is named in both the renv.lock and the supplement, the version called in the supplement will override the renv.lock
 #' @param r_rels_vect A character vector of R minor releases
 #' @param backupRrel A string of the R minor-release to use if preferred package version cannot be found under any of the minor releases specified in `r_rels_vect`
-#' @param outDir Path to output directory for package zips
+#' @param outputDir Path to output directory for package zips
 #'
-#' @return In addition to downloading the specified packages into the outDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
+#' @return In addition to downloading the specified packages into the outputDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' # Format supp in this way:
 #' supp <- list(Packages = list(devtools = list(Package = "devtools", Version = "2.5.1"), duckdb = list(Package = "duckdb", Version = "1.5.2")))
-#' pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outDir = "path/to/outDir")
+#' pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outputDir = "path/to/outputDir")
 #' }
 #'
 #' @details
@@ -26,7 +26,7 @@
 #' @import httr
 #' @importFrom stats setNames
 #' @importFrom utils download.file
-getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir ) {
+getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outputDir ) {
 
   if (is.null(lockfile_path) & is.null(supplement)) {
     stop("Silly goose, you need to specify the packages to be installed! Please provide the path to a lockfile or a list of packages and versions. Refer to the manual for list format:)", call. = FALSE)
@@ -73,13 +73,13 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
   }
 
   # Vector of all package names
-  pkg_vector <- names(pkgsVers_list$Packages) <- names(pkgsVers_list$Packages)
+  pkg_vector <- names(pkgsVers_list$Packages)
 
   # Initiate empty list to store requirements/dependencies into
   requirements <- list(Packages = list())
 
   # Search for specified package dependencies
-  for (pkg in   pkg_vector <- names(pkgsVers_list$Packages)) {
+  for (pkg in pkg_vector) {
 
     if (!is.null(pkgsVers_list[["Packages"]][[pkg]][["Requirements"]])) { # if a Requirements vector exist (like in a lockfile)
 
@@ -129,7 +129,7 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
                            URL = test_url) # store info here for reference by user
 
           download.file(url,
-                        destfile = paste0(outDir, "/", pkg, "_", version, ".zip"),
+                        destfile = paste0(outputDir, "/", pkg, "_", version, ".zip"),
                         quiet = FALSE)
 
           break # exit the inner loop as soon as viable URL is found
@@ -159,7 +159,7 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
                          URL = test_url)
 
         download.file(url,
-                      destfile = paste0(outDir, "/", pkg, "_", alt_version, ".zip"),
+                      destfile = paste0(outputDir, "/", pkg, "_", alt_version, ".zip"),
                       quiet = FALSE)
 
       }
