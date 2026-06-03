@@ -71,7 +71,7 @@ cdmNames <- function() {
     "BCR",
     "IQVIA LPD Belgium",
     "UZA",
-    "NAIS",
+    "NAJS",
     "DK-DHR",
     "EBB",
     "HARMONY Platform",
