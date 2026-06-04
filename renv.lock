@@ -90,6 +90,17 @@
       ],
       "Hash": "2e004ed19964915a8faf48a574439be9"
     },
+    "fs": {
+      "Package": "fs",
+      "Version": "2.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "methods"
+      ],
+      "Hash": "09278623bca442bc53b0940ffa2f6d87"
+    },
     "glue": {
       "Package": "glue",
       "Version": "1.8.1",
@@ -100,6 +111,16 @@
         "methods"
       ],
       "Hash": "f8122473e9a49e00d0642f78235ca5e3"
+    },
+    "here": {
+      "Package": "here",
+      "Version": "1.0.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "rprojroot"
+      ],
+      "Hash": "e5114f2abe04168238181913a8572358"
     },
     "httr": {
       "Package": "httr",
@@ -200,6 +221,16 @@
         "utils"
       ],
       "Hash": "f88151fb9ca15e72dc351deb1328716e"
+    },
+    "rprojroot": {
+      "Package": "rprojroot",
+      "Version": "2.1.1",
+      "Source": "Repository",
+      "Repository": "https://cloud.r-project.org",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "b2453de2d29aa646afe4781defdc7903"
     },
     "rstudioapi": {
       "Package": "rstudioapi",

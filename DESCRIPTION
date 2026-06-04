@@ -28,7 +28,8 @@ Imports:
     glue,
     stringr,
     zip,
-    here
+    here,
+    fs
 Config/roxygen2/version: 8.0.0
 Suggests: 
     testthat (>= 3.0.0)

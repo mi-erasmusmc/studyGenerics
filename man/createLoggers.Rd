@@ -6,10 +6,10 @@
 \usage{
 createLoggers(
   resultsDir,
-  loggerName = "OMOP STUDY",
-  logFileName = "log.txt",
-  errorFileName = "error.txt",
-  eventLevel = "TRACE"
+  logFileName = "log",
+  errorFileName = "error",
+  eventLevel = "TRACE",
+  errorLevel = "ERROR"
 )
 }
 \arguments{
@@ -17,14 +17,23 @@ createLoggers(
 This function will work best with the folder structure formed by
 `createsResultsDir()`}
 
+\item{logFileName}{A file name in character. Default 'log'}
+
+\item{errorFileName}{A file name in character. Default 'error'}
+
 \item{eventLevel}{TRACE is the default, captures all the output from
 the console}
+
+\item{errorLevel}{ERROR is the default, captures errors and fatal events}
 }
 \value{
 Invisible
 }
 \description{
-Sets `ohdsi/ParallelLogger` log and error report for a study
+Sets `ohdsi/ParallelLogger` log and error report for a study. Logger
+registered as 'OMOP_STUDY_LOGGER' and error report as 'OMOP_STUDY_ERROR_REPORT'.
+Please note: avoid using inside a tryCatch() or similar because events
+will not be 'obsorbed' and not recorded by ParallelLogger.
 }
 \examples{
 directories <- createResultsDir()

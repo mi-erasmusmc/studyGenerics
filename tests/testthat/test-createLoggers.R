@@ -3,29 +3,24 @@ test_that("Create logger files correctly", {
     tempdir()
   )
 
-  # runLoggerTest <- function(outputDir) {
-    directories <- createResultsDir(
-      outputDir = outputDir,
-      dbname = "LOGGER"
-    )
-    createLoggers(
-      resultsDir = directories$resultsDir,
-      loggerName = "OMOP STUDY",
-      logFileName = "log.txt",
-      errorFileName = "error.txt",
-      eventLevel = "TRACE"
-    )
-    stop("Error test")
-  # }
+  dirs <- createResultsDir(
+    outputDir = outputDir,
+    dbname = "LOGGER"
+  )
 
-  runLoggerTest(outputDir)
+  createLoggers(
+    resultsDir = dirs$resultsDir
+  )
+
+  ParallelLogger::logError("Test error.txt")
+  ParallelLogger::clearLoggers()
 
   file.path(
     outputDir,
     "results_LOGGER",
     "log.txt"
   ) |>
-    checkmate::checkFileExists() |>
+    file.exists() |>
     expect_true()
 
   file.path(
@@ -33,7 +28,7 @@ test_that("Create logger files correctly", {
     "results_LOGGER",
     "error.txt"
   ) |>
-    checkmate::checkFileExists() |>
+    file.exists() |>
     expect_true()
 
   unlink(
