@@ -24,14 +24,10 @@ getPkgZips(
 
 \item{backupRrel}{A string of the R minor-release to use if preferred package version cannot be found under any of the minor releases specified in `r_rels_vect`}
 
-<<<<<<< HEAD
-\item{outputDir}{Path to output directory for package zips}
-=======
 \item{outDir}{Path to output directory for package zips. If left empty, an output directory will be created in project 'renv' directory}
->>>>>>> develop
 }
 \value{
-In addition to downloading the specified packages into the outputDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
+In addition to downloading the specified packages into the outDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
 }
 \description{
 A function that locates and downloads Windows binaries (.zip) from CRAN based on packages specified in a renv.lock file.
