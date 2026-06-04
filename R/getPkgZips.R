@@ -21,10 +21,10 @@
 #'
 #' @details
 #' If the package version is not found under any of the R minor releases, the package will be downloaded from the specified `backupRrel` regardless of package version specified in renv.lock
-#' @import renv
-#' @import cli
-#' @import httr
-#' @import here
+#' @importFrom renv lockfile_read
+#' @importFrom cli cli_alert_success cli_alert_warning cli_alert_danger
+#' @importFrom httr HEAD
+#' @importFrom here here
 #' @importFrom stats setNames
 #' @importFrom utils download.file
 getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir = NULL) {
