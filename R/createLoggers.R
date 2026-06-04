@@ -1,4 +1,4 @@
-#' `createLogger()` as a text file in a results directory
+#' `createLoggers()` as a text file in a results directory
 #'
 #' @description
 #' Sets `ohdsi/ParallelLogger` log and error report for a study
@@ -20,7 +20,7 @@
 #'   )
 #' @importFrom checkmate assertDirectoryExists
 #' @importFrom ParallelLogger function
-createLogger <- function(
+createLoggers <- function(
     resultsDir,
     loggerName = "OMOP STUDY",
     logFileName = "log.txt",

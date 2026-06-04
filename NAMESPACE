@@ -2,7 +2,7 @@
 
 export(arrangeCdmNames)
 export(assertCdmNames)
-export(createLogger)
+export(createLoggers)
 export(createResultsDir)
 export(getPkgZips)
 export(unZipStudyFiles)
