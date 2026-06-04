@@ -6,7 +6,7 @@
 #' current working directory is used.
 #'
 #' @param outputDir Character string. The path to the main output folder.
-#'                  If NULL, defaults to the current working directory.
+#'                  If NULL, defaults to the current working directory. Default NULL.
 #' @param dbname Character string. The name of the database, used to suffix
 #'               the results folder (e.g., "results_dbname").
 #'
@@ -23,7 +23,7 @@
 #'
 #' @export
 createResultsDir <- function(
-    outputDir,
+    outputDir = NULL,
     dbname
     ) {
   # Set folder location for results ----
@@ -36,6 +36,7 @@ createResultsDir <- function(
       dir.create(outputDir)
       checkmate::assertDirectoryExists(outputDir)
     } else {
+      outputDir <- normalizePath(outputDir)
       checkmate::assertDirectoryExists(outputDir)
     }
   }

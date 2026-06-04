@@ -9,14 +9,14 @@
 #' @param backupRrel A string of the R minor-release to use if preferred package version cannot be found under any of the minor releases specified in `r_rels_vect`
 #' @param outDir Path to output directory for package zips. If left empty, an output directory will be created in project 'renv' directory
 #'
-#' @return In addition to downloading the specified packages into the outDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
+#' @return In addition to downloading the specified packages into the outputDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' # Format supp in this way:
 #' supp <- list(Packages = list(devtools = list(Package = "devtools", Version = "2.5.1"), duckdb = list(Package = "duckdb", Version = "1.5.2")))
-#' pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outDir = "path/to/outDir")
+#' pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outputDir = "path/to/outputDir")
 #' }
 #'
 #' @details
@@ -90,8 +90,17 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
     pkgsVers_list <- supplement
   }
 
-  for (pkg in pkgs) {
+  # Vector of all package names
+  pkg_vector <- names(pkgsVers_list$Packages)
+
+  # Initiate empty list to store requirements/dependencies into
+  requirements <- list(Packages = list())
+
+  # Search for specified package dependencies
+  for (pkg in pkg_vector) {
+
     if (!is.null(pkgsVers_list[["Packages"]][[pkg]][["Requirements"]])) { # if a Requirements vector exist (like in a lockfile)
+
       reqs <- trimws(pkgsVers_list[["Packages"]][[pkg]][["Requirements"]]) # pull vector of requirements
 
       for (req in reqs) { # for each req
@@ -109,14 +118,13 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
     }
   }
 
+  # Update the list, should now include all package, supplemental packages, and specified requirements
   pkgsVers_list$Packages <- c(pkgsVers_list$Packages, requirements[["Packages"]])
-
-  # Check for dependcies and append them to the pkgsVers_list
 
   # Set up ----
   pkg_results <- list() # initiate list to store package information (version, URL, R-version, etc.)
 
-  pkg_vector <- names(pkgsVers_list$Packages) # pull vector of all packages from pkgsVers_list
+  pkg_vector <- names(pkgsVers_list$Packages) # pull vector of all packages from pkgsVers_list, overrides the previous versio used before searching for requirements
 
   # Searching URLs and downloading ----
   for (pkg in pkg_vector) {
@@ -139,7 +147,7 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
                            URL = test_url) # store info here for reference by user
 
           download.file(url,
-                        destfile = paste0(outDir, "/", pkg, "_", version, ".zip"),
+                        destfile = paste0(outputDir, "/", pkg, "_", version, ".zip"),
                         quiet = FALSE)
 
           break # exit the inner loop as soon as viable URL is found
@@ -169,7 +177,7 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
                          URL = test_url)
 
         download.file(url,
-                      destfile = paste0(outDir, "/", pkg, "_", alt_version, ".zip"),
+                      destfile = paste0(outputDir, "/", pkg, "_", alt_version, ".zip"),
                       quiet = FALSE)
 
       }
