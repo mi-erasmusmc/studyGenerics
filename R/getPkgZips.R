@@ -9,14 +9,14 @@
 #' @param backupRrel A string of the R minor-release to use if preferred package version cannot be found under any of the minor releases specified in `r_rels_vect`
 #' @param outDir Path to output directory for package zips. If left empty, an output directory will be created in project 'renv' directory
 #'
-#' @return In addition to downloading the specified packages into the outputDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
+#' @return In addition to downloading the specified packages into the outDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' # Format supp in this way:
 #' supp <- list(Packages = list(devtools = list(Package = "devtools", Version = "2.5.1"), duckdb = list(Package = "duckdb", Version = "1.5.2")))
-#' pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outputDir = "path/to/outputDir")
+#' pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outDir = "path/to/outDir")
 #' }
 #'
 #' @details
@@ -147,7 +147,7 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
                            URL = test_url) # store info here for reference by user
 
           download.file(url,
-                        destfile = paste0(outputDir, "/", pkg, "_", version, ".zip"),
+                        destfile = paste0(outDir, "/", pkg, "_", version, ".zip"),
                         quiet = FALSE)
 
           break # exit the inner loop as soon as viable URL is found
@@ -177,7 +177,7 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
                          URL = test_url)
 
         download.file(url,
-                      destfile = paste0(outputDir, "/", pkg, "_", alt_version, ".zip"),
+                      destfile = paste0(outDir, "/", pkg, "_", alt_version, ".zip"),
                       quiet = FALSE)
 
       }
