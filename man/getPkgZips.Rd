@@ -36,10 +36,13 @@ A function that locates and downloads Windows binaries (.zip) from CRAN based on
 If the package version is not found under any of the R minor releases, the package will be downloaded from the specified `backupRrel` regardless of package version specified in renv.lock
 }
 \examples{
-\dontrun{
+pkg_status_list <- getPkgZips()
+
 # Format supp in this way:
-supp <- list(Packages = list(devtools = list(Package = "devtools", Version = "2.5.1"), duckdb = list(Package = "duckdb", Version = "1.5.2")))
-pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outDir = "path/to/outDir")
-}
+devtools <- list(Package = "devtools", Version = "2.5.1")
+duckdb <- list(Package = "duckdb", Version = "1.5.2")
+supp <- list(Packages = list(devtools = devtools, duckdb = duckdb))
+
+pkg_status_list <- getPkgZips(supplement = supp)
 
 }
