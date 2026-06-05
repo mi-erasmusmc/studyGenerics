@@ -8,7 +8,7 @@ test_that("Create logger files correctly", {
     dbname = "LOGGER"
   )
 
-  createLoggers(
+  studyGenerics::setLoggers(
     resultsDir = dirs$resultsDir
   )
 

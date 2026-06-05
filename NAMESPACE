@@ -2,9 +2,9 @@
 
 export(arrangeCdmNames)
 export(assertCdmNames)
-export(createLoggers)
 export(createResultsDir)
 export(getPkgZips)
+export(setLoggers)
 export(unZipStudyFiles)
 export(zipStudyFiles)
 importFrom(ParallelLogger,createFileAppender)

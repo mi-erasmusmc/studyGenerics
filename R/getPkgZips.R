@@ -13,15 +13,14 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' pkg_status_list <- getPkgZips()
-#'
 #' # Format supp in this way:
 #' devtools <- list(Package = "devtools", Version = "2.5.1")
 #' duckdb <- list(Package = "duckdb", Version = "1.5.2")
 #' supp <- list(Packages = list(devtools = devtools, duckdb = duckdb))
-#'
 #' pkg_status_list <- getPkgZips(supplement = supp)
-#'
+#' }
 #' @details
 #' If the package version is not found under any of the R minor releases, the package will be downloaded from the specified `backupRrel` regardless of package version specified in renv.lock
 #' @importFrom renv lockfile_read

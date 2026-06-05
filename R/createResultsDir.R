@@ -22,6 +22,17 @@
 #' @importFrom glue glue
 #'
 #' @export
+#'
+#' @examples
+#' outputDir <- file.path(
+#'    tempdir(),
+#'    "examples"
+#' )
+#' directories <- createResultsDir(
+#'    outputDir,
+#'    dbname = "OMOP"
+#'    )
+#' unlink(outputDir, recursive = TRUE)
 createResultsDir <- function(
     outputDir = NULL,
     dbname

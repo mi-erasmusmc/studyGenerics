@@ -1,4 +1,4 @@
-#' `createLoggers()` as a text file in a results directory
+#' `setLoggers()` as text files in the results directory
 #'
 #' @description
 #' Sets `ohdsi/ParallelLogger` log and error report for a study. Logger
@@ -14,21 +14,33 @@
 #' @param eventLevel TRACE is the default, captures all the output from
 #'    the console
 #' @param errorLevel ERROR is the default, captures errors and fatal events
-#' @returns Invisible
-#' @export
 #'
-#' @examples
-#' directories <- createResultsDir()
-#' createLogger(
-#'   resultsDir = directories$resultsDir
-#'   )
+#' @returns Invisible
+#'
 #' @importFrom checkmate assertDirectoryExists
 #' @importFrom checkmate assertCharacter
 #' @importFrom fs path_ext_set
 #' @importFrom ParallelLogger registerLogger createLogger createFileAppender layoutParallel
 #' @importFrom cli cli_alert_info
 #' @importFrom glue glue
-createLoggers <- function(
+#'
+#' @export
+#'
+#' @examples
+#' outputDir <- file.path(
+#'    tempdir(),
+#'    "examples"
+#' )
+#' directories <- createResultsDir(
+#'    outputDir,
+#'    dbname = "OMOP"
+#'    )
+#' setLoggers(
+#'   resultsDir = directories$resultsDir
+#'   )
+#' ParallelLogger::clearLoggers()
+#' unlink(outputDir, recursive = TRUE)
+setLoggers <- function(
     resultsDir,
     logFileName = "log",
     errorFileName = "error",

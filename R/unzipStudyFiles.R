@@ -15,6 +15,23 @@
 #' @importFrom glue glue
 #'
 #' @export
+#'
+#' @examples
+#'  \dontrun{
+#' path <- testthat::test_path(
+#'    "data",
+#'    "results_execution"
+#' )
+#' outputDir <- file.path(
+#'   tempdir(),
+#'   "examples"
+#' )
+#' unZipStudyFiles(
+#'   path = path,
+#'   outputDir = outputDir
+#' )
+#' unlink(outputDir, recursive = TRUE)
+#' }
 unZipStudyFiles <- function(
     path,
     pattern,
