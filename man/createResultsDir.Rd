@@ -26,3 +26,14 @@ Creates a subdirectory for results based on the database name within a
 specified output directory. If the output directory is not provided, the
 current working directory is used.
 }
+\examples{
+outputDir <- file.path(
+   tempdir(),
+   "examples"
+)
+directories <- createResultsDir(
+   outputDir,
+   dbname = "OMOP"
+   )
+unlink(outputDir, recursive = TRUE)
+}

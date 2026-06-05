@@ -17,42 +17,65 @@
 #'   \item \code{resultsDirName}: The name of the results subdirectory.
 #' }
 #'
-#' @importFrom ParallelLogger logInfo
+#' @importFrom cli cli_alert_info
 #' @importFrom checkmate assertDirectoryExists
 #' @importFrom glue glue
 #'
 #' @export
+#'
+#' @examples
+#' outputDir <- file.path(
+#'    tempdir(),
+#'    "examples"
+#' )
+#' directories <- createResultsDir(
+#'    outputDir,
+#'    dbname = "OMOP"
+#'    )
+#' unlink(outputDir, recursive = TRUE)
 createResultsDir <- function(
     outputDir = NULL,
     dbname
     ) {
   # Set folder location for results ----
-  ParallelLogger::logInfo("Setting location for results")
+  cli::cli_alert_info(
+    "Creating locations to save results"
+    )
   if (is.null(outputDir)) {
     outputDir <- getwd()
-    checkmate::assertDirectoryExists(outputDir)
+    checkmate::assertDirectoryExists(
+      outputDir
+      )
   } else {
     if (!dir.exists(outputDir)) {
-      dir.create(outputDir)
-      checkmate::assertDirectoryExists(outputDir)
+      dir.create(
+        outputDir
+        )
+      checkmate::assertDirectoryExists(
+        outputDir
+        )
     } else {
-      outputDir <- normalizePath(outputDir)
-      checkmate::assertDirectoryExists(outputDir)
+      outputDir <- normalizePath(
+        outputDir
+        )
+      checkmate::assertDirectoryExists(
+        outputDir
+        )
     }
   }
-
-  resultsDirName <- glue::glue("results_{dbname}")
-
+  resultsDirName <- glue::glue(
+    "results_{dbname}"
+    )
   resultsDir <- file.path(
     outputDir,
     resultsDirName
   )
-
   if (!dir.exists(resultsDir)) {
     dir.create(resultsDir)
   }
-
-  checkmate::assertDirectoryExists(resultsDir)
+  checkmate::assertDirectoryExists(
+    resultsDir
+    )
   return(
     list(
       outputDir = outputDir,

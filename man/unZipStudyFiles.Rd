@@ -23,3 +23,20 @@ A message stating the location of the uncompressed results
 \description{
 `unZipStudyFiles()` uncompress study results
 }
+\examples{
+ \dontrun{
+path <- testthat::test_path(
+   "data",
+   "results_execution"
+)
+outputDir <- file.path(
+  tempdir(),
+  "examples"
+)
+unZipStudyFiles(
+  path = path,
+  outputDir = outputDir
+)
+unlink(outputDir, recursive = TRUE)
+}
+}

@@ -19,3 +19,20 @@ A message stating the location of the compressed results
 \description{
 `zipStudyFiles()` compress study results
 }
+\examples{
+outputDir <- file.path(
+   tempdir(),
+   "examples"
+   )
+dbname <- "IPCI"
+directories <- createResultsDir(
+  outputDir,
+  dbname = dbname
+)
+zipStudyFiles(
+  resultsDirName = directories$resultsDir,
+  outputDir = directories$outputDir,
+  dbname = dbname
+)
+unlink(outputDir, recursive = TRUE)
+}
