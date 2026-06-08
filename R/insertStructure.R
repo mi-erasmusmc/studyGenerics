@@ -28,6 +28,7 @@ installPackageBundle <- function(path) {
     )
   )
 
+  # Install packages with renv
   if (!dir.exists(file.path(path, "renv"))) {
     cli::cli_abort(
       message = c(
@@ -37,31 +38,28 @@ installPackageBundle <- function(path) {
     )
   }
 
-  withr::with_dir(path, {
-    # Install packages with renv
-    renv::install(complete_darwin$cran)
-    renv::install(complete_darwin$github)
+  renv::install(complete_darwin$cran)
+  renv::install(complete_darwin$github)
 
-    # Add dependencies (default type = "Imports")
-    pkg_names <- c(
-      complete_darwin$cran,
-      basename(complete_darwin$github)
+  # Add dependencies (default type = "Imports")
+  pkg_names <- c(
+    complete_darwin$cran,
+    basename(complete_darwin$github)
+  )
+
+  if (!requireNamespace("usethis", quietly = TRUE)) {
+    cli::cli_inform(
+      "Installing required package: 'usethis'"
     )
+    install.packages("usethis")
+  }
 
-    if (!requireNamespace("usethis", quietly = TRUE)) {
-      cli::cli_inform(
-        "Installing required package: 'usethis'"
-      )
-      install.packages("usethis")
-    }
+  for (pkg in pkg_names) {
+    usethis::use_package(pkg)
+  }
 
-    for (pkg in pkg_names) {
-      usethis::use_package(pkg)
-    }
-
-    # Update lockfile
-    renv::snapshot()
-  })
+  # Update lockfile
+  renv::snapshot()
 
   # Return invisible package list
   invisible(pkg_names)
@@ -75,12 +73,10 @@ installPackageBundle <- function(path) {
 #'
 #' @return
 #' No return value.
-insertDocs <- function(path) {
-  withr::with_dir(path, {
-    usethis::use_news_md(open = FALSE)
-    usethis::use_readme_rmd(open = FALSE)
-    usethis::use_apl2_license()
-  })
+insertDocs <- function() {
+  usethis::use_news_md(open = FALSE)
+  usethis::use_readme_rmd(open = FALSE)
+  usethis::use_apl2_license()
 }
 
 
@@ -206,8 +202,10 @@ insertStructure <- function(
   cli::cli_alert_info("Installing package bundle...")
   installPackageBundle(path)
 
-  cli::cli_alert_info("Inserting documentation files...")
-  insertDocs(path)
+  withr::with_dir(path, {
+    cli::cli_alert_info("Inserting documentation files...")
+    insertDocs()
+  })
 
   cli::cli_alert_info("Inserting study files...")
   insertStudyFiles(path, n_obj)
