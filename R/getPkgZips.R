@@ -127,14 +127,14 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
   pkg_results <- list() # initiate list to store package information (version, URL, R-version, etc.)
 
   pkg_vector <- names(pkgsVers_list$Packages) # pull vector of all packages from pkgsVers_list, overrides the previous versio used before searching for requirements
-
   # Searching URLs and downloading ----
   for (pkg in pkg_vector) {
     version <- pkgsVers_list$Packages[[pkg]]$Version # pull package version from pkgsVers_list
 
+    found <- FALSE # initialize as FALSE
     if (!(is.null(version))) { # if a version is specified, then search!
       for (r_rel in sort(r_rels_vect, decreasing = TRUE)) { # try newest R version first
-        found <- FALSE # initalize as FALSE
+        # found <- FALSE # initialize as FALSE! Don't declare here, leads to errors saying package is found but giving the URL and name of the last found package
         test_url <- paste0("https://cran.r-project.org/bin/windows/contrib/", r_rel, "/", pkg, "_", version , ".zip")
 
         if (httr::HEAD(test_url)$status_code == 200) { # status_code = 200 checks for existence of the URL
@@ -168,7 +168,7 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
         url <- test_url
 
         if (is.null(version)) {
-          version <- "UNSPECIFIED" # override for print message, only used there within this statement
+          version <- "UNSPECIFIED" # override for print message
         }
 
         cli::cli_alert_warning(paste0("ALTERNATE: Found ", pkg, " v", alt_version, " under R v", backupRrel, " as an alternate to ", pkg, " v", version))
@@ -187,7 +187,10 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
     }
 
     if (!found) { # if the package isn't found under the alternate version of R
-      cli::cli_alert_danger(cat(paste0("PACKAGE NOT FOUND: Unable to find ", pkg, " v", version, " or a suitable alternate version under R v", backupRrel)), "\n")
+      if (is.null(version)) {
+        version <- "UNSPECIFIED" # override for print message
+      }
+      cli::cli_alert_danger(paste0("PACKAGE NOT FOUND: Unable to find ", pkg, " v", version, " or a suitable alternate version under R v", backupRrel), "\n")  # got rid of cat() for testing pr
       pkg_list <- list(Package = pkg,
                        Version = version,
                        R_release = NULL,
