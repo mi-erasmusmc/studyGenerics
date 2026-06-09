@@ -73,10 +73,12 @@ installPackageBundle <- function(path) {
 #'
 #' @return
 #' No return value.
-insertDocs <- function() {
-  usethis::use_news_md(open = FALSE)
-  usethis::use_readme_rmd(open = FALSE)
-  usethis::use_apl2_license()
+insertDocs <- function(path) {
+  withr::with_dir(path, {
+    usethis::use_news_md(open = FALSE)
+    usethis::use_readme_rmd(open = FALSE)
+    usethis::use_apl2_license()
+  })
 }
 
 
@@ -202,10 +204,8 @@ insertStructure <- function(
   cli::cli_alert_info("Installing package bundle...")
   installPackageBundle(path)
 
-  withr::with_dir(path, {
-    cli::cli_alert_info("Inserting documentation files...")
-    insertDocs()
-  })
+  cli::cli_alert_info("Inserting documentation files...")
+  insertDocs(path)
 
   cli::cli_alert_info("Inserting study files...")
   insertStudyFiles(path, n_obj)
