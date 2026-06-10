@@ -28,7 +28,6 @@ installPackageBundle <- function(path) {
     )
   )
 
-  # Install packages with renv
   if (!dir.exists(file.path(path, "renv"))) {
     cli::cli_abort(
       message = c(
@@ -38,28 +37,31 @@ installPackageBundle <- function(path) {
     )
   }
 
-  renv::install(complete_darwin$cran)
-  renv::install(complete_darwin$github)
+  withr::with_dir(path, {
+    # Install packages with renv
+    renv::install(complete_darwin$cran)
+    renv::install(complete_darwin$github)
 
-  # Add dependencies (default type = "Imports")
-  pkg_names <- c(
-    complete_darwin$cran,
-    basename(complete_darwin$github)
-  )
-
-  if (!requireNamespace("usethis", quietly = TRUE)) {
-    cli::cli_inform(
-      "Installing required package: 'usethis'"
+    # Add dependencies (default type = "Imports")
+    pkg_names <- c(
+      complete_darwin$cran,
+      basename(complete_darwin$github)
     )
-    install.packages("usethis")
-  }
 
-  for (pkg in pkg_names) {
-    usethis::use_package(pkg)
-  }
+    if (!requireNamespace("usethis", quietly = TRUE)) {
+      cli::cli_inform(
+        "Installing required package: 'usethis'"
+      )
+      install.packages("usethis")
+    }
 
-  # Update lockfile
-  renv::snapshot()
+    for (pkg in pkg_names) {
+      usethis::use_package(pkg)
+    }
+
+    # Update lockfile
+    renv::snapshot()
+  })
 
   # Return invisible package list
   invisible(pkg_names)
