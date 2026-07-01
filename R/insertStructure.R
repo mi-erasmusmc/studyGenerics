@@ -9,7 +9,6 @@
 #' @return
 #' An invisible list of the installed packages.
 installPackageBundle <- function(path) {
-
   # Install default package bundle
   complete_darwin <- list(
     cran = c(
@@ -63,7 +62,6 @@ installPackageBundle <- function(path) {
 
   # Return invisible package list
   invisible(pkg_names)
-
 }
 
 
@@ -92,9 +90,9 @@ insertDocs <- function() {
 #' @return
 #' No return value.
 insertStudyFiles <- function(
-    path = ".",
-    n_obj = 3
-    ) {
+  path = ".",
+  n_obj = 3
+) {
   # R/
   if ("hello.R" %in% list.files(file.path(path, "R"))) {
     unlink(file.path(path, "R/hello.R"))
@@ -138,12 +136,14 @@ insertStudyFiles <- function(
 #' @return
 #' No return value.
 insertTests <- function(
-    path = "."
-    ) {
-
+  path = "."
+) {
   usethis::use_testthat()
 
-  if (!dir.exists(file.path(path, "R")) | length(list.files(file.path(path, "R"))) == 0) {
+  if (
+    !dir.exists(file.path(path, "R")) |
+      length(list.files(file.path(path, "R"))) == 0
+  ) {
     cli::cli_abort(
       message = c(
         "!" = "No .R files are found to generate tests",
@@ -156,8 +156,9 @@ insertTests <- function(
   for (script in list.files(file.path(path, "R"))) {
     if (script == "globals.R") {
       next
-    } else{                                 # remove ".R"
-      usethis::use_test(substr(script, 1, nchar(script) -2), open = FALSE)
+    } else {
+      # remove ".R"
+      usethis::use_test(substr(script, 1, nchar(script) - 2), open = FALSE)
     }
   }
 }
@@ -181,10 +182,9 @@ insertTests <- function(
 #'
 #' @export
 insertStructure <- function(
-    path = ".",
-    n_obj = 3
-  ) {
-
+  path = ".",
+  n_obj = 3
+) {
   # Need an existing package to run the function
   if (!file.exists(file.path(path, "DESCRIPTION"))) {
     cli::cli_abort(

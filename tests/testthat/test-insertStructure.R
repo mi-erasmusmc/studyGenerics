@@ -1,6 +1,13 @@
 test_that("insertStructure works", {
 
-  test_pkg_path <- testthat::test_path("testPackage")
+  test_pkg_path <- testthat::test_path("testPackage") 
+  dir.create(
+    file.path(
+      test_pkg_path,
+      "renv"
+    ),
+     recursive = TRUE
+  )
 
   insertStructure(path = test_pkg_path, n_obj = 3)
 
@@ -52,12 +59,17 @@ test_that("insertStructure works", {
     }
   }
 
-  # De-comment to reset testPackage structure before testing again
-  # unlink(file.path(test_pkg_path, c("extras", "inst", "tests")), recursive = TRUE, force = TRUE)
-  # unlink(list.files(file.path(test_pkg_path, "R"), full.names = TRUE), recursive = TRUE, force = TRUE)
-  # unlink(list.files(file.path(test_pkg_path, "man"), full.names = TRUE), recursive = TRUE, force = TRUE)
-  # unlink(file.path(test_pkg_path, c("NEWS.md", "README.Rmd", "LICENSE.md")), force = TRUE)
-  # desc$del_deps()
-  # desc$write()
+  files <- list.files(
+    test_pkg_path,
+    full.names = TRUE,
+    all.files = TRUE,
+    no.. = TRUE
+  )
+  to_remove <- files[!basename(files) %in% c("renv.lock", "DESCRIPTION")]
+
+  unlink(
+    to_remove,
+    recursive = TRUE
+  )
 
 })
