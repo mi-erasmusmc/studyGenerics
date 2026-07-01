@@ -1,8 +1,15 @@
 test_that("insertStructure works", {
 
   test_pkg_path <- withr::local_tempdir()
-  usethis::create_package(test_pkg_path, open = FALSE)
-  renv::init(project = test_pkg_path, bare = TRUE)
+  usethis::create_package(
+    test_pkg_path,
+    open = FALSE
+  )
+  renv::init(project = test_pkg_path)
+  renv::install(
+    "usethis",
+    project = test_pkg_path
+  )
 
   usethis::with_project(test_pkg_path, {
     insertStructure(
