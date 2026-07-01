@@ -99,7 +99,7 @@ test_that("cdmNames retrieves all acronyms", {
       "BCR",
       "IQVIA LPD Belgium",
       "UZA",
-      "NAIS",
+      "NAJS",
       "DK-DHR",
       "EBB",
       "HARMONY Platform",

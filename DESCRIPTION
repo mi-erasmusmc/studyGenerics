@@ -27,8 +27,11 @@ Imports:
     checkmate,
     glue,
     stringr,
-    zip
+    zip,
+    here,
+    fs
 Config/roxygen2/version: 8.0.0
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+URL: https://mi-erasmusmc.github.io/studyGenerics/

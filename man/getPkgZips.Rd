@@ -10,11 +10,11 @@ getPkgZips(
   override_lock = FALSE,
   r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"),
   backupRrel = "4.4",
-  outDir
+  outDir = NULL
 )
 }
 \arguments{
-\item{lockfile_path}{Path to renv.lock file}
+\item{lockfile_path}{Path to renv.lock file, if empty will search for renv.lock in project directory}
 
 \item{supplement}{Nested list of packages to supplement or use in place of a renv.lock file}
 
@@ -24,7 +24,7 @@ getPkgZips(
 
 \item{backupRrel}{A string of the R minor-release to use if preferred package version cannot be found under any of the minor releases specified in `r_rels_vect`}
 
-\item{outDir}{Path to output directory for package zips}
+\item{outDir}{Path to output directory for package zips. If left empty, an output directory will be created in project 'renv' directory}
 }
 \value{
 In addition to downloading the specified packages into the outDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
@@ -37,9 +37,11 @@ If the package version is not found under any of the R minor releases, the packa
 }
 \examples{
 \dontrun{
+pkg_status_list <- getPkgZips()
 # Format supp in this way:
-supp <- list(Packages = list(devtools = list(Package = "devtools", Version = "2.5.1"), duckdb = list(Package = "duckdb", Version = "1.5.2")))
-pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outDir = "path/to/outDir")
+devtools <- list(Package = "devtools", Version = "2.5.1")
+duckdb <- list(Package = "duckdb", Version = "1.5.2")
+supp <- list(Packages = list(devtools = devtools, duckdb = duckdb))
+pkg_status_list <- getPkgZips(supplement = supp)
 }
-
 }

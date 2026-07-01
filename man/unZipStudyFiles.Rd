@@ -2,24 +2,41 @@
 % Please edit documentation in R/unzipStudyFiles.R
 \name{unZipStudyFiles}
 \alias{unZipStudyFiles}
-\title{`unZipStudyFiles()` extract results for importing}
+\title{`unZipStudyFiles()` uncompress study results}
 \usage{
 unZipStudyFiles(path, pattern, negate = FALSE, recursive = TRUE, outputDir)
 }
 \arguments{
-\item{path}{The path to the directory where the .zip files are located}
+\item{path}{The path to the directory where the .zip files are located. Character.}
 
-\item{pattern}{A character string to filter the files in the location provided, default NULL}
+\item{pattern}{A character string to filter the files from the location provided. Default is NULL.}
 
-\item{negate}{If TRUE it will filter the opposite specified in pattern, default FALSE}
+\item{negate}{If TRUE it will filter the opposite from 'pattern'. Default is FALSE.}
 
-\item{recursive}{If TRUE it will search recursively for .zip files in the path}
+\item{recursive}{If TRUE it will search recursively for .zip files. Default is TRUE.}
 
-\item{outputDir}{Character string. The path to the main output folder}
+\item{outputDir}{The path to the main output folder. Character.}
 }
 \value{
-A message stating on where the result files were extracted
+A message stating the location of the uncompressed results
 }
 \description{
-`unZipStudyFiles()` extract results for importing
+`unZipStudyFiles()` uncompress study results
+}
+\examples{
+ \dontrun{
+path <- testthat::test_path(
+   "data",
+   "results_execution"
+)
+outputDir <- file.path(
+  tempdir(),
+  "examples"
+)
+unZipStudyFiles(
+  path = path,
+  outputDir = outputDir
+)
+unlink(outputDir, recursive = TRUE)
+}
 }

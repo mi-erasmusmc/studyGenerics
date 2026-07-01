@@ -23,7 +23,7 @@ labels <- c(
   "BCR",
   "IQVIA US - PMTX+",
   "IQVIA US - AmbEMR",
-  "IQVIA LPD Belgium",
-)
+  "IQVIA LPD Belgium"
+  )
 arrangeCdmNames(labels = labels)
 }

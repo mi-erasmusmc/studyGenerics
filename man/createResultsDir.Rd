@@ -4,11 +4,11 @@
 \alias{createResultsDir}
 \title{Create directory for analysis results}
 \usage{
-createResultsDir(outputDir, dbname)
+createResultsDir(outputDir = NULL, dbname)
 }
 \arguments{
 \item{outputDir}{Character string. The path to the main output folder.
-If NULL, defaults to the current working directory.}
+If NULL, defaults to the current working directory. Default NULL.}
 
 \item{dbname}{Character string. The name of the database, used to suffix
 the results folder (e.g., "results_dbname").}
@@ -25,4 +25,15 @@ A list containing three elements:
 Creates a subdirectory for results based on the database name within a
 specified output directory. If the output directory is not provided, the
 current working directory is used.
+}
+\examples{
+outputDir <- file.path(
+   tempdir(),
+   "examples"
+)
+directories <- createResultsDir(
+   outputDir,
+   dbname = "OMOP"
+   )
+unlink(outputDir, recursive = TRUE)
 }
