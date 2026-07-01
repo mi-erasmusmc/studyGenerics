@@ -9,6 +9,7 @@
 #' @return
 #' An invisible list of the installed packages.
 installPackageBundle <- function(path) {
+
   # Install default package bundle
   complete_darwin <- list(
     cran = c(
@@ -27,7 +28,6 @@ installPackageBundle <- function(path) {
     )
   )
 
-  # Install packages with renv
   if (!dir.exists(file.path(path, "renv"))) {
     cli::cli_abort(
       message = c(
@@ -37,31 +37,35 @@ installPackageBundle <- function(path) {
     )
   }
 
-  renv::install(complete_darwin$cran)
-  renv::install(complete_darwin$github)
+  withr::with_dir(path, {
+    # Install packages with renv
+    renv::install(complete_darwin$cran)
+    renv::install(complete_darwin$github)
 
-  # Add dependencies (default type = "Imports")
-  pkg_names <- c(
-    complete_darwin$cran,
-    basename(complete_darwin$github)
-  )
-
-  if (!requireNamespace("usethis", quietly = TRUE)) {
-    cli::cli_inform(
-      "Installing required package: 'usethis'"
+    # Add dependencies (default type = "Imports")
+    pkg_names <- c(
+      complete_darwin$cran,
+      basename(complete_darwin$github)
     )
-    install.packages("usethis")
-  }
 
-  for (pkg in pkg_names) {
-    usethis::use_package(pkg)
-  }
+    if (!requireNamespace("usethis", quietly = TRUE)) {
+      cli::cli_inform(
+        "Installing required package: 'usethis'"
+      )
+      install.packages("usethis")
+    }
 
-  # Update lockfile
-  renv::snapshot()
+    for (pkg in pkg_names) {
+      usethis::use_package(pkg)
+    }
+
+    # Update lockfile
+    renv::snapshot()
+  })
 
   # Return invisible package list
   invisible(pkg_names)
+
 }
 
 
@@ -71,10 +75,12 @@ installPackageBundle <- function(path) {
 #'
 #' @return
 #' No return value.
-insertDocs <- function() {
-  usethis::use_news_md(open = FALSE)
-  usethis::use_readme_rmd(open = FALSE)
-  usethis::use_apl2_license()
+insertDocs <- function(path) {
+  withr::with_dir(path, {
+    usethis::use_news_md(open = FALSE)
+    usethis::use_readme_rmd(open = FALSE)
+    usethis::use_apl2_license()
+  })
 }
 
 
@@ -90,9 +96,9 @@ insertDocs <- function() {
 #' @return
 #' No return value.
 insertStudyFiles <- function(
-  path = ".",
-  n_obj = 3
-) {
+    path = ".",
+    n_obj = 3
+    ) {
   # R/
   if ("hello.R" %in% list.files(file.path(path, "R"))) {
     unlink(file.path(path, "R/hello.R"))
@@ -136,14 +142,12 @@ insertStudyFiles <- function(
 #' @return
 #' No return value.
 insertTests <- function(
-  path = "."
-) {
+    path = "."
+    ) {
+
   usethis::use_testthat()
 
-  if (
-    !dir.exists(file.path(path, "R")) |
-      length(list.files(file.path(path, "R"))) == 0
-  ) {
+  if (!dir.exists(file.path(path, "R")) | length(list.files(file.path(path, "R"))) == 0) {
     cli::cli_abort(
       message = c(
         "!" = "No .R files are found to generate tests",
@@ -156,9 +160,8 @@ insertTests <- function(
   for (script in list.files(file.path(path, "R"))) {
     if (script == "globals.R") {
       next
-    } else {
-      # remove ".R"
-      usethis::use_test(substr(script, 1, nchar(script) - 2), open = FALSE)
+    } else{                                 # remove ".R"
+      usethis::use_test(substr(script, 1, nchar(script) -2), open = FALSE)
     }
   }
 }
@@ -182,9 +185,10 @@ insertTests <- function(
 #'
 #' @export
 insertStructure <- function(
-  path = ".",
-  n_obj = 3
-) {
+    path = ".",
+    n_obj = 3
+  ) {
+
   # Need an existing package to run the function
   if (!file.exists(file.path(path, "DESCRIPTION"))) {
     cli::cli_abort(
@@ -202,10 +206,8 @@ insertStructure <- function(
   cli::cli_alert_info("Installing package bundle...")
   installPackageBundle(path)
 
-  withr::with_dir(path, {
-    cli::cli_alert_info("Inserting documentation files...")
-    insertDocs()
-  })
+  cli::cli_alert_info("Inserting documentation files...")
+  insertDocs(path)
 
   cli::cli_alert_info("Inserting study files...")
   insertStudyFiles(path, n_obj)

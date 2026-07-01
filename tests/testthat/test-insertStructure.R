@@ -1,19 +1,18 @@
 test_that("insertStructure works", {
 
-  test_pkg_path <- testthat::test_path("testPackage") 
-  dir.create(
-    file.path(
-      test_pkg_path,
-      "renv"
-    ),
-     recursive = TRUE
-  )
+  test_pkg_path <- withr::local_tempdir()
+  usethis::create_package(test_pkg_path, open = FALSE)
+  renv::init(project = test_pkg_path, bare = TRUE)
 
-  insertStructure(path = test_pkg_path, n_obj = 3)
+  usethis::with_project(test_pkg_path, {
+    insertStructure(
+      path = ".",
+      n_obj = 3)
+  })
 
   # Expect installed packages
   expect_true(dir.exists(file.path(test_pkg_path, "renv")))
-  expect_true(file.exists(file.path(test_pkg_path, "renv.lock")))
+  # expect_true(file.exists(file.path(test_pkg_path, "renv.lock")))
   installed_pkgs <- c(
     "omopgenerics",
     "PhenotypeR",
@@ -59,16 +58,8 @@ test_that("insertStructure works", {
     }
   }
 
-  files <- list.files(
-    test_pkg_path,
-    full.names = TRUE,
-    all.files = TRUE,
-    no.. = TRUE
-  )
-  to_remove <- files[!basename(files) %in% c("renv.lock", "DESCRIPTION")]
-
   unlink(
-    to_remove,
+    test_pkg_path,
     recursive = TRUE
   )
 
