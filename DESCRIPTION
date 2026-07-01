@@ -30,17 +30,7 @@ Imports:
     zip,
     here,
     fs,
-    usethis,
-    omopgenerics,
-    PhenotypeR,
-    DrugExposureDiagnostics,
-    CohortConstructor,
-    IncidencePrevalence,
-    DrugUtilisation,
-    CohortCharacteristics,
-    CohortSurvival,
-    visOmopResults,
-    DarwinShinyModules
+    usethis
 Config/roxygen2/version: 8.0.0
 Suggests: 
     testthat (>= 3.0.0)

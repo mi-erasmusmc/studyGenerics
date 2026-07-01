@@ -6,13 +6,14 @@ test_that("insertStructure works", {
 
   usethis::with_project(test_pkg_path, {
     insertStructure(
-      path = ".",
+      path = test_pkg_path,
+      # path = ".",
       n_obj = 3)
   })
 
   # Expect installed packages
   expect_true(dir.exists(file.path(test_pkg_path, "renv")))
-  # expect_true(file.exists(file.path(test_pkg_path, "renv.lock")))
+  expect_true(file.exists(file.path(test_pkg_path, "renv.lock")))
   installed_pkgs <- c(
     "omopgenerics",
     "PhenotypeR",

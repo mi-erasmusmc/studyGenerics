@@ -37,10 +37,16 @@ installPackageBundle <- function(path) {
     )
   }
 
-  withr::with_dir(path, {
+  # withr::with_dir(path, {
     # Install packages with renv
-    renv::install(complete_darwin$cran)
-    renv::install(complete_darwin$github)
+    renv::install(
+      packages = complete_darwin$cran, 
+      project = path
+    )
+    renv::install(
+      packages = complete_darwin$github,
+      project = path
+    )
 
     # Add dependencies (default type = "Imports")
     pkg_names <- c(
@@ -52,7 +58,10 @@ installPackageBundle <- function(path) {
       cli::cli_inform(
         "Installing required package: 'usethis'"
       )
-      install.packages("usethis")
+      renv::install(
+        packages = "usethis",
+        project = path
+      )
     }
 
     for (pkg in pkg_names) {
@@ -60,8 +69,10 @@ installPackageBundle <- function(path) {
     }
 
     # Update lockfile
-    renv::snapshot()
-  })
+    renv::snapshot(
+      project = path
+    )
+  # })
 
   # Return invisible package list
   invisible(pkg_names)
