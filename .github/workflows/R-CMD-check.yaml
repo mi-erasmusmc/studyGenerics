@@ -52,8 +52,9 @@ jobs:
         run: |
           mkdir -p ~/.R
           cat <<EOF >> ~/.R/Makevars
-          PKG_CPPFLAGS=$(pkg-config --cflags cairo freetype2 fontconfig)
-          PKG_LIBS=$(pkg-config --libs cairo freetype2 fontconfig)
+          CPPFLAGS=$(pkg-config --cflags cairo freetype2 fontconfig)
+          LDFLAGS=$(pkg-config --libs-only-L cairo freetype2 fontconfig)
+          LDLIBS=$(pkg-config --libs-only-l cairo freetype2 fontconfig)
           EOF
 
       - uses: r-lib/actions/setup-r-dependencies@v2
