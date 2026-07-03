@@ -9,6 +9,11 @@
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/createResultsDir.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/getPkgZips.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/index.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/insertDocs.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/insertStructure.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/insertStudyFiles.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/insertTests.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/installPackageBundle.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/setLoggers.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/unZipStudyFiles.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/zipStudyFiles.html</loc></url>

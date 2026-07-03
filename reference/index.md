@@ -12,6 +12,16 @@
   : Create directory for analysis results
 - [`getPkgZips()`](https://mi-erasmusmc.github.io/studyGenerics/reference/getPkgZips.md)
   : Download zip-compressed Windows binaries from a renv.lock file
+- [`insertDocs()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertDocs.md)
+  : Insert default documentation files
+- [`insertStructure()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertStructure.md)
+  : Set up study structure
+- [`insertStudyFiles()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertStudyFiles.md)
+  : Insert default study files
+- [`insertTests()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertTests.md)
+  : Insert default test files
+- [`installPackageBundle()`](https://mi-erasmusmc.github.io/studyGenerics/reference/installPackageBundle.md)
+  : Install default package bundle
 - [`setLoggers()`](https://mi-erasmusmc.github.io/studyGenerics/reference/setLoggers.md)
   : \`setLoggers()\` as text files in the results directory
 - [`unZipStudyFiles()`](https://mi-erasmusmc.github.io/studyGenerics/reference/unZipStudyFiles.md)
