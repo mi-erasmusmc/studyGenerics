@@ -1,6 +1,6 @@
 #' Download zip-compressed Windows binaries from a renv.lock file
 #'
-#'A function that locates and downloads Windows binaries (.zip) from CRAN based on packages specified in a renv.lock file.
+#' A function that locates and downloads Windows binaries (.zip) from CRAN based on packages specified in a renv.lock file.
 #' @param lockfile_path Path to renv.lock file, if empty will search for renv.lock in project directory
 #' @param supplement Nested list of packages to supplement or use in place of a renv.lock file
 #'
@@ -29,7 +29,14 @@
 #' @importFrom here here
 #' @importFrom stats setNames
 #' @importFrom utils download.file
-getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir = NULL) {
+getPkgZips <- function(
+  lockfile_path = NULL,
+  supplement = NULL,
+  override_lock = FALSE,
+  r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"),
+  backupRrel = "4.4",
+  outDir = NULL
+) {
 
   # If specific lockfile path wasn't provided
   if (is.null(lockfile_path)) {
@@ -224,9 +231,9 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
     cli::cli_alert_danger(paste0("Unable to find ", length(unique(not_found)), " package(s)"))
   }
 
-  cat("Check the returned list for more details!")
+  # cli::cli_alert_info("Check the returned list for more details!")
 
-  return(pkg_results)
+  return(invisible())
 
 }
 
