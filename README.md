@@ -32,7 +32,7 @@ You can install the development version of studyGenerics from
 remotes::install_github("mi-erasmusmc/studyGenerics")
 ```
 
-## Sharing the same structure
+### Sharing the same structure
 
 For instance, we have a function that creates the specific structure we
 need for a study.
@@ -67,7 +67,7 @@ we use more frequently.
       |-tests/
       |-renv/
 
-# Unifying approaches
+### Unifying approaches
 
 Even in the same development team, people may prefer different tools for
 routine tasks (such as logging or even saving zip files). Here we try to
@@ -99,7 +99,7 @@ studyGenerics::unZipStudyFiles(
   )
 ```
 
-# Smoother processes
+### Smoother processes
 
 Furthermore, in `studyGenerics()` we also develop functions that make
 our life easier, such as saving an R virtual environment in a cellar on
