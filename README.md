@@ -11,13 +11,15 @@
 Code should be readable and it’s the means of communication of software
 developers. The objective of `studyGenerics()` is centralise common (and
 even functions considered trivial!) used in epidemiological analysis
-performed at the Erasmus MC Department of Medical Informatics. More than
-trying to ‘standardise’ how to write a study package, we use this
-project to save (and more importantly test) frequently used functions
-that make our life easier. The intention is to break our own silos and
-learn how to better communicate our ideas and best practices to work
-more effectively as a team with common grounds. Please feel free to
-contribute.
+performed at the Erasmus MC Department of Medical Informatics.
+
+More than trying to ‘standardise’ how to write a study package, we use
+this project to save (and more importantly test) frequently used
+functions that make our life easier.
+
+The intention is to break our own silos and learn how to better
+communicate our ideas and best practices to work more effectively as a
+team with common grounds. Please feel free to contribute.
 
 ## Installation
 
