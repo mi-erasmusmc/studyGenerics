@@ -50,38 +50,88 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of studyGenerics is to …</p>
+<p>Code should be readable, and it is the main means of communication for software developers. The objective of <code>studyGenerics()</code> is to centralise common functions (including functions considered trivial!) used in epidemiological analyses performed at the Erasmus MC Department of Medical Informatics.</p>
+<p>More than trying to ‘standardise’ how to write a study package, we use this project to save (and, more importantly, test) frequently used functions that make our life easier.</p>
+<p>The intention is to break our own silos and learn how to better communicate our ideas and best practices, so we can work more effectively as a team on common ground. Please feel free to contribute.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of studyGenerics from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"mi-erasmusmc/studyGenerics"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
-</h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mi-erasmusmc/studyGenerics"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="sharing-the-same-structure">Sharing the same structure<a class="anchor" aria-label="anchor" href="#sharing-the-same-structure"></a>
+</h3>
+<p>For instance, we have a function that creates the specific structure we need for a study.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mi-erasmusmc.github.io/studyGenerics/">studyGenerics</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: replacing previous import 'httr::config' by 'renv::config' when</span></span>
-<span><span class="co">#&gt; loading 'studyGenerics'</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
-<p>What is special about using <code>README.Rmd</code> instead of just <code>README.md</code>? You can include R chunks like so:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      speed           dist       </span></span>
-<span><span class="co">#&gt;  Min.   : 4.0   Min.   :  2.00  </span></span>
-<span><span class="co">#&gt;  1st Qu.:12.0   1st Qu.: 26.00  </span></span>
-<span><span class="co">#&gt;  Median :15.0   Median : 36.00  </span></span>
-<span><span class="co">#&gt;  Mean   :15.4   Mean   : 42.98  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:19.0   3rd Qu.: 56.00  </span></span>
-<span><span class="co">#&gt;  Max.   :25.0   Max.   :120.00</span></span></code></pre></div>
-<p>You’ll still need to render <code>README.Rmd</code> regularly, to keep <code>README.md</code> up-to-date. <code>devtools::build_readme()</code> is handy for this.</p>
-<p>You can also embed plots, for example:</p>
-<p><img src="reference/figures/README-pressure-1.png" alt="" width="100%"></p>
-<p>In that case, don’t forget to commit and push the resulting figure files, so they display on GitHub and CRAN.</p>
+<code class="sourceCode R"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/insertStructure.html">insertStructure</a></span><span class="op">(</span></span>
+<span>    path <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>    n_obj <span class="op">=</span> <span class="fl">3</span></span>
+<span>  <span class="op">)</span> </span></code></pre></div>
+<p>The file structure of the package will contain most of the elements that we use more frequently.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="sc">|-</span>studyPackage</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="sc">|-</span>R<span class="sc">/</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="er">|</span><span class="sc">-</span>createCohorts.R</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="sc">|-</span>runStudy.R</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="sc">|-</span>objective1.R</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="sc">|-</span>objective2.R</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="sc">|-</span>objective3.R</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    ...</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="sc">|-</span>inst<span class="sc">/</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    <span class="er">|</span><span class="sc">-</span>concept_set<span class="sc">/</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    <span class="er">|</span><span class="sc">-</span>cohorts<span class="sc">/</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  <span class="er">|</span><span class="sc">-</span>LICENSE</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="sc">|-</span>README.rmd</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>  <span class="sc">|-</span>extras<span class="sc">/</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>    <span class="er">|</span><span class="sc">-</span>CodeToRun.R</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    <span class="sc">|-</span>pullFromATLAS.R</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    <span class="sc">|-</span>shiny<span class="sc">/</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>  <span class="er">|</span><span class="sc">-</span>tests<span class="sc">/</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>  <span class="er">|</span><span class="sc">-</span>renv<span class="sc">/</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="unifying-approaches">Unifying approaches<a class="anchor" aria-label="anchor" href="#unifying-approaches"></a>
+</h3>
+<p>Even in the same development team, people may prefer different tools for routine tasks (such as logging or even saving zip files). Here we try to find common ground, test functions, and avoid unnecessary bugs from small and less complicated methods, from asserting data partner names to making sure we are zipping results to the correct folder.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/arrangeCdmNames.html">arrangeCdmNames</a></span><span class="op">(</span></span>
+<span>  <span class="va">labels</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/createResultsDir.html">createResultsDir</a></span><span class="op">(</span></span>
+<span>   <span class="va">outputDir</span>,</span>
+<span>   <span class="va">dbname</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/zipStudyFiles.html">zipStudyFiles</a></span><span class="op">(</span></span>
+<span>  <span class="va">resultsDirName</span>,</span>
+<span>  <span class="va">outputDir</span>,</span>
+<span>  <span class="va">dbname</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/unZipStudyFiles.html">unZipStudyFiles</a></span><span class="op">(</span></span>
+<span>  <span class="va">path</span>,</span>
+<span>  <span class="va">pattern</span>,</span>
+<span>  <span class="va">negate</span>,</span>
+<span>  <span class="va">recursive</span>,</span>
+<span>  <span class="va">outputDir</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="smoother-processes">Smoother processes<a class="anchor" aria-label="anchor" href="#smoother-processes"></a>
+</h3>
+<p>Furthermore, in <code>studyGenerics()</code> we also develop functions that make our life easier, such as saving an R virtual environment in a cellar on macOS and later using that folder to <code><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">renv::restore()</a></code> on a Windows machine without internet access.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/getPkgZips.html">getPkgZips</a></span><span class="op">(</span></span>
+<span>  <span class="va">lockfile_path</span>, </span>
+<span>  <span class="va">supplement</span>, </span>
+<span>  <span class="va">override_lock</span>,</span>
+<span>  <span class="va">r_rels_vect</span>,</span>
+<span>  <span class="va">backupRrel</span>,</span>
+<span>  <span class="va">outDir</span></span>
+<span>  <span class="op">)</span> </span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
@@ -124,7 +174,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

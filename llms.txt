@@ -1,6 +1,18 @@
 # studyGenerics
 
-The goal of studyGenerics is to …
+Code should be readable, and it is the main means of communication for
+software developers. The objective of `studyGenerics()` is to centralise
+common functions (including functions considered trivial!) used in
+epidemiological analyses performed at the Erasmus MC Department of
+Medical Informatics.
+
+More than trying to ‘standardise’ how to write a study package, we use
+this project to save (and, more importantly, test) frequently used
+functions that make our life easier.
+
+The intention is to break our own silos and learn how to better
+communicate our ideas and best practices, so we can work more
+effectively as a team on common ground. Please feel free to contribute.
 
 ## Installation
 
@@ -9,46 +21,101 @@ You can install the development version of studyGenerics from
 
 ``` r
 
-# install.packages("pak")
-pak::pak("mi-erasmusmc/studyGenerics")
+# install.packages("remotes")
+remotes::install_github("mi-erasmusmc/studyGenerics")
 ```
 
-## Example
+### Sharing the same structure
 
-This is a basic example which shows you how to solve a common problem:
+For instance, we have a function that creates the specific structure we
+need for a study.
 
 ``` r
 
-library(studyGenerics)
-#> Warning: replacing previous import 'httr::config' by 'renv::config' when
-#> loading 'studyGenerics'
-## basic example code
+studyGenerics::insertStructure(
+    path = ".",
+    n_obj = 3
+  ) 
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+The file structure of the package will contain most of the elements that
+we use more frequently.
+
+``` R
+|-studyPackage
+  |-R/
+    |-createCohorts.R
+    |-runStudy.R
+    |-objective1.R
+    |-objective2.R
+    |-objective3.R
+    ...
+  |-inst/
+    |-concept_set/
+    |-cohorts/
+  |-LICENSE
+  |-README.rmd
+  |-extras/
+    |-CodeToRun.R
+    |-pullFromATLAS.R
+    |-shiny/
+  |-tests/
+  |-renv/
+```
+
+### Unifying approaches
+
+Even in the same development team, people may prefer different tools for
+routine tasks (such as logging or even saving zip files). Here we try to
+find common ground, test functions, and avoid unnecessary bugs from
+small and less complicated methods, from asserting data partner names to
+making sure we are zipping results to the correct folder.
 
 ``` r
 
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+studyGenerics::arrangeCdmNames(
+  labels
+  )
+
+studyGenerics::createResultsDir(
+   outputDir,
+   dbname
+)
+
+studyGenerics::zipStudyFiles(
+  resultsDirName,
+  outputDir,
+  dbname)
+
+studyGenerics::unZipStudyFiles(
+  path,
+  pattern,
+  negate,
+  recursive,
+  outputDir
+  )
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+### Smoother processes
 
-You can also embed plots, for example:
+Furthermore, in `studyGenerics()` we also develop functions that make
+our life easier, such as saving an R virtual environment in a cellar on
+macOS and later using that folder to
+[`renv::restore()`](https://rstudio.github.io/renv/reference/restore.html)
+on a Windows machine without internet access.
 
-![](reference/figures/README-pressure-1.png)
+``` r
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+
+studyGenerics::getPkgZips(
+  lockfile_path, 
+  supplement, 
+  override_lock,
+  r_rels_vect,
+  backupRrel,
+  outDir
+  ) 
+```
 
 # Package index
 
