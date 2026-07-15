@@ -8,7 +8,16 @@
 [![R-CMD-check](https://github.com/mi-erasmusmc/StudyToolBelt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mi-erasmusmc/StudyToolBelt/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of studyGenerics is to …
+Code should be readable and it’s the means of communication of software
+developers. The objective of `studyGenerics()` is centralise common (and
+even functions considered trivial!) used in epidemiological analysis
+performed at the Erasmus MC Department of Medical Informatics. More than
+trying to ‘standardise’ how to write a study package, we use this
+project to save (and more importantly test) frequently used functions
+that make our life easier. The intention is to break our own silos and
+learn how to better communicate our ideas and best practices to work
+more effectively as a team with common grounds. Please feel free to
+contribute.
 
 ## Installation
 
@@ -16,41 +25,45 @@ You can install the development version of studyGenerics from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("mi-erasmusmc/studyGenerics")
+# install.packages("remotes")
+remotes::install_github("mi-erasmusmc/studyGenerics")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+For instance, we have a function that creates the specific structure
+that we need for a study.
 
-``` r
-library(studyGenerics)
-#> Warning: replacing previous import 'httr::config' by 'renv::config' when
-#> loading 'studyGenerics'
-## basic example code
-```
+The file structure of the package will contain the structure most of the
+elements that we use more frequently.
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+    |-studyPackage
+      |-R/
+        |-createCohorts.R
+        |-runStudy.R
+        |-objective1.R
+        |-objective2.R
+        |-objective3.R
+        ...
+      |-inst/
+        |-concept_set/
+        |-cohorts/
+      |-LICENSE
+      |-README.rmd
+      |-extras/
+        |-CodeToRun.R
+        |-pullFromATLAS.R
+        |-shiny/
+      |-tests/
+      |-renv/
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
+Even in the same development team, people may prefer different tools for
+routine tasks (such as logging or even saving zip files). Here we try to
+find a common ground, test a function and avoid unnecessary bugs from
+little less complicated methods, from asserting names of data partners
+to making sure we are zipping results to the correct folder.
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" alt="" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+Furthermore, in `studyGenerics()` we also develop functions that make
+our life easier like saving an R virtual environment in a cellar in
+macOS, and later use that folder to `renv::restore()` in a Windows
+machine without internet access.
