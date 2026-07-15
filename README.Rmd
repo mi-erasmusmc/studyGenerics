@@ -34,7 +34,7 @@ remotes::install_github("mi-erasmusmc/studyGenerics")
 ## Example
 
 For instance, we have a function that creates the specific structure that we need for a study. 
-```{r}
+``` r
 studyGenerics::insertStructure(
     path = ".",
     n_obj = 3
@@ -66,7 +66,7 @@ The file structure of the package will contain the structure most of the element
 ```
 
 Even in the same development team, people may prefer different tools for routine tasks (such as logging or even saving zip files). Here we try to find a common ground, test a function and avoid unnecessary bugs from little less complicated methods, from asserting names of data partners to making sure we are zipping results to the correct folder. 
-```{r}
+``` r 
 studyGenerics::arrangeCdmNames(
   labels
   )
@@ -92,7 +92,7 @@ studyGenerics::unZipStudyFiles(
 
 Furthermore, in `studyGenerics()` we also develop functions that make our life easier like saving an R virtual environment in a cellar in macOS, and later use that folder to `renv::restore()` in a Windows machine without internet access.   
 
-```{r}
+``` r
 
 studyGenerics::getPkgZips(
   lockfile_path, 
