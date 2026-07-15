@@ -1,36 +1,55 @@
 #' Download zip-compressed Windows binaries from a renv.lock file
 #'
 #'A function that locates and downloads Windows binaries (.zip) from CRAN based on packages specified in a renv.lock file.
-#' @param lockfile_path Path to renv.lock file
+#' @param lockfile_path Path to renv.lock file, if empty will search for renv.lock in project directory
 #' @param supplement Nested list of packages to supplement or use in place of a renv.lock file
 #'
 #' @param override_lock Logical. Default is FALSE. If set to TRUE and the same package is named in both the renv.lock and the supplement, the version called in the supplement will override the renv.lock
 #' @param r_rels_vect A character vector of R minor releases
 #' @param backupRrel A string of the R minor-release to use if preferred package version cannot be found under any of the minor releases specified in `r_rels_vect`
-#' @param outDir Path to output directory for package zips
+#' @param outDir Path to output directory for package zips. If left empty, an output directory will be created in project 'renv' directory
 #'
 #' @return In addition to downloading the specified packages into the outDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
 #' @export
 #'
 #' @examples
 #' \dontrun{
+#' pkg_status_list <- getPkgZips()
 #' # Format supp in this way:
-#' supp <- list(Packages = list(devtools = list(Package = "devtools", Version = "2.5.1"), duckdb = list(Package = "duckdb", Version = "1.5.2")))
-#' pkg_status_list <- getPkgZips(lockfile_path = "path/to/renv.lock", r_rels_vect = c("4.3", "4.4", "4.5", "4.6"), backupRrel = "4.5", outDir = "path/to/outDir")
+#' devtools <- list(Package = "devtools", Version = "2.5.1")
+#' duckdb <- list(Package = "duckdb", Version = "1.5.2")
+#' supp <- list(Packages = list(devtools = devtools, duckdb = duckdb))
+#' pkg_status_list <- getPkgZips(supplement = supp)
 #' }
-#'
 #' @details
 #' If the package version is not found under any of the R minor releases, the package will be downloaded from the specified `backupRrel` regardless of package version specified in renv.lock
-#' @import renv
-#' @import cli
-#' @import httr
+#' @importFrom renv lockfile_read
+#' @importFrom cli cli_alert_success cli_alert_warning cli_alert_danger
+#' @importFrom httr HEAD
+#' @importFrom here here
 #' @importFrom stats setNames
 #' @importFrom utils download.file
+getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir = NULL) {
 
-getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = FALSE, r_rels_vect = c("4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6"), backupRrel = "4.4", outDir ) {
+  # If specific lockfile path wasn't provided
+  if (is.null(lockfile_path)) {
+    lockfile_path <- file.path(here::here(), "renv.lock")
+  } else { # if still not found, keep NULL
+    NULL
+  }
 
+  # If outDir path not specified
+  if (is.null(outDir)) {
+    outDir <- file.path(here::here(), "renv", "cellar")
+
+    if (!dir.exists(outDir)) { # create the outDir if it doesn't already exist
+      dir.create(outDir)
+    }
+  }
+
+  # If lockfile_path not provided and renv.lock not found in project dir and no supplement provided
   if (is.null(lockfile_path) & is.null(supplement)) {
-    stop("Silly goose, you need to specify the packages to be installed! Please provide the path to a lockfile or a list of packages and versions. Refer to the manual for list format:)", call. = FALSE)
+    stop("Silly goose, you need to specify the packages to be downloaded! Either create a renv.lock in your project directory, provide the path to another lockfile, or create a supplement list of packages and versions. Refer to the manual for list format:)", call. = FALSE)
   }
 
   # PACKAGES as df in case we need to rely on backupRrel ----
@@ -40,7 +59,7 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
   close(con)
 
   # Check which inputs have been provided and construct pkgsVers_list list accordingly ----
-  if (!is.null(lockfile_path)) {
+  if (!is.null(lockfile_path)) { # either provided lockfile or located renv.lock
     locklist <- renv::lockfile_read(lockfile_path)
   }
 
@@ -73,8 +92,17 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
     pkgsVers_list <- supplement
   }
 
-  for (pkg in pkgs) {
+  # Vector of all package names
+  pkg_vector <- names(pkgsVers_list$Packages)
+
+  # Initiate empty list to store requirements/dependencies into
+  requirements <- list(Packages = list())
+
+  # Search for specified package dependencies
+  for (pkg in pkg_vector) {
+
     if (!is.null(pkgsVers_list[["Packages"]][[pkg]][["Requirements"]])) { # if a Requirements vector exist (like in a lockfile)
+
       reqs <- trimws(pkgsVers_list[["Packages"]][[pkg]][["Requirements"]]) # pull vector of requirements
 
       for (req in reqs) { # for each req
@@ -92,14 +120,13 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
     }
   }
 
+  # Update the list, should now include all package, supplemental packages, and specified requirements
   pkgsVers_list$Packages <- c(pkgsVers_list$Packages, requirements[["Packages"]])
-
-  # Check for dependcies and append them to the pkgsVers_list
 
   # Set up ----
   pkg_results <- list() # initiate list to store package information (version, URL, R-version, etc.)
 
-  pkg_vector <- names(pkgsVers_list$Packages) # pull vector of all packages from pkgsVers_list
+  pkg_vector <- names(pkgsVers_list$Packages) # pull vector of all packages from pkgsVers_list, overrides the previous versio used before searching for requirements
 
   # Searching URLs and downloading ----
   for (pkg in pkg_vector) {
@@ -199,3 +226,4 @@ getPkgZips <- function(lockfile_path = NULL, supplement = NULL, override_lock = 
   return(pkg_results)
 
 }
+

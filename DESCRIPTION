@@ -1,24 +1,43 @@
-Package: StudyToolBelt
+Package: studyGenerics
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
+Title: A centralised repository of tested and frequently used methods for OMOP-CDM studies
+Version: 0.0.0.9000
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Cesar", "Barboza",
+      email = "c.barboza@mi-erasmusmc.nl",
       role = c("aut", "cre")
+    ),
+    person(
+      "Cristiana", "Di Tullio",
+      email = "a.alamshahi@mi-erasmusmc.nl",
+      role = c("aut")
+    ),
+    person(
+      "Arianna", "Alamshahi",
+      email = "a.alamshahi@mi-erasmusmc.nl",
+      role = c("aut")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Description: This set of generic functions wraps routine and basic functions required to run an OMOP-CDM study. 
+  But besides testing this recurrent methods, studyGenerics aims to centralise colaboration to speed-up development of this type of projects. 
+License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
 Imports: 
     cli,
     httr,
-    renv
+    renv,
+    ParallelLogger,
+    checkmate,
+    glue,
+    stringr,
+    zip,
+    here,
+    fs,
+    usethis
 Config/roxygen2/version: 8.0.0
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+URL: https://mi-erasmusmc.github.io/studyGenerics/
