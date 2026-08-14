@@ -1,0 +1,24 @@
+name: Prevent generated docs in source branches
+
+on:
+  pull_request:
+    branches-ignore:
+      - gh-pages
+
+jobs:
+  prevent-generated-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reject generated docs changes
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git diff --name-status "origin/${BASE_REF}"...HEAD > changed-files.txt
+          if awk '$1 !~ /^D/ && $2 ~ /^docs\// { found = 1 } END { exit !found }' changed-files.txt; then
+            echo "Generated docs/ files belong on gh-pages, not source branches."
+            exit 1
+          fi
