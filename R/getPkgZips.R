@@ -237,3 +237,177 @@ getPkgZips <- function(
 
 }
 
+mockLock <- function() {
+  # Create a lockfile ----
+  # Create a temporary file path
+  lockfile <- tempfile(pattern = "renv_", fileext = ".lock")
+
+  # Lockfile content
+  lock_content <- list(
+    R = list(
+      Version = "4.6.0",
+      Repositories = list( # c() doesn't lead to exact structure like renv.lock when loaded in
+        list(
+          Name = "CRAN",
+          URL = "https://packagemanager.posit.co/cran/latest"
+        )
+      )
+    ),
+    Packages = list(
+      DarwinShinyModules = list(
+        Package = "DarwinShinyModules",
+        Version = "0.4.0",
+        Source = "GitHub",
+        RemoteType = "github",
+        RemoteHost = "api.github.com",
+        RemoteRepo = "DarwinShinyModules",
+        RemoteUsername = "darwin-eu",
+        RemoteSha = "2d35aae58626c94ec4bb964d0cfa20b57a4ffc4b",
+        Requirements = c("DT", # will it still download requirements if it doesn't find the package? -yes!
+                         "R",
+                         "R6",
+                         "checkmate",
+                         "dplyr",
+                         "flextable",
+                         "ggplot2",
+                         "gt",
+                         "plotly",
+                         "promises",
+                         "purrr",
+                         "reactable",
+                         "rlang",
+                         "shiny",
+                         "shinyWidgets",
+                         "stringr"),
+                         Hash = "7d9083247a80bb0aff94c0d5305c137d"),
+                         DiagrammeR = list(
+                          Package = "DiagrammeR",
+                          Version = "1.0.11",
+                          Source = "Repository",
+                          Repository = "CRAN",
+                          Requirements = c("R",
+                                           "RColorBrewer",
+                                           "cli",
+                                           "dplyr",
+                                           "glue",
+                                           "htmltools",
+                                           "htmlwidgets",
+                                           "igraph",
+                                           "magrittr",
+                                           "purrr",
+                                           "readr",
+                                           "rlang",
+                                           "rstudioapi",
+                                           "scales",
+                                           "stringr",
+                                           "tibble",
+                                           "tidyr",
+                                           "viridisLite",
+                                           "visNetwork"),
+                                           Hash = "584c1e1cbb6f9b6c3b0f4ef0ad960966"),
+                    renv = list(
+                      Package = "renv",
+                      Version = "1.0.11", # Doesn't exist in the R releases provided in r_rels_vect, should get v1.2.2 from R v4.4 as alternate
+                      Source = "Repository",
+                      Repository = "CRAN",
+                      Requirements = c("utils"),
+                      Hash = "47623f66b4e80b3b0587bc5d7b309888"
+                    ),
+                    rlang = list(
+                      Package = "rlang",
+                      Version = "1.2.0",
+                      Source = "Repository",
+                      Repository = "CRAN",
+                      Requirements = c("R", "utils"),
+                      Hash = "f88151fb9ca15e72dc351deb1328716e"),
+                    rmarkdown = list(
+                      Package = "rmarkdown",
+                      Version = "2.31",
+                      Source = "Repository",
+                      Repository = "CRAN",
+                      Requirements = c("R",
+                                       "bslib",
+                                       "evaluate",
+                                       "fontawesome",
+                                       "htmltools",
+                                       "jquerylib",
+                                       "jsonlite",
+                                       "knitr",
+                                       "methods",
+                                       "tinytex",
+                                       "tools",
+                                       "utils",
+                                       "xfun",
+                                       "yaml"
+                                     ),
+                                     Hash = "f34039d57d861d2869cbf9be813ed08e"),
+                    rprojroot = list(
+                      Package = "rprojroot",
+                      Version = "2.1.1",
+                      Source = "Repository",
+                      Repository = "CRAN",
+                      Requirements = c("R"),
+                      Hash = "b2453de2d29aa646afe4781defdc7903"
+                    ),
+                    rstudioapi = list(
+                      Package = "rstudioapi",
+                      Version = "0.16.0",
+                      Source = "Repository",
+                      Repository = "CRAN",
+                      Hash = "96710351d642b70e8f02ddeb237c46a7"
+                    ),
+                    sass = list(
+                      Package = "sass",
+                      Version = "0.4.9",
+                      Source = "Repository",
+                      Repository = "CRAN",
+                      Requirements = c("R6",
+                                       "fs",
+                                      "htmltools",
+                                      "rappdirs",
+                                      "rlang"),
+                                      Hash = "d53dbfddf695303ea4ad66f86e99b95d"),
+                    scales = list(
+                      Package = "scales",
+                      Version = "1.4.0",
+                      Source = "Repository",
+                      Repository = "RSPM",
+                      Requirements = c("R",
+                                       "R6",
+                                       "RColorBrewer",
+                                       "cli",
+                                       "farver",
+                                       "glue",
+                                       "labeling",
+                                       "lifecycle",
+                                       "rlang",
+                                       "viridisLite"),
+                                       Hash = "c5bba8f0d1df8c4b9538a40570798d9b"),
+                    xfun = list(
+                      Package = "xfun",
+                      Version = "0.58",
+                      Source = "Repository",
+                      Repository = "CRAN"
+                    ),
+                    zip = list(
+                      Package = "zip",
+                      Version = "2.3.3",
+                      Source = "Repository",
+                      Repository = "RSPM",
+                      Hash = "6ebe4b1dc74c3e50e74e316323629583"
+                    )
+                  )
+    )
+
+  # Write JSON to temporary file
+  jsonlite::write_json(
+    lock_content,
+    path = lockfile,
+    auto_unbox = TRUE,
+    pretty = TRUE
+  )
+
+  # Path to temporary lockfile
+  return(lockfile)
+}
+
