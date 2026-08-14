@@ -37,6 +37,32 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
 
+      - name: Install Linux system libraries
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcairo2-dev \
+            libfribidi-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libharfbuzz-dev \
+            libjpeg-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libwebp-dev \
+            pkg-config
+
+      - name: Configure Linux Makevars for gdtools
+        if: runner.os == 'Linux'
+        run: |
+          mkdir -p ~/.R
+          cat <<EOF >> ~/.R/Makevars
+          CPPFLAGS=$(pkg-config --cflags cairo freetype2 fontconfig)
+          LDFLAGS=$(pkg-config --libs-only-L cairo freetype2 fontconfig)
+          LDLIBS=$(pkg-config --libs-only-l cairo freetype2 fontconfig)
+          EOF
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck

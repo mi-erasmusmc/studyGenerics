@@ -1,12 +1,17 @@
 Package: studyGenerics
 Type: Package
 Title: A centralised repository of tested and frequently used methods for OMOP-CDM studies
-Version: 0.1.0
+Version: 0.0.0.9000
 Authors@R: c(
     person(
       "Cesar", "Barboza",
       email = "c.barboza@mi-erasmusmc.nl",
       role = c("aut", "cre")
+    ),
+    person(
+      "Cristiana", "Di Tullio",
+      email = "a.alamshahi@mi-erasmusmc.nl",
+      role = c("aut")
     ),
     person(
       "Arianna", "Alamshahi",
@@ -29,7 +34,8 @@ Imports:
     stringr,
     zip,
     here,
-    fs
+    fs,
+    usethis
 Config/roxygen2/version: 8.0.0
 Suggests: 
     testthat (>= 3.0.0)

@@ -5,3 +5,7 @@
 .positai
 .DS_Store
 docs
+README.html
+SRS.*
+extras/SRS.qmd
+extras/SRS.docx
