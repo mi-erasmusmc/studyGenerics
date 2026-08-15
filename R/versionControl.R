@@ -130,5 +130,4 @@ pullRequest <- function(
     cat(prData$html_url, "\n")
     invisible(prData$html_url)
   }
-
 }
