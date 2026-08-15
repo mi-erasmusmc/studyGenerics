@@ -127,5 +127,9 @@ issueOpen <- function(
       force = FALSE,
       repo = "."
     )
+    gert::git_push(
+      remote = "origin",
+      set_upstream = TRUE
+    )
   }
 }
