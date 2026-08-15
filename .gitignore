@@ -4,5 +4,9 @@
 .Ruserdata
 .positai
 .DS_Store
-docs
+# Generated pkgdown site. The published copy is maintained on the gh-pages branch.
+docs/
 README.html
+SRS.*
+extras/SRS.qmd
+extras/SRS.docx
