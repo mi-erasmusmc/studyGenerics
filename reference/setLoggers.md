@@ -62,7 +62,7 @@ setLoggers(
   resultsDir = directories$resultsDir
   )
 #> Currently in a tryCatch or withCallingHandlers block, so unable to add global calling handlers. ParallelLogger will not capture R messages, errors, and warnings, only explicit calls to ParallelLogger. (This message will not be shown again this R session)
-#> Logger file will be created at: /tmp/RtmpIqnViC/examples/results_OMOP
+#> Logger file will be created at: /tmp/RtmpGs3Fg5/examples/results_OMOP
 ParallelLogger::clearLoggers()
 unlink(outputDir, recursive = TRUE)
 ```
