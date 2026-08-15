@@ -55,7 +55,6 @@ pullRequest <- function(
 
 }
 
-
 #' `issueOpen()` is a wrapper for gh::gh() to swiftly post 
 #' in the GitHub repository of the current project
 #'
