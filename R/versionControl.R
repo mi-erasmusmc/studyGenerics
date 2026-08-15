@@ -130,5 +130,17 @@ pullRequest <- function(
     cat(prData$html_url, "\n")
     invisible(prData$html_url)
   }
+}
 
+developCheckout <- function() {
+  branch <- "develop"
+  if (gert::git_branch_exists(branch)) {
+    gert::git_branch_checkout(
+      branch = "develop",
+      force = FALSE,
+      orphan = FALSE,
+      repo = "."
+    )
+    gert::git_pull()
+  }
 }
