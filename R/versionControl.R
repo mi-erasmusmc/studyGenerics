@@ -1,60 +1,3 @@
-#' `pullRequest()` is a wrapper for gh::gh() to swiftly ask merging
-#' code from the current branch
-#'
-#' @param title of the issue in character
-#' @param body of the issue in character
-#' @param base The target branch, in character. Defaults to "develop"
-#'
-#' @returns A message with the link of the issue
-#' @importFrom checkmate assertCharacter assertLogical assertTRUE checkClass
-#' @importFrom gh gh gh_tree_remote gh_token_exists
-#' @importFrom gert git_branch_create git_branch
-#' @export
-#' @examples
-pullRequest <- function(
-  title,
-  body,
-  base = "develop"
-) {
-  checkmate::assertCharacter(
-    title,
-    len = 1,
-    any.missing = FALSE
-  )
-  title_word_count <- length(
-    regmatches(
-      title,
-      gregexpr(
-        "\\S+",
-        title,
-        perl = TRUE
-      ))[[1]])
-  checkmate::assertTRUE(title_word_count >= 2)
-  checkmate::assertCharacter(body)
-  checkmate::assertTRUE(gh::gh_token_exists())
-  prData <- gh::gh(
-    "POST /repos/{owner}/{repo}/pulls",
-    owner = gh::gh_tree_remote()$username,
-    repo = gh::gh_tree_remote()$repo,
-    head  = gert::git_branch(),
-    base  = base,
-    title = title,
-    body = body
-  )
-  pr_created <- checkmate::checkClass(
-    prData,
-    "gh_response"
-  )
-  if (isTRUE(pr_created)) {
-    cli::cli_alert_success(
-      "Pull request created at:"
-    )
-    cat(prData$html_url, "\n")
-    invisible(prData$html_url)
-  }
-
-}
-
 #' `issueOpen()` is a wrapper for gh::gh() to swiftly post 
 #' in the GitHub repository of the current project
 #'
@@ -131,4 +74,61 @@ issueOpen <- function(
       set_upstream = TRUE
     )
   }
+}
+
+#' `pullRequest()` is a wrapper for gh::gh() to swiftly ask merging
+#' code from the current branch
+#'
+#' @param title of the issue in character
+#' @param body of the issue in character
+#' @param base The target branch, in character. Defaults to "develop"
+#'
+#' @returns A message with the link of the issue
+#' @importFrom checkmate assertCharacter assertLogical assertTRUE checkClass
+#' @importFrom gh gh gh_tree_remote gh_token_exists
+#' @importFrom gert git_branch_create git_branch
+#' @export
+#' @examples
+pullRequest <- function(
+  title,
+  body,
+  base = "develop"
+) {
+  checkmate::assertCharacter(
+    title,
+    len = 1,
+    any.missing = FALSE
+  )
+  title_word_count <- length(
+    regmatches(
+      title,
+      gregexpr(
+        "\\S+",
+        title,
+        perl = TRUE
+      ))[[1]])
+  checkmate::assertTRUE(title_word_count >= 2)
+  checkmate::assertCharacter(body)
+  checkmate::assertTRUE(gh::gh_token_exists())
+  prData <- gh::gh(
+    "POST /repos/{owner}/{repo}/pulls",
+    owner = gh::gh_tree_remote()$username,
+    repo = gh::gh_tree_remote()$repo,
+    head  = gert::git_branch(),
+    base  = base,
+    title = title,
+    body = body
+  )
+  pr_created <- checkmate::checkClass(
+    prData,
+    "gh_response"
+  )
+  if (isTRUE(pr_created)) {
+    cli::cli_alert_success(
+      "Pull request created at:"
+    )
+    cat(prData$html_url, "\n")
+    invisible(prData$html_url)
+  }
+
 }
