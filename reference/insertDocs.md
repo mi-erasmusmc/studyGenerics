@@ -6,7 +6,7 @@ License 2.0) files.
 ## Usage
 
 ``` r
-insertDocs()
+insertDocs(path)
 ```
 
 ## Value

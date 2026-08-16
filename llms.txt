@@ -129,6 +129,9 @@ studyGenerics::getPkgZips(
   and display an error if incorrect
 - [`createResultsDir()`](https://mi-erasmusmc.github.io/studyGenerics/reference/createResultsDir.md)
   : Create directory for analysis results
+- [`developCheckout()`](https://mi-erasmusmc.github.io/studyGenerics/reference/developCheckout.md)
+  : \`developCheckout()\` is a wrapper for gert functions to swiftly
+  default to develop and pull latest changes
 - [`getPkgZips()`](https://mi-erasmusmc.github.io/studyGenerics/reference/getPkgZips.md)
   : Download zip-compressed Windows binaries from a renv.lock file
 - [`insertDocs()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertDocs.md)
@@ -141,6 +144,12 @@ studyGenerics::getPkgZips(
   : Insert default test files
 - [`installPackageBundle()`](https://mi-erasmusmc.github.io/studyGenerics/reference/installPackageBundle.md)
   : Install default package bundle
+- [`issueOpen()`](https://mi-erasmusmc.github.io/studyGenerics/reference/issueOpen.md)
+  : \`issueOpen()\` is a wrapper for gh::gh() to swiftly post in the
+  GitHub repository of the current project
+- [`pullRequest()`](https://mi-erasmusmc.github.io/studyGenerics/reference/pullRequest.md)
+  : \`pullRequest()\` is a wrapper for gh::gh() to swiftly ask merging
+  code from the current branch
 - [`setLoggers()`](https://mi-erasmusmc.github.io/studyGenerics/reference/setLoggers.md)
   : \`setLoggers()\` as text files in the results directory
 - [`unZipStudyFiles()`](https://mi-erasmusmc.github.io/studyGenerics/reference/unZipStudyFiles.md)
