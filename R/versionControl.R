@@ -11,7 +11,6 @@
 #' @importFrom gh gh gh_tree_remote gh_token_exists
 #' @importFrom gert git_branch_create git_branch
 #' @export
-#' @examples
 issueOpen <- function(
   title, 
   body,
@@ -88,7 +87,6 @@ issueOpen <- function(
 #' @importFrom gh gh gh_tree_remote gh_token_exists
 #' @importFrom gert git_branch_create git_branch
 #' @export
-#' @examples
 pullRequest <- function(
   title,
   body,
@@ -138,7 +136,6 @@ pullRequest <- function(
 #' @returns Git log messages after checking out and pulling 'develop'
 #' @importFrom gert git_branch_exists git_branch_checkout git_pull
 #' @export
-#' @examples
 developCheckout <- function() {
   branch <- "develop"
   if (gert::git_branch_exists(branch)) {
