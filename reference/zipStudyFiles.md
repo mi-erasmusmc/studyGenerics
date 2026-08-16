@@ -45,6 +45,6 @@ zipStudyFiles(
   dbname = dbname
 )
 #> ℹ Exporting results to zip format
-#> ✔ Results exported to /tmp/Rtmp9u9UeB/examples/results_IPCI/results_IPCI_20260816.zip
+#> ✔ Results exported to /tmp/RtmpbfGal6/examples/results_IPCI/results_IPCI_20260816.zip
 unlink(outputDir, recursive = TRUE)
 ```
