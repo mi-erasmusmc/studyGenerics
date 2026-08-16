@@ -8,14 +8,24 @@
 #'
 #' @returns A message with the link of the PR
 #' @importFrom checkmate assertCharacter assertLogical assertTRUE checkClass
-#' @importFrom gh gh gh_tree_remote gh_token_exists
-#' @importFrom gert git_branch_create git_branch
 #' @export
 issueOpen <- function(
   title, 
   body,
   newBranch = FALSE
 ) {
+  if (!requireNamespace("gh", quietly = TRUE)) {
+    stop(
+      "Package \"gh\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
+  if (!requireNamespace("gert", quietly = TRUE)) {
+    stop(
+      "Package \"gert\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
   checkmate::assertCharacter(
     title,
     len = 1,
@@ -84,14 +94,24 @@ issueOpen <- function(
 #'
 #' @returns A message with the link of the issue
 #' @importFrom checkmate assertCharacter assertLogical assertTRUE checkClass
-#' @importFrom gh gh gh_tree_remote gh_token_exists
-#' @importFrom gert git_branch_create git_branch
 #' @export
 pullRequest <- function(
   title,
   body,
   base = "develop"
 ) {
+  if (!requireNamespace("gh", quietly = TRUE)) {
+    stop(
+      "Package \"gh\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
+  if (!requireNamespace("gert", quietly = TRUE)) {
+    stop(
+      "Package \"gert\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
   checkmate::assertCharacter(
     title,
     len = 1,
@@ -134,9 +154,14 @@ pullRequest <- function(
 #' and pull latest changes
 #'
 #' @returns Git log messages after checking out and pulling 'develop'
-#' @importFrom gert git_branch_exists git_branch_checkout git_pull
 #' @export
 developCheckout <- function() {
+  if (!requireNamespace("gert", quietly = TRUE)) {
+    stop(
+      "Package \"gert\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
   branch <- "develop"
   if (gert::git_branch_exists(branch)) {
     gert::git_branch_checkout(
