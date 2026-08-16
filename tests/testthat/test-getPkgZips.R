@@ -44,7 +44,8 @@ test_that("Message checks - lockfile only", {
 # Test on  lockfile + supp, override_lock = FALSE ----
 test_that("Message checks - lockfile + supp, override_lock = FALSE", {
 
-  msgs <- capture_messages(pkg_summary <- getPkgZips(lockfile_path = lockfile, supplement = supp))
+  lockfile <- mockLock()
+  msgs <- capture_messages(pkg_summary <- getPkgZips(lockfile_path = lockfile, supplement = suppPackages()))
 
   expect_true(any(grepl("PACKAGE NOT FOUND: Unable to find DarwinShinyModules v0.4.0 or a suitable alternate version under R v4.4", msgs)))
   expect_true(any(grepl("PACKAGE NOT FOUND: Unable to find utils vUNSPECIFIED or a suitable alternate version under R v4.4", msgs)))
@@ -71,7 +72,7 @@ test_that("Message checks - lockfile + supp, override_lock = FALSE", {
 test_that("Message checks - lockfile + supp, override_lock = TRUE", {
 
   lockfile <- mockLock()
-  msgs <- capture_messages(pkg_summary <- getPkgZips(lockfile_path = lockfile, supplement = supp, override_lock = TRUE))
+  msgs <- capture_messages(pkg_summary <- getPkgZips(lockfile_path = lockfile, supplement = suppPackages(), override_lock = TRUE))
 
   expect_true(any(grepl("PACKAGE NOT FOUND: Unable to find DarwinShinyModules v0.4.0 or a suitable alternate version under R v4.4", msgs)))
   expect_true(any(grepl("PACKAGE NOT FOUND: Unable to find utils vUNSPECIFIED or a suitable alternate version under R v4.4", msgs)))
@@ -103,34 +104,8 @@ test_that("mockLock()", {
 
   lockfile <- mockLock()
   # Create a supplementary file ----
-  supp <- list(
-    Packages = list(
-      devtools = list(
-        Package = "devtools",
-        Version = "2.5.2"
-      ), # 2.5.2 exists in multiple releases, should pick from the newest (R v4.6)
-      dplyr = list(
-        Package = "dplyr",
-        Version = "0.6"
-      ), # there is no 0.6 in any of the releases, should get v1.2.1 as alternate from R v4.4
-      tidyrr = list(
-        Package = "tidyr",
-        Version = "1.3.2"
-      ), # tidyrr does not exist
-      RPostgres = list(
-        Package = "RPostgres",
-        Version = NULL
-      ), # no version provided, should get v1.4.10 as alternate from R v4.4
-      renv = list(
-        Package = "renv",
-        Version = "1.0.7"
-      ), # renv already exists in lockfile, if override_lock = TRUE, should get v1.0.7 from R v4.2
-      xfun = list(
-        Package = "xfun",
-        Version = NULL
-      )
-    )
-  ) # xfun already exists in lockfile, if override_lock = TRUE, should get v0.57 from R v4.4
+  supp <- suppPackages()
+
   # Sanity check of counts ----
   lock <- renv::lockfile_read(lockfile)
   pkgs <- names(lock[["Packages"]])
@@ -151,7 +126,6 @@ test_that("mockLock()", {
   expect_equal(n_reqs, 46)
   # expect_equal(n_reqs_wo_overlap, 41)
   expect_equal(n_all, 56) # not 58 bc of the supps overlap
-
 })
 
 
