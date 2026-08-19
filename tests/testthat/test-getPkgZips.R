@@ -1,5 +1,4 @@
 test_that("packageList git repostitories", {
-
   test_lockfile <- testthat::test_path(
      "data",
      "renv.lock"
@@ -20,7 +19,6 @@ test_that("packageList git repostitories", {
     expect_equal(
       list("DarwinShinyModules" = "0.6.0")
     )
-
 })
 
 test_that("extractGithubList", {
