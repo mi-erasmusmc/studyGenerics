@@ -40,6 +40,9 @@ Config/roxygen2/version: 8.0.0
 Suggests:
     gert,
     gh,
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: https://mi-erasmusmc.github.io/studyGenerics/
+VignetteBuilder: knitr
