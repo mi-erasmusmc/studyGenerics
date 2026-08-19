@@ -441,3 +441,60 @@ suppPackages <- function() {
     )
   ) # xfun already exists in lockfile, if override_lock = TRUE, should get v0.57 from R v4.4
 }
+
+packageList <- function(
+  lockfile_path,
+  type = "github"
+) {
+  requireInstall("jsonvalidate")
+  is_lockfile <- renv::lockfile_validate(
+    lockfile = lockfile_path
+  )
+  if (isTRUE(is_lockfile)) {
+    lockfile_data <- renv::lockfile_read(
+      file = lockfile_path
+    )
+    cli::cli_alert_success(
+      "{lockfile_path} read successfully"
+    )
+  } else {
+    cli::cli_abort(
+      "{lockfile_path} is not a valid renv.lock file"
+    )
+  }
+  checkmate::assertChoice(
+    type,
+    c("github", "all")
+  )
+  if (type == "github") {
+    return(extractGithubList(lockfile_data$Packages))
+  }
+}
+
+extractGithubList <- function(lockfile_data) {
+  lockfile_data |> 
+    lapply(
+      FUN = function(x) {
+        if (x$Source == "GitHub") {
+          if (x$RemoteType == "github") {
+            return(x$Version)
+          }
+        }
+      }
+    ) |> 
+  Filter(
+    Negate(is.null),
+    x = _
+  )
+} 
+
+requireInstall <- function(package) {
+    if (!requireNamespace(package, quietly = TRUE)) {
+    cli::cli_abort(
+      glue::glue(
+        "'{package}' must be installed to use this function."
+      )
+    )
+  }
+  return(invisible())
+}
