@@ -1,5 +1,5 @@
 test_that("assertCdmNames works", {
-  # Assert a group of acryonims
+  # Assert a group of acronyms
   labels <- c(
     "BCR",
     "IQVIA LPD Belgium",
@@ -9,9 +9,9 @@ test_that("assertCdmNames works", {
   )
   assertCdmNames(labels = labels) |>
     expect_invisible()
-  # Error acronim do not match
+  # Error acronym do not match
   labels <- c(
-    "BCRX", # Mispelled acronym
+    "BCRX", # Misspelled acronym
     "IQVIA LPD Belgium",
     "NLHR@UiO:PERINATAL",
     "IQVIA US - AmbEMR",
@@ -22,7 +22,7 @@ test_that("assertCdmNames works", {
 })
 
 test_that("assertCdmNames against expected acronyms", {
-  # Assert a group of acryonims
+  # Assert a group of acronyms
   labels <- c(
     "BCR",
     "IQVIA LPD Belgium",
@@ -42,7 +42,7 @@ test_that("assertCdmNames against expected acronyms", {
     expect_error()
   # Incorrect acronym
   labels <- c(
-    "BCRX", # Mispelled acronym
+    "BCRX", # Misspelled acronym
     "IQVIA LPD Belgium",
     "NLHR@UiO:PERINATAL",
     "IQVIA US - AmbEMR",
@@ -78,9 +78,9 @@ test_that("arrangeCdmNames returns required acronyms in order", {
       "IQVIA US - AmbEMR",
       "IQVIA US - PMTX+"
     ))
-  # Error acronim do not match
+  # Error acronym do not match
   labels <- c(
-    "BCRX", # Mispelled acronym
+    "BCRX", # Misspelled acronym
     "IQVIA LPD Belgium",
     "NLHR@UiO:PERINATAL",
     "IQVIA US - AmbEMR",
