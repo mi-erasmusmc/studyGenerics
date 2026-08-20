@@ -1,3 +1,50 @@
+test_that("packageList git repostitories", {
+  test_lockfile <- testthat::test_path(
+     "data",
+     "renv.lock"
+    )
+  renv::lockfile_create(
+    libpaths = .libPaths(),
+    packages = c("DarwinShinyModules", "dplyr")
+  ) |> 
+    renv::lockfile_write(
+      file = testthat::test_path(
+        "data",
+        "renv.lock"
+      )
+    )
+  packageList(
+    lockfile_path = test_lockfile
+  ) |>  
+    expect_equal(
+      list("DarwinShinyModules" = "0.6.0")
+    )
+})
+
+test_that("extractGithubList", {
+  test_lockfile <- testthat::test_path(
+    "data",
+    "renv.lock"
+  )
+  renv::lockfile_create(
+    libpaths = .libPaths(),
+    packages = c("DarwinShinyModules", "dplyr")
+  ) |> 
+    renv::lockfile_write(
+      file = testthat::test_path(
+        "data",
+        "renv.lock"
+      )
+    )
+  lockfile_data <- renv::lockfile_read(
+    file = test_lockfile
+  )
+  extractGithubList(lockfile_data$Packages) |> 
+    expect_equal(
+      list("DarwinShinyModules" = "0.6.0")
+    )
+})
+
 # Test on  getPkgZips(): creation of dir and download of zips from project specific renv.lock ----
 test_that("Package zips are actually downloaded to renv/cellar from studyGenerics renv.lock", {
   msgs <- capture_messages(getPkgZips())
