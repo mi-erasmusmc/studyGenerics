@@ -12,3 +12,4 @@
 ^pkgdown$
 ^README.html$
 ^extras$
+^vignettes/articles$

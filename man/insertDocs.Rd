@@ -4,7 +4,7 @@
 \alias{insertDocs}
 \title{Insert default documentation files}
 \usage{
-insertDocs()
+insertDocs(path)
 }
 \value{
 No return value.

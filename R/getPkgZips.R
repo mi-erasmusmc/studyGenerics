@@ -411,3 +411,33 @@ mockLock <- function() {
   return(lockfile)
 }
 
+suppPackages <- function() {
+  list(
+    Packages = list(
+      devtools = list(
+        Package = "devtools",
+        Version = "2.5.2"
+      ), # 2.5.2 exists in multiple releases, should pick from the newest (R v4.6)
+      dplyr = list(
+        Package = "dplyr",
+        Version = "0.6"
+      ), # there is no 0.6 in any of the releases, should get v1.2.1 as alternate from R v4.4
+      tidyrr = list(
+        Package = "tidyr",
+        Version = "1.3.2"
+      ), # tidyrr does not exist
+      RPostgres = list(
+        Package = "RPostgres",
+        Version = NULL
+      ), # no version provided, should get v1.4.10 as alternate from R v4.4
+      renv = list(
+        Package = "renv",
+        Version = "1.0.7"
+      ), # renv already exists in lockfile, if override_lock = TRUE, should get v1.0.7 from R v4.2
+      xfun = list(
+        Package = "xfun",
+        Version = NULL
+      )
+    )
+  ) # xfun already exists in lockfile, if override_lock = TRUE, should get v0.57 from R v4.4
+}

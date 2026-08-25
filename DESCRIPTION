@@ -1,7 +1,7 @@
 Package: studyGenerics
 Type: Package
 Title: A centralised repository of tested and frequently used methods for OMOP-CDM studies
-Version: 0.0.0.9000
+Version: 0.0.0.9002
 Authors@R: c(
     person(
       "Cesar", "Barboza",
@@ -37,7 +37,13 @@ Imports:
     fs,
     usethis
 Config/roxygen2/version: 8.0.0
-Suggests: 
+Suggests:
+    gert,
+    gh,
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: https://mi-erasmusmc.github.io/studyGenerics/
+VignetteBuilder: knitr
+Config/Needs/website: rmarkdown
