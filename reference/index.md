@@ -35,5 +35,7 @@
   : \`setLoggers()\` as text files in the results directory
 - [`unZipStudyFiles()`](https://mi-erasmusmc.github.io/studyGenerics/reference/unZipStudyFiles.md)
   : \`unZipStudyFiles()\` uncompress study results
+- [`updateColumnValues()`](https://mi-erasmusmc.github.io/studyGenerics/reference/updateColumnValues.md)
+  : Update values in a summarised result
 - [`zipStudyFiles()`](https://mi-erasmusmc.github.io/studyGenerics/reference/zipStudyFiles.md)
   : \`zipStudyFiles()\` compress study results

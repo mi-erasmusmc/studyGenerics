@@ -1,6 +1,9 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/404.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/LICENSE.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/articles/index.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/articles/macos_solves.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/articles/new_study_package.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/authors.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/index.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/news/index.html</loc></url>
@@ -19,6 +22,7 @@
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/pullRequest.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/setLoggers.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/unZipStudyFiles.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/updateColumnValues.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/zipStudyFiles.html</loc></url>
 </urlset>
 
