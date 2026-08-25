@@ -46,3 +46,4 @@ Suggests:
 Config/testthat/edition: 3
 URL: https://mi-erasmusmc.github.io/studyGenerics/
 VignetteBuilder: knitr
+Config/Needs/website: rmarkdown
