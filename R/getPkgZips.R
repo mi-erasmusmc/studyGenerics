@@ -477,7 +477,15 @@ extractGithubList <- function(lockfile_data) {
       FUN = function(x) {
         if (x$Source == "GitHub") {
           if (x$RemoteType == "github") {
-            return(x$Version)
+            download_data <- list(
+              Version = x$Version,
+              RemoteRepo = x$RemoteRepo,
+              RemoteUsername = x$RemoteUsername,
+              RemoteHost = x$RemoteHost,
+              Hash = x$Hash,
+              Requirements = x$Requirements
+            )
+            return(download_data)
           }
         }
       }
