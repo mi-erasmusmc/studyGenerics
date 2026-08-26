@@ -506,8 +506,6 @@ downloadPackageList <- function(
     x = type,
     choices = c("github", "cran")
   )
-  
-
 }
 
 requireInstall <- function(package) {
