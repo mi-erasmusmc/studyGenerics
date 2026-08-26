@@ -52,8 +52,19 @@ test_that("extractGithubList", {
   )
   extractGithubList(lockfile_data$Packages) |> 
     expect_equal(
-      list("DarwinShinyModules" = "0.6.0")
+      list(
+        DarwinShinyModules = list(
+          Version = "0.7.1",
+          RemoteRepo = "DarwinShinyModules", 
+          RemoteUsername = "darwin-eu", RemoteHost = "api.github.com", 
+          Hash = "89f480bbf075d972b4d92a5db35265f0", Requirements = c("DT", 
+          "R", "R6", "checkmate", "dplyr", "flextable", "ggplot2", 
+          "gt", "mirai", "plotly", "promises", "purrr", "qs2", "reactable", 
+          "rlang", "shiny", "shinyWidgets", "stringr", "visOmopResults"
+        )
+      )
     )
+  )
 })
 
 # Test on  getPkgZips(): creation of dir and download of zips from project specific renv.lock ----
