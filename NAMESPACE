@@ -11,29 +11,51 @@ export(pullRequest)
 export(setLoggers)
 export(unZipStudyFiles)
 export(zipStudyFiles)
-importFrom(ParallelLogger,createFileAppender)
-importFrom(ParallelLogger,createLogger)
-importFrom(ParallelLogger,layoutParallel)
-importFrom(ParallelLogger,registerLogger)
-importFrom(checkmate,assertCharacter)
-importFrom(checkmate,assertDirectoryExists)
-importFrom(checkmate,assertFileExists)
-importFrom(checkmate,assertLogical)
-importFrom(checkmate,assertTRUE)
-importFrom(checkmate,checkClass)
-importFrom(cli,cli_abort)
-importFrom(cli,cli_alert_danger)
-importFrom(cli,cli_alert_info)
-importFrom(cli,cli_alert_success)
-importFrom(cli,cli_alert_warning)
+importFrom(ParallelLogger,
+  createFileAppender,
+  createLogger,
+  layoutParallel,
+  logInfo,
+  registerLogger
+)
+importFrom(checkmate,
+  assertCharacter,
+  assertDirectoryExists,
+  assertDouble,
+  assertFileExists,
+  assertLogical,
+  assertTRUE,
+  checkClass
+)
+importFrom(cli,
+  cli_abort,
+  cli_alert_danger,
+  cli_alert_info,
+  cli_alert_success,
+  cli_alert_warning
+)
+importFrom(dplyr,
+  bind_rows,
+  tibble
+)
 importFrom(fs,path_ext_set)
-importFrom(glue,glue)
-importFrom(glue,glue_collapse)
+importFrom(glue,
+  glue,
+  glue_collapse
+)
 importFrom(here,here)
 importFrom(httr,HEAD)
+importFrom(jsonlite,toJSON)
 importFrom(renv,lockfile_read)
 importFrom(stats,setNames)
-importFrom(stringr,str_detect)
+importFrom(stringr,
+  str_detect,
+  str_remove,
+  str_replace_all,
+  str_to_lower
+)
 importFrom(utils,download.file)
-importFrom(zip,unzip)
-importFrom(zip,zip)
+importFrom(zip,
+  unzip,
+  zip
+)
