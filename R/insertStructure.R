@@ -40,7 +40,7 @@ installPackageBundle <- function(path) {
   # withr::with_dir(path, {
     # Install packages with renv
     renv::install(
-      packages = complete_darwin$cran, 
+      packages = complete_darwin$cran,
       project = path
     )
     renv::install(
@@ -184,7 +184,7 @@ insertTests <- function(
 #' It includes standard folders, R scripts, test and documentation files and it
 #' installs a default list of DARWIN EU®/OHDSI packages.
 #'
-#' It assumes an active R project has already been created and the `renv`
+#' It assumes an active R project has already been created and renv
 #' initialized.
 #'
 #' @param path Character string identifying the path to the study project,

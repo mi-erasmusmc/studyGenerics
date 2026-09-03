@@ -21,6 +21,6 @@ It includes standard folders, R scripts, test and documentation files and it
 installs a default list of DARWIN EU®/OHDSI packages.
 }
 \details{
-It assumes an active R project has already been created and the \code{renv}
+It assumes an active R project has already been created and renv
 initialized.
 }
