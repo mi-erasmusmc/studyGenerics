@@ -2,7 +2,7 @@
 % Please edit documentation in R/cdmNames.R
 \name{arrangeCdmNames}
 \alias{arrangeCdmNames}
-\title{`arrangeCdmNames()` verifies if data partner's acronyms are valie
+\title{\code{arrangeCdmNames()} verifies if data partner's acronyms are valie
 and returns a vector ordered by country alphabetical order}
 \usage{
 arrangeCdmNames(labels)
@@ -14,7 +14,7 @@ arrangeCdmNames(labels)
 A character vector
 }
 \description{
-`arrangeCdmNames()` verifies if data partner's acronyms are valie
+\code{arrangeCdmNames()} verifies if data partner's acronyms are valie
 and returns a vector ordered by country alphabetical order
 }
 \examples{

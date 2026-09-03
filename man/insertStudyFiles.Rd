@@ -8,14 +8,14 @@ insertStudyFiles(path = ".", n_obj = 3)
 }
 \arguments{
 \item{path}{Character string identifying the path to the study project,
-default `"."`.}
+default \code{"."}.}
 
-\item{n_obj}{Number of study objectives, default `n_obj = 3`.}
+\item{n_obj}{Number of study objectives, default \code{n_obj = 3}.}
 }
 \value{
 No return value.
 }
 \description{
-Creates the `inst` and `extras` folders and populates the `R` folder with
+Creates the \code{inst} and \code{extras} folders and populates the \code{R} folder with
 ready files for standard study functions.
 }

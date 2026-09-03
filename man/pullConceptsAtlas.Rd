@@ -16,12 +16,12 @@ pullConceptsAtlas(
 \item{conceptSetList}{A numeric vector of ATLAS concept set IDs to download.}
 
 \item{conceptSetType}{A character string used to group the downloaded concept
-set JSON files under `inst/concept_sets/`.}
+set JSON files under \verb{inst/concept_sets/}.}
 
 \item{baseUrl}{A character string with the base URL of the ATLAS WebAPI.}
 
 \item{deletePrevious}{A logical value indicating whether to delete existing files in
-the target `<conceptSetType>` folder before downloading the new concept sets.}
+the target \verb{<conceptSetType>} folder before downloading the new concept sets.}
 
 \item{patternToRemove}{A vector of regular expressions containing the pattern(s)
 to be removed from the ATLAS concept set names before creating the output JSON files.
@@ -29,11 +29,11 @@ By default, matches}
 }
 \value{
 A tibble with one row per downloaded concept set and the columns
-`conceptSetId`, `originalName`, `cleanName`, and `jsonPath`.
+\code{conceptSetId}, \code{originalName}, \code{cleanName}, and \code{jsonPath}.
 }
 \description{
 Retrieves each concept set definition from the ATLAS WebAPI, cleans the
 concept set name for use as a file name and writes the JSON definition to
-`inst/concept_sets/<conceptSetType>/`.
+\verb{inst/concept_sets/<conceptSetType>/}.
 }
 \keyword{internal}

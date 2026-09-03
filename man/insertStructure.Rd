@@ -8,9 +8,9 @@ insertStructure(path = ".", n_obj = 3)
 }
 \arguments{
 \item{path}{Character string identifying the path to the study project,
-default `"."`.}
+default \code{"."}.}
 
-\item{n_obj}{Number of study objectives, default `n_obj = 3`.}
+\item{n_obj}{Number of study objectives, default \code{n_obj = 3}.}
 }
 \value{
 No return value.
@@ -21,6 +21,6 @@ It includes standard folders, R scripts, test and documentation files and it
 installs a default list of DARWIN EU®/OHDSI packages.
 }
 \details{
-It assumes an active R project has already been created and the `renv`
+It assumes an active R project has already been created and the \code{renv}
 initialized.
 }

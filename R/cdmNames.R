@@ -41,8 +41,8 @@ assertCdmNames <- function(labels, expected) {
     }
   }
 
-#' `arrangeCdmNames()` verifies if data partner's acronyms are valie
-#' and returns a vector ordered by country alphabetical order
+#' `arrangeCdmNames()` verifies if data partner's acronyms are valid
+#' and returns a vector ordered by country alphabetical order.
 #'
 #' @param labels A character vector of data partners acronyms
 #'

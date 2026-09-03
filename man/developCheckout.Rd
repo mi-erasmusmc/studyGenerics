@@ -2,7 +2,7 @@
 % Please edit documentation in R/versionControl.R
 \name{developCheckout}
 \alias{developCheckout}
-\title{`developCheckout()` is a wrapper for gert functions to swiftly default to develop
+\title{\code{developCheckout()} is a wrapper for gert functions to swiftly default to develop
 and pull latest changes}
 \usage{
 developCheckout()
@@ -11,6 +11,6 @@ developCheckout()
 Git log messages after checking out and pulling 'develop'
 }
 \description{
-`developCheckout()` is a wrapper for gert functions to swiftly default to develop
+\code{developCheckout()} is a wrapper for gert functions to swiftly default to develop
 and pull latest changes
 }
