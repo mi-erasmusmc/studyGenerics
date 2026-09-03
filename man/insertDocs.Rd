@@ -10,5 +10,5 @@ insertDocs(path)
 No return value.
 }
 \description{
-Creates default `NEWS.md`, `README.Rmd` and `LICENSE.md` (Apache License 2.0) files.
+Creates default \code{NEWS.md}, \code{README.Rmd} and \code{LICENSE.md} (Apache License 2.0) files.
 }

@@ -22,7 +22,7 @@ getPkgZips(
 
 \item{r_rels_vect}{A character vector of R minor releases}
 
-\item{backupRrel}{A string of the R minor-release to use if preferred package version cannot be found under any of the minor releases specified in `r_rels_vect`}
+\item{backupRrel}{A string of the R minor-release to use if preferred package version cannot be found under any of the minor releases specified in \code{r_rels_vect}}
 
 \item{outDir}{Path to output directory for package zips. If left empty, an output directory will be created in project 'renv' directory}
 }
@@ -33,7 +33,7 @@ In addition to downloading the specified packages into the outDir, returns a lis
 A function that locates and downloads Windows binaries (.zip) from CRAN based on packages specified in a renv.lock file.
 }
 \details{
-If the package version is not found under any of the R minor releases, the package will be downloaded from the specified `backupRrel` regardless of package version specified in renv.lock
+If the package version is not found under any of the R minor releases, the package will be downloaded from the specified \code{backupRrel} regardless of package version specified in renv.lock
 }
 \examples{
 \dontrun{

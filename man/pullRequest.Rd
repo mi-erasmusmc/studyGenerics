@@ -2,7 +2,7 @@
 % Please edit documentation in R/versionControl.R
 \name{pullRequest}
 \alias{pullRequest}
-\title{`pullRequest()` is a wrapper for gh::gh() to swiftly ask merging
+\title{\code{pullRequest()} is a wrapper for gh::gh() to swiftly ask merging
 code from the current branch}
 \usage{
 pullRequest(title, body, base = "develop")
@@ -18,6 +18,6 @@ pullRequest(title, body, base = "develop")
 A message with the link of the issue
 }
 \description{
-`pullRequest()` is a wrapper for gh::gh() to swiftly ask merging
+\code{pullRequest()} is a wrapper for gh::gh() to swiftly ask merging
 code from the current branch
 }

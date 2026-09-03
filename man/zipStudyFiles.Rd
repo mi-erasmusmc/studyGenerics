@@ -2,7 +2,7 @@
 % Please edit documentation in R/zipStudyFiles.R
 \name{zipStudyFiles}
 \alias{zipStudyFiles}
-\title{`zipStudyFiles()` compress study results}
+\title{\code{zipStudyFiles()} compress study results}
 \usage{
 zipStudyFiles(resultsDirName, outputDir, dbname)
 }
@@ -17,7 +17,7 @@ zipStudyFiles(resultsDirName, outputDir, dbname)
 A message stating the location of the compressed results
 }
 \description{
-`zipStudyFiles()` compress study results
+\code{zipStudyFiles()} compress study results
 }
 \examples{
 outputDir <- file.path(

@@ -36,7 +36,7 @@ Imports:
     here,
     fs,
     usethis
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
 Suggests:
     gert,
     gh,
@@ -47,3 +47,4 @@ Config/testthat/edition: 3
 URL: https://mi-erasmusmc.github.io/studyGenerics/
 VignetteBuilder: knitr
 Config/Needs/website: rmarkdown
+Roxygen: list(markdown = TRUE)

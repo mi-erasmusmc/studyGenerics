@@ -2,7 +2,7 @@
 % Please edit documentation in R/versionControl.R
 \name{issueOpen}
 \alias{issueOpen}
-\title{`issueOpen()` is a wrapper for gh::gh() to swiftly post 
+\title{\code{issueOpen()} is a wrapper for gh::gh() to swiftly post
 in the GitHub repository of the current project}
 \usage{
 issueOpen(title, body, newBranch = FALSE)
@@ -19,6 +19,6 @@ branch in GitHub format}
 A message with the link of the PR
 }
 \description{
-`issueOpen()` is a wrapper for gh::gh() to swiftly post 
+\code{issueOpen()} is a wrapper for gh::gh() to swiftly post
 in the GitHub repository of the current project
 }

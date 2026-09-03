@@ -16,9 +16,9 @@ the results folder (e.g., "results_dbname").}
 \value{
 A list containing three elements:
 \itemize{
-  \item \code{outputDir}: The path to the main output directory.
-  \item \code{resultsDir}: The path to the specific results subdirectory created.
-  \item \code{resultsDirName}: The name of the results subdirectory.
+\item \code{outputDir}: The path to the main output directory.
+\item \code{resultsDir}: The path to the specific results subdirectory created.
+\item \code{resultsDirName}: The name of the results subdirectory.
 }
 }
 \description{

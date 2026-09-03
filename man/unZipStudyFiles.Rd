@@ -2,7 +2,7 @@
 % Please edit documentation in R/unzipStudyFiles.R
 \name{unZipStudyFiles}
 \alias{unZipStudyFiles}
-\title{`unZipStudyFiles()` uncompress study results}
+\title{\code{unZipStudyFiles()} uncompress study results}
 \usage{
 unZipStudyFiles(path, pattern, negate = FALSE, recursive = TRUE, outputDir)
 }
@@ -21,7 +21,7 @@ unZipStudyFiles(path, pattern, negate = FALSE, recursive = TRUE, outputDir)
 A message stating the location of the uncompressed results
 }
 \description{
-`unZipStudyFiles()` uncompress study results
+\code{unZipStudyFiles()} uncompress study results
 }
 \examples{
  \dontrun{

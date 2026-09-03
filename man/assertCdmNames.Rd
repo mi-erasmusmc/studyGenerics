@@ -2,7 +2,7 @@
 % Please edit documentation in R/cdmNames.R
 \name{assertCdmNames}
 \alias{assertCdmNames}
-\title{`assertCdmNames()` verifies if data partner's names are correct and display an error if incorrect}
+\title{\code{assertCdmNames()} verifies if data partner's names are correct and display an error if incorrect}
 \usage{
 assertCdmNames(labels, expected)
 }
@@ -15,7 +15,7 @@ assertCdmNames(labels, expected)
 Invisible if labels are correct
 }
 \description{
-`assertCdmNames()` verifies if data partner's names are correct and display an error if incorrect
+\code{assertCdmNames()} verifies if data partner's names are correct and display an error if incorrect
 }
 \examples{
 # Assert if acronyms are correct
