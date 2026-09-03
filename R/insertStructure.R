@@ -138,7 +138,7 @@ insertStudyFiles <- function(
   # extras/
   dir.create(file.path(path, "extras"))
   invisible(file.create(file.path(path, "extras/CodeToRun.R")))
-  invisible(file.create(file.path(path, "extras/pullCohortsFromAtlas.R")))
+  invisible(file.create(file.path(path, "extras/pullConceptSetsFromAtlas.R")))
 }
 
 
