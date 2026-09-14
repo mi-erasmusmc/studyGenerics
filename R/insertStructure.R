@@ -118,7 +118,6 @@ insertStudyFiles <- function(
   writeLines(createCohortsFun(), file.path(path, "R", "createCohorts.R"))
   usethis::use_r("runStudy", open = FALSE)
   usethis::use_r("runDiagnostics", open = FALSE)
-  usethis::use_r("pullFromAtlas", open = FALSE)
   usethis::use_r("utils", open = FALSE)
   usethis::use_r("globals", open = FALSE)
   usethis::use_r("merge", open = FALSE)

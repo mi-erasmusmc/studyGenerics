@@ -12,7 +12,6 @@
 #' the target `<conceptSetType>` folder before downloading the new concept sets.
 #' @param patternToRemove A vector of regular expressions containing the pattern(s)
 #' to be removed from the ATLAS concept set names before creating the output JSON files.
-#' By default, matches
 #'
 #' @returns A tibble with one row per downloaded concept set and the columns
 #' `conceptSetId`, `originalName`, `cleanName`, and `jsonPath`.
