@@ -48,22 +48,14 @@ createResultsDir <- function(
       )
   } else {
     if (!dir.exists(outputDir)) {
-      dir.create(
-        outputDir
-        )
-      checkmate::assertDirectoryExists(
-        outputDir
-        )
+      dir.create(outputDir)
+      checkmate::assertDirectoryExists(outputDir)
     } else {
-      outputDir <- normalizePath(
-        outputDir
-        )
-      checkmate::assertDirectoryExists(
-        outputDir
-        )
+      outputDir <- normalizePath(outputDir)
+      checkmate::assertDirectoryExists(outputDir)
     }
   }
-  resultsDirName <- glue::glue(
+resultsDirName <- glue::glue(
     "results_{dbname}"
     )
   resultsDir <- file.path(
@@ -73,9 +65,7 @@ createResultsDir <- function(
   if (!dir.exists(resultsDir)) {
     dir.create(resultsDir)
   }
-  checkmate::assertDirectoryExists(
-    resultsDir
-    )
+  checkmate::assertDirectoryExists(resultsDir)
   return(
     list(
       outputDir = outputDir,
