@@ -90,6 +90,9 @@ insertDocs <- function(path) {
   withr::with_dir(path, {
     usethis::use_news_md(open = FALSE)
     usethis::use_readme_rmd(open = FALSE)
+    if ("LICENSE" %in% list.files(path)) {
+      unlink(file.path(path, "LICENSE"))
+    }
     usethis::use_apl2_license()
   })
 }
