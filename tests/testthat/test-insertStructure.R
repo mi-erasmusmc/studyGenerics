@@ -1,5 +1,4 @@
 test_that("insertStructure works", {
-
   test_pkg_path <- withr::local_tempdir()
   usethis::create_package(
     test_pkg_path,
@@ -10,14 +9,12 @@ test_that("insertStructure works", {
     "usethis",
     project = test_pkg_path
   )
-
   usethis::with_project(test_pkg_path, {
     insertStructure(
       path = test_pkg_path,
       # path = ".",
       n_obj = 3)
   })
-
   # Expect installed packages
   expect_true(dir.exists(file.path(test_pkg_path, "renv")))
   expect_true(file.exists(file.path(test_pkg_path, "renv.lock")))
@@ -38,16 +35,14 @@ test_that("insertStructure works", {
   for (pkg in installed_pkgs) {
     expect_true(grepl(pkg, imported_pkgs))
   }
-
   # Expect inserted docs
   expect_true(file.exists(file.path(test_pkg_path, "NEWS.md")))
   expect_true(file.exists(file.path(test_pkg_path, "README.Rmd")))
   expect_true(file.exists(file.path(test_pkg_path, "LICENSE.md")))
-
   # Expect inserted study files
   expect_true(dir.exists(file.path(test_pkg_path, "R")))
   r_files <- length(list.files(file.path(test_pkg_path, "R")))
-  expect_equal(r_files, 10)
+  expect_equal(r_files, 9)
   readLines(file.path(test_pkg_path, "R", "createCohorts.R")) |> 
     expect_equal(createCohortsFun())
   expect_false(file.exists(file.path(test_pkg_path, "R", "hello.R")))
@@ -58,7 +53,6 @@ test_that("insertStructure works", {
   expect_true(dir.exists(file.path(test_pkg_path, "extras")))
   expect_true(file.exists(file.path(test_pkg_path, "extras", "CodeToRun.R")))
   expect_true(file.exists(file.path(test_pkg_path, "extras", "pullConceptSetsFromAtlas.R")))
-
   # Expect inserted tests
   for (script in list.files(file.path(test_pkg_path, "R"))) {
     if (script == "globals.R") {

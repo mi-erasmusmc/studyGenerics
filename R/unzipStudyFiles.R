@@ -42,14 +42,12 @@ unZipStudyFiles <- function(
     outputDir
     ) {
   checkmate::assertDirectoryExists(path)
-
   zip_files <- list.files(
     path = path,
     pattern = ".zip",
     full.names = TRUE,
     recursive = recursive
     )
-  
   if (!missing(pattern) & !missing(recursive)) {
     checkmate::assertLogical(negate)
     checkmate::assertLogical(recursive)
