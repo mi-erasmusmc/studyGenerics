@@ -1,9 +1,9 @@
 #' `zipStudyFiles()` compress study results
 #'
-#' @param resultsDirName Location of the results. Character.
-#' @param outputDir The directory where the results folder is located. Character
-#' @param dbname The database name. Character
-#'
+#' @param outputDir Character path to the base output directory.
+#' @param resultsDirName Character name or path to the results subfolder.
+#' @param dbname Character database identifier.
+#' 
 #' @returns A message stating the location of the compressed results
 #'
 #' @importFrom checkmate assertDirectoryExists assertFileExists
@@ -28,32 +28,41 @@
 #'   dbname = dbname
 #' )
 #' unlink(outputDir, recursive = TRUE)
+#' @returns Character file name of the generated zip archive.
 zipStudyFiles <- function(
-    resultsDirName,
     outputDir,
+    resultsDirName,
     dbname
 ) {
-  resultsDirName <- normalizePath(resultsDirName)
   outputDir <- normalizePath(outputDir)
-  checkmate::assertDirectoryExists(resultsDirName)
   checkmate::assertDirectoryExists(outputDir)
+  resultsDirName <- basename(resultsDirName)
   assertCdmNames(dbname)
   cli::cli_alert_info(
     "Exporting results to zip format"
     )
   zipFileName <- glue::glue(
-    "{resultsDirName}/results_{dbname}_{format(Sys.Date(), format='%Y%m%d')}.zip"
+      "results_{dbname}_{format(Sys.Date(), format='%Y%m%d')}.zip"
+    )
+  zipFileNamePath <- file.path(
+      resultsDirName,
+      zipFileName
     )
   zip::zip(
-    zipfile = zipFileName,
-    files = basename(resultsDirName),
+    zipfile = zipFileNamePath,
+    files = resultsDirName,
     root = outputDir
     )
-  checkmate::assertFileExists(zipFileName)
-  cli::cli_alert_success(
-    glue::glue(
-      "Results exported to {zipFileName}"
+  checkmate::assertFileExists(
+    file.path(
+      outputDir,
+      zipFileNamePath
     )
   )
-  return(invisible())
+  cli::cli_alert_success(
+    glue::glue(
+      "Results exported to {file.path(outputDir, zipFileNamePath)}"
+    )
+  )
+  return(zipFileName)
 }

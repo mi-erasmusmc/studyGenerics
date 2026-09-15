@@ -31,8 +31,8 @@ test_that("zipStudyFiles works", {
 
   # -- Zip
   zipStudyFiles(
-    resultsDirName = directories$resultsDir,
     outputDir = directories$outputDir,
+    resultsDirName = directories$resultsDir,
     dbname = dbname
   )
 
