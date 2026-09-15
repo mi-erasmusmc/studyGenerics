@@ -112,12 +112,13 @@ insertStudyFiles <- function(
     ) {
   # R/
   if ("hello.R" %in% list.files(file.path(path, "R"))) {
-    unlink(file.path(path, "R/hello.R"))
+    unlink(file.path(path, "R", "hello.R"))
   }
   usethis::use_r("createCohorts", open = FALSE)
   writeLines(createCohortsFun(), file.path(path, "R", "createCohorts.R"))
   usethis::use_r("runStudy", open = FALSE)
   usethis::use_r("runDiagnostics", open = FALSE)
+  writeLines(runDiagnosticsFun(), file.path(path, "R", "runDiagnostics.R"))
   usethis::use_r("utils", open = FALSE)
   usethis::use_r("globals", open = FALSE)
   usethis::use_r("merge", open = FALSE)
@@ -129,16 +130,16 @@ insertStudyFiles <- function(
     dir.create(file.path(path, "man"))
   }
   if ("hello.Rd" %in% list.files(file.path(path, "man"))) {
-    unlink(file.path(path, "man/hello.Rd"))
+    unlink(file.path(path, "man", "hello.Rd"))
   }
   # inst/
   dir.create(file.path(path, "inst"))
-  dir.create(file.path(path, "inst/cohorts"))
-  dir.create(file.path(path, "inst/concept_sets"))
+  dir.create(file.path(path, "inst", "cohorts"))
+  dir.create(file.path(path, "inst", "concept_sets"))
   # extras/
   dir.create(file.path(path, "extras"))
-  invisible(file.create(file.path(path, "extras/CodeToRun.R")))
-  invisible(file.create(file.path(path, "extras/pullConceptSetsFromAtlas.R")))
+  invisible(file.create(file.path(path, "extras", "CodeToRun.R")))
+  invisible(file.create(file.path(path, "extras", "pullConceptSetsFromAtlas.R")))
 }
 
 
@@ -229,10 +230,18 @@ insertStructure <- function(
   cli::cli_alert_success("Package structure created successfully.")
 }
 
-createCohortsFun <- function(path) {
+
+#' Load default content for createCohorts.R
+#'
+#' @param path Character string identifying the path to the study project,
+#' default `"."`.
+#'
+#' @return
+#' No return value.
+createCohortsFun <- function(path = ".") {
     c("#' Creates a cohort set based on phenotype specifications",
       "#' @param cdm A cdm reference.",
-      "#' @param path Folder where the concept sets to build the cohortm, in character.",
+      "#' @param path Folder where the concept sets to build the cohort are saved, in character.",
       "#' Default 'concept_sets'",
       "#' @param name Name of the new cohort set, in character.",
       "#' @param dbname Data source name in character. ",
@@ -253,7 +262,7 @@ createCohortsFun <- function(path) {
       "   name,",
       "   dbname = 'TEST_DATA'",
       "  ) {",
-      "  valid_dbnames <- assertCdmNames(",
+      "  valid_dbnames <- studyGenerics::assertCdmNames(",
       "    labels = dbname,",
       "    expected = c(",
       "      \"BCR\", \"IQVIA LPD Belgium\", \"UZA\", \"NAJS\", \"DK-DHR\",",
@@ -299,4 +308,182 @@ createCohortsFun <- function(path) {
       "  return(cdm)",
       "}"
     )
+}
+
+
+#' Load default content for runDiagnostics.R
+#'
+#' @param path Character string identifying the path to the study project,
+#' default `"."`.
+#'
+#' @return
+#' No return value.
+runDiagnosticsFun <- function(path = ".") {
+  c(
+    "#' Runs the diagnostics workflow.",
+    "#'",
+    "#' Creates the study result folders, validates the database identifier, builds",
+    "#' the cohorts, runs PhenotypeR diagnostics for the generated cohorts,",
+    "#' and writes a zip archive with the results to `outputDir`.",
+    "#'",
+    "#' @param cdm A cdm reference.",
+    "#' @param dbname Data source name in character.",
+    "#' @param outputDir Character string with the base output directory where study",
+    "#' results, logs, and the final zip archive will be written. If `NULL`, the",
+    "#' current working directory is used.",
+    "#' @param test Logical indicating whether to run in test mode with a minimum",
+    "#' cell count of `0` instead of `5`.",
+    "#'",
+    "#' @returns Invisibly returns `NULL`. The main side effects are writing",
+    "#' diagnostics output to `outputDir` and creating a zip archive of the results.",
+    "#'",
+    "#' @importFrom checkmate assertDirectoryExists assertFileExists",
+    "#' @importFrom glue glue",
+    "#' @importFrom omopgenerics bind exportSummarisedResult",
+    "#' @importFrom ParallelLogger addDefaultFileLogger logInfo",
+    "#' @importFrom CohortCharacteristics summariseLargeScaleCharacteristics",
+    "#' @importFrom PatientProfiles addSex addAge",
+    "#' @importFrom zip zip",
+    "#'",
+    "#' @export",
+    "",
+    "runDiagnostics <- function(",
+    "  cdm,",
+    "  dbname = 'TEST_DATA',",
+    "  outputDir = NULL,",
+    "  test = FALSE",
+    ") {",
+    "",
+    "  # --- Validate database name ---",
+    "  valid_dbnames <- studyGenerics::assertCdmNames(",
+    "    labels = dbname,",
+    "    expected = c(",
+    "      \"BCR\", \"IQVIA LPD Belgium\", \"UZA\", \"NAJS\", \"DK-DHR\",",
+    "      \"EBB\", \"HARMONY Platform\", \"HARMONY-ALL\", \"HARMONY-AML\",",
+    "      \"HARMONY-CML\", \"HARMONY-MM\", \"FinOMOP-ACI Varha\", \"FinOMOP-HUS\",",
+    "      \"FinOMOP-TaUH Pirha\", \"FinOMOP-THL\", \"APHM\", \"CDW Bordeaux\",",
+    "      \"SNDS\", \"InGef RDB\", \"IQVIA DA Germany\", \"UMD\", \"PGH\", \"SUCD\",",
+    "      \"Pedianet\", \"POLIMI\", \"LDH\", \"CRN\", \"NLHR\", \"NLHR@UiO:PERINATAL\",",
+    "      \"EMDB-ULSEDV\", \"EMDB-ULSGE\", \"EMDB-ULSRA\", \"ULSM-RT\", \"BIFAP\",",
+    "      \"H12O\", \"HUVM\", \"IMASIS\", \"PRISIB\", \"SIDIAP\", \"VID\", \"HI-SPEED\",",
+    "      \"IPCI\", \"NCR\", \"CPRD AURUM\", \"CPRD Aurum Linked\", \"CPRD GOLD\",",
+    "      \"UKBB\", \"IQVIA US - AmbEMR\", \"IQVIA US - PMTX+\"",
+    "    )",
+    "  )",
+    "",
+    "  # --- Create results folders ---",
+    "  ParallelLogger::logInfo(\"Defining output directories\")",
+    "  directories <- studyGenerics::createResultsDir(",
+    "    outputDir,",
+    "    dbname",
+    "  )",
+    "  outputDir <- directories$outputDir",
+    "  resultsDir <- directories$resultsDir",
+    "  resultsDirName <- directories$resultsDirName",
+    "  checkmate::assertDirectoryExists(resultsDir)",
+    "  execution_date <- format(",
+    "    Sys.Date(),",
+    "    format='%Y%m%d'",
+    "  )",
+    "  if (test) {",
+    "    minCell <- 0",
+    "  } else {",
+    "    minCell <- 5",
+    "  }",
+    "",
+    "  # --- Create log file ---",
+    "  ParallelLogger::logInfo(\"Creating log file\")",
+    "  logFileName <- file.path(resultsDir, \"log.txt\")",
+    "  ParallelLogger::addDefaultFileLogger(logFileName)",
+    "",
+    "  # --- Create cohorts ---",
+    "  ParallelLogger::logInfo(\"Generating cohorts\")",
+    "  cdm <- createCancerCohorts(",
+    "    cdm,",
+    "    path = \"cancer_cohorts\",",
+    "    name = \"cancer_cohorts\"",
+    "  )",
+    "",
+    "  # --- Run PhenotypeR diagnostics ---",
+    "  if (!requireNamespace(\"PhenotypeR\", quietly = TRUE)) {",
+    "    stop(",
+    "      \"Package 'PhenotypeR' is required when 'diagnostics = TRUE'.\",",
+    "      call. = FALSE",
+    "    )",
+    "  }",
+    "  ",
+    "  ParallelLogger::logInfo(\"Running Diagnostics\")",
+    "  ",
+    "  result_diagnostics <- cdm$cancer_cohorts |>",
+    "    PhenotypeR::phenotypeDiagnostics(",
+    "      databaseDiagnostics = list(",
+    "        snapshot = TRUE,",
+    "        personTableSummary = TRUE,",
+    "        observationPeriodsSummary = TRUE",
+    "      ),",
+    "      codelistDiagnostics = list(",
+    "        achillesCodeUse = TRUE,",
+    "        orphanCodeUse = TRUE,",
+    "        cohortCodeUse = TRUE,",
+    "        drugDiagnostics = NULL,",
+    "        drugDiagnosticsSample = NULL,",
+    "        measurementDiagnostics = NULL,",
+    "        measurementDiagnosticsSample = NULL",
+    "      ),",
+    "      cohortDiagnostics = list(",
+    "        cohortCount = TRUE,",
+    "        cohortCharacteristics = TRUE,",
+    "        largeScaleCharacteristics = TRUE,",
+    "        compareCohorts = TRUE,",
+    "        cohortSurvival = NULL,",
+    "        cohortSample = NULL,",
+    "        matchedSample = NULL",
+    "      ),",
+    "      populationDiagnostics = list(",
+    "        incidence = TRUE,",
+    "        periodPrevalence = TRUE,",
+    "        populationSample = NULL,",
+    "        populationDateRange = as.Date(c(NA, NA))",
+    "      ),",
+    "      stagingDirectory = NULL",
+    "    )",
+    "",
+    "  file_name_diagnostics <- paste(",
+    "    \"diagnostics\",",
+    "    \"{cdm_name}_{date}.csv\",",
+    "    sep = \"_\"",
+    "  )",
+    "  ParallelLogger::logInfo(",
+    "    glue::glue(",
+    "      \"Exporting PhenotypeDiagnostics results for: {file_name_diagnostics}\"",
+    "    )",
+    "  )",
+    "",
+    "  omopgenerics::exportSummarisedResult(",
+    "    result_diagnostics,",
+    "    fileName = file_name_diagnostics,",
+    "    path = resultsDir,",
+    "    minCellCount = minCell",
+    "  )",
+    "  ParallelLogger::logInfo(",
+    "    glue::glue(",
+    "      \"PhenotypeDiagnostics completed; results in folder: {resultsDir}\"",
+    "    )",
+    "  )",
+    "",
+    "  ParallelLogger::logInfo(",
+    "    \"Exporting results in zip format\"",
+    "  )",
+    "  zipFileName <- glue::glue(",
+    "    \"{resultsDir}/results_diagnostics_{dbname}_{format(Sys.Date(), format='%Y%m%d')}.zip\"",
+    "  )",
+    "  zip::zip(",
+    "    zipfile = zipFileName,",
+    "    files = resultsDirName,",
+    "    root = outputDir",
+    "  )",
+    "  checkmate::assertFileExists(zipFileName)",
+    "  ParallelLogger::logInfo(\"-- Thank you for running the diagnostics!\")",
+    "}"
+  )
 }

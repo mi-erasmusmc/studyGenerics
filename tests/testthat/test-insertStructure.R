@@ -48,12 +48,12 @@ test_that("insertStructure works", {
   expect_true(dir.exists(file.path(test_pkg_path, "R")))
   r_files <- length(list.files(file.path(test_pkg_path, "R")))
   expect_equal(r_files, 10)
-  readLines(file.path(test_pkg_path, "R", "createCohorts.R")) |> 
+  readLines(file.path(test_pkg_path, "R", "createCohorts.R")) |>
     expect_equal(createCohortsFun())
   expect_false(file.exists(file.path(test_pkg_path, "R", "hello.R")))
   expect_false(file.exists(file.path(test_pkg_path, "man", "hello.Rd")))
-  expect_true(dir.exists(file.path(test_pkg_path, "inst", "cohorts")))
   expect_true(dir.exists(file.path(test_pkg_path, "inst")))
+  expect_true(dir.exists(file.path(test_pkg_path, "inst", "cohorts")))
   expect_true(dir.exists(file.path(test_pkg_path, "inst", "concept_sets")))
   expect_true(dir.exists(file.path(test_pkg_path, "extras")))
   expect_true(file.exists(file.path(test_pkg_path, "extras", "CodeToRun.R")))
@@ -89,6 +89,30 @@ test_that("createCohortsFun inserted into createCohorts.R", {
       "createCohorts.R"
     )
   writeLines(createCohortsFun(), path)
-  readLines(path) |> 
+  readLines(path) |>
     expect_equal(createCohortsFun())
+})
+
+test_that("runDiagnosticsFun inserted into runDiagnostics.R", {
+  test_pkg_path <- withr::local_tempdir()
+  usethis::create_package(
+    test_pkg_path,
+    open = FALSE
+  )
+  renv::init(project = test_pkg_path, load = FALSE)
+  renv::install(
+    "usethis",
+    project = test_pkg_path
+  )
+  usethis::with_project(test_pkg_path, {
+    usethis::use_r("runDiagnostics", open = FALSE)
+  })
+  path <- file.path(
+    test_pkg_path,
+    "R",
+    "runDiagnosticsFun.R"
+  )
+  writeLines(runDiagnosticsFun(), path)
+  readLines(path) |>
+    expect_equal(runDiagnosticsFun())
 })
