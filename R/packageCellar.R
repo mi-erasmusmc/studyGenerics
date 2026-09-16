@@ -7,7 +7,7 @@
 #' @returns Invisible
 #'
 #' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
-#' @importFrom renv lockfile_validate retrieve paths lockfile_read 
+#' @importFrom renv lockfile_validate retrieve lockfile_read 
 #' @importFrom purrr walk
 #' @importFrom usethis proj_set
 #' @export
