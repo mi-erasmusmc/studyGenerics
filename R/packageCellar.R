@@ -1,6 +1,6 @@
 #' `packageCellar()` saves files from a renv.lock file into the 'cellar' folder in renv
 #'
-#' @param lockfile 
+#' @param lockfile A valid path to a lockfile
 #' @param cellarDir
 #' @param type 
 #' 
@@ -9,12 +9,23 @@
 #' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice
 #' @importFrom renv lockfile_validate retrieve paths lockfile_read assertList
 #' @importFrom purrr walk
+#' @importFrom usethis proj_get
+#' @export
 #' @keywords internal
 packageCellar <- function(
   lockfile,
   cellarDir,
   type = "complete"
 ) {
+  if (missing(lockfile)) {
+    lockfile <- file.path(
+      usethis::proj_get(),
+      "renv.lock"
+    )
+  }
+  if (missing(cellarDir)) {
+    cellarDir <- renv::paths$root("cellar")
+  }
   checkmate::assertFileExists(lockfile)
   renv::lockfile_validate(lockfile = lockfile)
   checkmate::assertDirectoryExists(cellarDir)
