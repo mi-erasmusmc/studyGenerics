@@ -163,24 +163,32 @@ downloadGithub <- function(
 #' @importFrom purrr walk
 #' @importFrom usethis proj_set
 #' @export
-#' @keywords internal
-installCellar <- function(path) {
-  if (missing(path)) {
-    path <- file.path(
-      usethis::proj_path(),
-      "renv",
-      "cellar"
-    )
-  }
-  path <- normalizePath(path)
-  checkmate::assertDirectoryExists(path)
-  package_name <- list.files(
-    path
+installCellar <- function() {
+  project <- usethis::proj_path()
+  cellar <- file.path(
+    project,
+    "renv",
+    "cellar"
+  ) |>
+    normalizePath()
+  checkmate::assertDirectoryExists(cellar)
+  library <- file.path(
+    project,
+    "renv",
+    "library"
   ) 
-  packages <- list.files(
-    path,
-    full.names = TRUE
-  )
+  library |> 
+    dir.create()
+  library <- library |> 
+    normalizePath()
+  checkmate::assertDirectoryExists(library)
+  lockfile <- file.path(
+    project,
+    "renv.lock"
+  ) 
+  checkmate::assertFileExists(lockfile)
+  packages <- cellar |> 
+    list.files()
   if (length(packages) == 0) {
     cli::cli_abort(
       glue::glue(
@@ -188,28 +196,24 @@ installCellar <- function(path) {
       )
     )
   }
-  for (i in seq_along(packages)) {
-    installed <- tryCatch(
-      expr = {
-        install.packages(
-          pkgs = packages[i],
-          repos = NULL,
-          type = "source",
-          quiet = FALSE
-        )
-        TRUE
-      },
-      error = function(e) {
-        cli::cli_alert_warning(
-          glue::glue(
-            "Could not install {package_name[i]} {e$message}"
-          )
-        )
-        FALSE
-      }
-    )
-    if (!installed) {
-      next
-    }
-  }
+  cli::cli_alert_warning(
+    "renv use of cache set to FALSE"
+  )
+  renv::settings$use.cache(
+    FALSE,
+    project = project
+  )
+  Sys.setenv(RENV_PATHS_ROOT = library)
+  Sys.setenv(RENV_PATHS_LIBRARY = library)
+  Sys.setenv(RENV_PATHS_LIBRARY_ROOT = library)
+  Sys.setenv(RENV_PATHS_LOCKFILE = lockfile)
+  Sys.setenv(RENV_PATHS_CELLAR = cellar)  	 
+  renv::restore(
+    project = project,
+    library = library,
+    lockfile = lockfile,
+    rebuild = TRUE,
+    prompt = FALSE
+  )
+  return(invisible())
 }

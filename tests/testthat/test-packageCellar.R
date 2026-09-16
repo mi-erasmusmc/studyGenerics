@@ -219,37 +219,54 @@ test_that("downloadGithub package to cellar", {
   )
 })
 
-test_that("installCellar try loop", {
+test_that("installCellar", {
   # PREP ----------
-  unlink(
-    renv::paths$root("cellar"),
-    recursive = TRUE
-  )
   testLockfile <- testthat::test_path(
     "data",
     "renv.lock"
   )
-  checkmate::assertFileExists(testLockfile)
-  testCellarDir <- file.path(
-    tempdir(),
-    "test_cellar"
+  unlink(
+    renv::paths$root("cellar"),
+    recursive = TRUE
   )
-  dir.create(testCellarDir)
+  test_pkg_path <- withr::local_tempdir()
+  renv::init(
+    project = test_pkg_path,
+    load = FALSE
+  ) 
+  file.copy(
+    from = testLockfile,
+    to = test_pkg_path,
+    overwrite = TRUE
+  )
   # EXECUTION -------
-  packageCellar(
-    lockfile = testLockfile,
-    cellarDir = testCellarDir,
-    type = "complete"
-  )
-  # TEST ------------
-  expect_no_error({
-    installCellar(
-      path = testCellarDir
-    )
+  usethis::with_project(test_pkg_path, {
+    packageCellar()
+     # TEST ------------
+    expect_no_error({
+      installCellar()
+    })
+    testProject <- usethis::proj_path()
+    cellar_length <- file.path(
+      testProject,
+      "renv",
+      "cellar"
+    ) |> 
+      list.files() |>
+      length()
+    file.path(
+      testProject,
+      "renv",
+      "library"
+    ) |> 
+      list.files() |> 
+      expect_length(
+        107
+      )
   })
   # EXIT ------------
   unlink(
-    testCellarDir,
+    test_pkg_path,
     recursive = TRUE
   )
 })
