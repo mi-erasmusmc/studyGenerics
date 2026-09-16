@@ -50,6 +50,8 @@ test_that("insertStructure works", {
   expect_equal(r_files, 10)
   readLines(file.path(test_pkg_path, "R", "createCohorts.R")) |>
     expect_equal(createCohortsFun())
+  readLines(file.path(test_pkg_path, "R", "runDiagnostics.R")) |>
+    expect_equal(runDiagnosticsFun())
   expect_false(file.exists(file.path(test_pkg_path, "R", "hello.R")))
   expect_false(file.exists(file.path(test_pkg_path, "man", "hello.Rd")))
   expect_true(dir.exists(file.path(test_pkg_path, "inst")))
