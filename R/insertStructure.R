@@ -1,4 +1,6 @@
 #' Install default package bundle
+#' 
+#' @param path A valid path to the study project in character.
 #'
 #' Installs a predefined set of DARWIN EU®/OHDSI packages into the study project
 #' and updates their dependencies. The standard package list includes the packages
@@ -79,8 +81,9 @@ installPackageBundle <- function(path) {
 
 }
 
-
 #' Insert default documentation files
+#' 
+#' @param path A valid path to the study project in character.
 #'
 #' Creates default `NEWS.md`, `README.Rmd` and `LICENSE.md` (Apache License 2.0) files.
 #'
@@ -96,7 +99,6 @@ insertDocs <- function(path) {
     usethis::use_apl2_license()
   })
 }
-
 
 #' Insert default study files
 #'
@@ -145,7 +147,6 @@ insertStudyFiles <- function(
   invisible(file.create(file.path(path, "extras", "pullConceptSetsFromAtlas.R")))
 }
 
-
 #' Insert default test files
 #'
 #' Creates the `tests` folder and populates the `tests/testthat` folder with
@@ -180,7 +181,6 @@ insertTests <- function(
     }
   }
 }
-
 
 #' Set up study structure
 #'
@@ -232,7 +232,6 @@ insertStructure <- function(
 
   cli::cli_alert_success("Package structure created successfully.")
 }
-
 
 #' Load default content for createCohorts.R
 #'
@@ -312,7 +311,6 @@ createCohortsFun <- function(path = ".") {
       "}"
     )
 }
-
 
 #' Load default content for runDiagnostics.R
 #'

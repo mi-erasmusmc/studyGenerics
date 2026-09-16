@@ -35,13 +35,21 @@ Imports:
     zip,
     here,
     fs,
-    usethis
+    usethis,
+    dplyr,
+    jsonlite,
+    withr
 Config/roxygen2/version: 8.1.0
 Suggests:
+    desc,
     gert,
     gh,
     knitr,
+    jsonvalidate,
+    omopgenerics,
+    purrr,
     rmarkdown,
+    ROhdsiWebApi,    
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: https://mi-erasmusmc.github.io/studyGenerics/

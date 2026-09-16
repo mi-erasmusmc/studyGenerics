@@ -2,7 +2,7 @@
 title: "macOS solves"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{macos_solves}
+  %\VignetteIndexEntry{macOS solves}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

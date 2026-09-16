@@ -37,12 +37,7 @@ pullConceptsAtlas <- function(
   checkmate::assertCharacter(baseUrl)
   checkmate::assertLogical(deletePrevious)
   checkmate::assertCharacter(patternToRemove)
-  if (!requireNamespace("ROhdsiWebApi", quietly = TRUE)) {
-    stop(
-      "Package 'ROhdsiWebApi' is required to pull concept sets from ATLAS.",
-      call. = FALSE
-    )
-  }
+  requireInstall("ROhdsiWebApi")
 
   # --- Extract IDs ---
   ParallelLogger::logInfo(glue::glue("Extracting ids from excel file"))

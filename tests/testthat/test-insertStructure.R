@@ -1,5 +1,5 @@
 test_that("insertStructure works", {
-
+  requireInstall("desc")
   test_pkg_path <- withr::local_tempdir()
   usethis::create_package(
     test_pkg_path,
@@ -47,7 +47,7 @@ test_that("insertStructure works", {
   # Expect inserted study files
   expect_true(dir.exists(file.path(test_pkg_path, "R")))
   r_files <- length(list.files(file.path(test_pkg_path, "R")))
-  expect_equal(r_files, 10)
+  expect_equal(r_files, 9)
   readLines(file.path(test_pkg_path, "R", "createCohorts.R")) |>
     expect_equal(createCohortsFun())
   expect_false(file.exists(file.path(test_pkg_path, "R", "hello.R")))

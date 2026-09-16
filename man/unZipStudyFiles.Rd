@@ -2,26 +2,27 @@
 % Please edit documentation in R/unzipStudyFiles.R
 \name{unZipStudyFiles}
 \alias{unZipStudyFiles}
-\title{\code{unZipStudyFiles()} uncompress study results}
+\title{Unzip study result files}
 \usage{
-unZipStudyFiles(path, pattern, negate = FALSE, recursive = TRUE, outputDir)
+unZipStudyFiles(path, recursive = FALSE, pattern, negate = TRUE, outputDir)
 }
 \arguments{
-\item{path}{The path to the directory where the .zip files are located. Character.}
+\item{path}{Character directory where zip files are searched.}
 
-\item{pattern}{A character string to filter the files from the location provided. Default is NULL.}
+\item{recursive}{Logical indicating whether to search recursively for zip files.}
 
-\item{negate}{If TRUE it will filter the opposite from 'pattern'. Default is FALSE.}
+\item{pattern}{Optional regular expression used to filter zip file paths.
+For instance, just unzip those files that do not belong to a 'DED' folder.}
 
-\item{recursive}{If TRUE it will search recursively for .zip files. Default is TRUE.}
+\item{negate}{Logical passed to \code{stringr::str_detect()} to negate the optional pattern argument.}
 
-\item{outputDir}{The path to the main output folder. Character.}
+\item{outputDir}{Character directory where files will be unzipped.}
 }
 \value{
-A message stating the location of the uncompressed results
+Invisible called for its side effects.
 }
 \description{
-\code{unZipStudyFiles()} uncompress study results
+Finds zip files under \code{path} and extracts them to \code{outputDir}.
 }
 \examples{
  \dontrun{

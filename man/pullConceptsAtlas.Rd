@@ -24,8 +24,7 @@ set JSON files under \verb{inst/concept_sets/}.}
 the target \verb{<conceptSetType>} folder before downloading the new concept sets.}
 
 \item{patternToRemove}{A vector of regular expressions containing the pattern(s)
-to be removed from the ATLAS concept set names before creating the output JSON files.
-By default, matches}
+to be removed from the ATLAS concept set names before creating the output JSON files.}
 }
 \value{
 A tibble with one row per downloaded concept set and the columns

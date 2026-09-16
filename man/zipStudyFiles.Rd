@@ -4,17 +4,19 @@
 \alias{zipStudyFiles}
 \title{\code{zipStudyFiles()} compress study results}
 \usage{
-zipStudyFiles(resultsDirName, outputDir, dbname)
+zipStudyFiles(outputDir, resultsDirName, dbname)
 }
 \arguments{
-\item{resultsDirName}{Location of the results. Character.}
+\item{outputDir}{Character path to the base output directory.}
 
-\item{outputDir}{The directory where the results folder is located. Character}
+\item{resultsDirName}{Character name or path to the results subfolder.}
 
-\item{dbname}{The database name. Character}
+\item{dbname}{Character database identifier.}
 }
 \value{
 A message stating the location of the compressed results
+
+Character file name of the generated zip archive.
 }
 \description{
 \code{zipStudyFiles()} compress study results

@@ -14,18 +14,8 @@ issueOpen <- function(
   body,
   newBranch = FALSE
 ) {
-  if (!requireNamespace("gh", quietly = TRUE)) {
-    stop(
-      "Package \"gh\" must be installed to use this function.",
-      call. = FALSE
-    )
-  }
-  if (!requireNamespace("gert", quietly = TRUE)) {
-    stop(
-      "Package \"gert\" must be installed to use this function.",
-      call. = FALSE
-    )
-  }
+  requireInstall("gh")
+  requireInstall("gert")
   checkmate::assertCharacter(
     title,
     len = 1,
@@ -100,18 +90,8 @@ pullRequest <- function(
   body,
   base = "develop"
 ) {
-  if (!requireNamespace("gh", quietly = TRUE)) {
-    stop(
-      "Package \"gh\" must be installed to use this function.",
-      call. = FALSE
-    )
-  }
-  if (!requireNamespace("gert", quietly = TRUE)) {
-    stop(
-      "Package \"gert\" must be installed to use this function.",
-      call. = FALSE
-    )
-  }
+  requireInstall("gh")
+  requireInstall("gert")
   checkmate::assertCharacter(
     title,
     len = 1,
@@ -156,12 +136,7 @@ pullRequest <- function(
 #' @returns Git log messages after checking out and pulling 'develop'
 #' @export
 developCheckout <- function() {
-  if (!requireNamespace("gert", quietly = TRUE)) {
-    stop(
-      "Package \"gert\" must be installed to use this function.",
-      call. = FALSE
-    )
-  }
+  requireInstall("gert")
   branch <- "develop"
   if (gert::git_branch_exists(branch)) {
     gert::git_branch_checkout(

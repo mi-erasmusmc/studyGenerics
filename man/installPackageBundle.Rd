@@ -6,13 +6,18 @@
 \usage{
 installPackageBundle(path)
 }
-\value{
-An invisible list of the installed packages.
-}
-\description{
+\arguments{
+\item{path}{A valid path to the study project in character.
+
 Installs a predefined set of DARWIN EU®/OHDSI packages into the study project
 and updates their dependencies. The standard package list includes the packages
 omopgenerics, PhenotypeR, DrugExposureDiagnostics, CohortConstructor,
 IncidencePrevalence, DrugUtilisation, CohortCharacteristics, CohortSurvival,
-visOmopResults and DarwinShinyModules.
+visOmopResults and DarwinShinyModules.}
+}
+\value{
+An invisible list of the installed packages.
+}
+\description{
+Install default package bundle
 }

@@ -6,9 +6,14 @@
 \usage{
 insertDocs(path)
 }
+\arguments{
+\item{path}{A valid path to the study project in character.
+
+Creates default \code{NEWS.md}, \code{README.Rmd} and \code{LICENSE.md} (Apache License 2.0) files.}
+}
 \value{
 No return value.
 }
 \description{
-Creates default \code{NEWS.md}, \code{README.Rmd} and \code{LICENSE.md} (Apache License 2.0) files.
+Insert default documentation files
 }

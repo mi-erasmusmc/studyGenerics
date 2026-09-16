@@ -1,3 +1,15 @@
+#' `packageCellar()` saves files from a renv.lock file into the 'cellar' folder in renv
+#'
+#' @param lockfile 
+#' @param cellarDir
+#' @param type 
+#' 
+#' @returns Invisible
+#'
+#' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice
+#' @importFrom renv lockfile_validate retrieve paths lockfile_read assertList
+#' @importFrom purrr walk
+#' @keywords internal
 packageCellar <- function(
   lockfile,
   cellarDir,
@@ -7,6 +19,7 @@ packageCellar <- function(
   renv::lockfile_validate(lockfile = lockfile)
   checkmate::assertDirectoryExists(cellarDir)
   checkmate::assertChoice(type, c("complete", "github"))
+  requireInstall("purrr")
   switch(
     type,
     complete = renv::retrieve(
@@ -114,15 +127,4 @@ downloadGithub <- function(
     },
     cellarDir
   )
-}
-
-requireInstall <- function(package) {
-    if (!requireNamespace(package, quietly = TRUE)) {
-    cli::cli_abort(
-      glue::glue(
-        "'{package}' must be installed to use this function."
-      )
-    )
-  }
-  return(invisible())
 }
