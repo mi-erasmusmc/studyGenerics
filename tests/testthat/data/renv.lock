@@ -865,7 +865,7 @@
     },
     "omopgenerics": {
       "Package": "omopgenerics",
-      "Version": "1.4.1",
+      "Version": "1.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -885,7 +885,7 @@
         "tidyr",
         "vctrs"
       ],
-      "Hash": "9fccbc1c75d6cc7283ef6c93831053f1"
+      "Hash": "d035bd63eb1ddf26886ce8c57cf09d84"
     },
     "openssl": {
       "Package": "openssl",

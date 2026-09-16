@@ -1,12 +1,13 @@
-#' `unZipStudyFiles()` uncompress study results
+#' Unzip study result files
 #'
-#' @param path The path to the directory where the .zip files are located. Character.
-#' @param pattern A character string to filter the files from the location provided. Default is NULL.
-#' @param negate If TRUE it will filter the opposite from 'pattern'. Default is FALSE.
-#' @param recursive If TRUE it will search recursively for .zip files. Default is TRUE.
-#' @param outputDir The path to the main output folder. Character.
+#' Finds zip files under `path` and extracts them to `outputDir`.
 #'
-#' @returns A message stating the location of the uncompressed results
+#' @param path Character directory where zip files are searched.
+#' @param recursive Logical indicating whether to search recursively for zip files.
+#' @param pattern Optional regular expression used to filter zip file paths.
+#' For instance, just unzip those files that do not belong to a 'DED' folder.
+#' @param negate Logical passed to `stringr::str_detect()` to negate the optional pattern argument.
+#' @param outputDir Character directory where files will be unzipped.
 #'
 #' @importFrom checkmate assertDirectoryExists assertLogical
 #' @importFrom stringr str_detect
@@ -32,42 +33,24 @@
 #' )
 #' unlink(outputDir, recursive = TRUE)
 #' }
+#' @returns Invisible called for its side effects.
 unZipStudyFiles <- function(
     path,
+    recursive = FALSE,
     pattern,
-    negate = FALSE,
-    recursive = TRUE,
+    negate = TRUE,
     outputDir
-) {
-  path <- normalizePath(path)
-  if (!dir.exists(outputDir)) {
-    dir.create(outputDir)
-  }
-  outputDir <- normalizePath(outputDir)
+    ) {
   checkmate::assertDirectoryExists(path)
-  checkmate::assertLogical(recursive)
-
   zip_files <- list.files(
     path = path,
     pattern = ".zip",
     full.names = TRUE,
     recursive = recursive
-  )
-
-  if (!length(zip_files)) {
-    cli::cli_abort(
-      glue::glue(
-        "Files with .zip extension couldn't be found in: {outputDir}"
-        )
-      )
-    return(invisible(NULL))
-  }
-
-  if (!missing(pattern)) {
-
-    checkmate::assertCharacter(pattern)
+    )
+  if (!missing(pattern) & !missing(recursive)) {
     checkmate::assertLogical(negate)
-
+    checkmate::assertLogical(recursive)
     index_files <- stringr::str_detect(
       zip_files,
       pattern = pattern,
@@ -75,18 +58,28 @@ unZipStudyFiles <- function(
     )
     zip_files <- zip_files[index_files]
   }
-
-  for (i in 1:length(zip_files)) {
-    zip::unzip(
-      zip_files[i],
-      exdir = outputDir
-    )
+  if (!dir.exists(outputDir)) {
+    dir.create(outputDir)
   }
-
-  cli::cli_alert_success(
-    glue::glue(
-      "Files unzipped to: {outputDir}"
+  if (length(zip_files) > 0) {
+    for (i in 1:length(zip_files)) {
+      zip::unzip(
+        zip_files[i],
+        exdir = outputDir
+        )
+    } 
+    cli::cli_alert_success(
+      glue::glue(
+        "Files successfully unzipped to: {outputDir}"
+      )
     )
-  )
-  return(invisible(NULL))
+  } else {
+    cli::cli_abort(
+      glue::glue(
+        "No zip files to uncompress"
+      ), 
+      class = "No files found"
+   )
+  }
+  return(invisible())
 }
