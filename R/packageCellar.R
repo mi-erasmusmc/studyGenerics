@@ -1,13 +1,13 @@
 #' `packageCellar()` saves files from a renv.lock file into the 'cellar' folder in renv
 #'
-#' @param lockfile A valid path to a lockfile
-#' @param cellarDir
-#' @param type 
+#' @param lockfile A valid path to a lockfile in character.
+#' @param cellarDir A valid path to the cellar in character. If no value is assigned, it will create renv/cellar 
+#' @param type A choice in characcter from either "complete" or "github" to download only packages from GH.
 #' 
 #' @returns Invisible
 #'
-#' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice
-#' @importFrom renv lockfile_validate retrieve paths lockfile_read assertList
+#' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
+#' @importFrom renv lockfile_validate retrieve paths lockfile_read 
 #' @importFrom purrr walk
 #' @importFrom usethis proj_get
 #' @export
@@ -25,6 +25,12 @@ packageCellar <- function(
   }
   if (missing(cellarDir)) {
     cellarDir <- renv::paths$root("cellar")
+    if (!dir.exists(cellarDir)) {
+      dir.create(
+        cellarDir,
+        ecursive = TRUE
+      )
+    }
   }
   checkmate::assertFileExists(lockfile)
   renv::lockfile_validate(lockfile = lockfile)
@@ -47,7 +53,7 @@ packageCellar <- function(
 
 retrieveGithub <- function(
   lockfile,
-  cellarDir = renv::paths$root("cellar")
+  cellarDir
 ) {
   checkmate::assertDirectoryExists(cellarDir)
   checkmate::assertFileExists(lockfile)

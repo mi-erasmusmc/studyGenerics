@@ -7,41 +7,65 @@ export(developCheckout)
 export(getPkgZips)
 export(insertStructure)
 export(issueOpen)
+export(packageCellar)
 export(pullRequest)
 export(setLoggers)
 export(unZipStudyFiles)
 export(zipStudyFiles)
-importFrom(ParallelLogger,createFileAppender)
-importFrom(ParallelLogger,createLogger)
-importFrom(ParallelLogger,layoutParallel)
-importFrom(ParallelLogger,logInfo)
-importFrom(ParallelLogger,registerLogger)
-importFrom(checkmate,assertCharacter)
-importFrom(checkmate,assertDirectoryExists)
-importFrom(checkmate,assertDouble)
-importFrom(checkmate,assertFileExists)
-importFrom(checkmate,assertLogical)
-importFrom(checkmate,assertTRUE)
-importFrom(checkmate,checkClass)
-importFrom(cli,cli_abort)
-importFrom(cli,cli_alert_danger)
-importFrom(cli,cli_alert_info)
-importFrom(cli,cli_alert_success)
-importFrom(cli,cli_alert_warning)
-importFrom(dplyr,bind_rows)
-importFrom(dplyr,tibble)
+importFrom(ParallelLogger,
+  createFileAppender,
+  createLogger,
+  layoutParallel,
+  logInfo,
+  registerLogger
+)
+importFrom(checkmate,
+  assertCharacter,
+  assertChoice,
+  assertDirectoryExists,
+  assertDouble,
+  assertFileExists,
+  assertList,
+  assertLogical,
+  assertTRUE,
+  checkClass
+)
+importFrom(cli,
+  cli_abort,
+  cli_alert_danger,
+  cli_alert_info,
+  cli_alert_success,
+  cli_alert_warning
+)
+importFrom(dplyr,
+  bind_rows,
+  tibble
+)
 importFrom(fs,path_ext_set)
-importFrom(glue,glue)
-importFrom(glue,glue_collapse)
+importFrom(glue,
+  glue,
+  glue_collapse
+)
 importFrom(here,here)
 importFrom(httr,HEAD)
 importFrom(jsonlite,toJSON)
-importFrom(renv,lockfile_read)
+importFrom(purrr,walk)
+importFrom(renv,
+  lockfile_read,
+  lockfile_validate,
+  paths,
+  retrieve
+)
 importFrom(stats,setNames)
-importFrom(stringr,str_detect)
-importFrom(stringr,str_remove)
-importFrom(stringr,str_replace_all)
-importFrom(stringr,str_to_lower)
+importFrom(stringr,
+  str_detect,
+  str_remove,
+  str_replace_all,
+  str_to_lower
+)
+importFrom(usethis,proj_get)
 importFrom(utils,download.file)
-importFrom(zip,unzip)
-importFrom(zip,zip)
+importFrom(zip,
+  unzip,
+  zip
+)
