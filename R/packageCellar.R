@@ -28,7 +28,7 @@ packageCellar <- function(
     if (!dir.exists(cellarDir)) {
       dir.create(
         cellarDir,
-        ecursive = TRUE
+        recursive = TRUE
       )
     }
   }
