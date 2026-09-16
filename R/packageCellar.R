@@ -9,7 +9,7 @@
 #' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
 #' @importFrom renv lockfile_validate retrieve paths lockfile_read 
 #' @importFrom purrr walk
-#' @importFrom usethis proj_get
+#' @importFrom usethis proj_set
 #' @export
 #' @keywords internal
 packageCellar <- function(
@@ -19,12 +19,16 @@ packageCellar <- function(
 ) {
   if (missing(lockfile)) {
     lockfile <- file.path(
-      usethis::proj_get(),
+      usethis::proj_path(),
       "renv.lock"
     )
   }
   if (missing(cellarDir)) {
-    cellarDir <- renv::paths$root("cellar")
+    cellarDir <- file.path(
+      usethis::proj_path(),
+      "renv",
+      "cellar"
+    )
     if (!dir.exists(cellarDir)) {
       dir.create(
         cellarDir,
@@ -155,14 +159,18 @@ downloadGithub <- function(
 #' @returns Invisible
 #'
 #' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
-#' @importFrom renv lockfile_validate retrieve paths lockfile_read 
+#' @importFrom renv lockfile_validate retrieve lockfile_read 
 #' @importFrom purrr walk
-#' @importFrom usethis proj_get
+#' @importFrom usethis proj_set
 #' @export
 #' @keywords internal
 installCellar <- function(path) {
   if (missing(path)) {
-    path <- renv::paths$root("cellar")
+    path <- file.path(
+      usethis::proj_path(),
+      "renv",
+      "cellar"
+    )
   }
   path <- normalizePath(path)
   checkmate::assertDirectoryExists(path)
@@ -173,6 +181,13 @@ installCellar <- function(path) {
     path,
     full.names = TRUE
   )
+  if (length(packages) == 0) {
+    cli::cli_abort(
+      glue::glue(
+        "No packages found in cellar {path}"
+      )
+    )
+  }
   for (i in seq_along(packages)) {
     installed <- tryCatch(
       expr = {

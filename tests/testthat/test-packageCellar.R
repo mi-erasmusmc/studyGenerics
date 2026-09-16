@@ -4,16 +4,16 @@ test_that("packageCellar saves single cran and github package to cellar", {
     "data",
     "renv.lock"
   )
-  renv::lockfile_create(
-    libpaths = .libPaths(),
-    packages = c("DarwinShinyModules", "dplyr")
-  ) |> 
-    renv::lockfile_write(
-      file = testthat::test_path(
-        "data",
-        "renv.lock"
-      )
-    )
+  # renv::lockfile_create(
+  #   libpaths = .libPaths(),
+  #   packages = c("DarwinShinyModules", "dplyr")
+  # ) |> 
+  #   renv::lockfile_write(
+  #     file = testthat::test_path(
+  #       "data",
+  #       "renv.lock"
+  #     )
+  #   )
   checkmate::assertFileExists(testLockfile)
   testCellarDir <- file.path(
     tempdir(),
@@ -46,16 +46,6 @@ test_that("packageCellar saves multiple github packages to cellar", {
     "data",
     "renv.lock"
   )
-  renv::lockfile_create(
-    libpaths = .libPaths(),
-    packages = c("DarwinShinyModules", "CohortDiagnostics", "dplyr")
-  ) |> 
-    renv::lockfile_write(
-      file = testthat::test_path(
-        "data",
-        "renv.lock"
-      )
-    )
   checkmate::assertFileExists(testLockfile)
   testCellarDir <- file.path(
     tempdir(),
@@ -90,16 +80,6 @@ test_that("packageCellar saves single github package to cellar", {
     "data",
     "renv.lock"
   )
-  renv::lockfile_create(
-    libpaths = .libPaths(),
-    packages = c("DarwinShinyModules", "dplyr")
-  ) |> 
-    renv::lockfile_write(
-      file = testthat::test_path(
-        "data",
-        "renv.lock"
-      )
-    )
   checkmate::assertFileExists(testLockfile)
   testCellarDir <- file.path(
     tempdir(),
@@ -186,16 +166,6 @@ test_that("extractGithubList", {
     "data",
     "renv.lock"
   )
-  renv::lockfile_create(
-    libpaths = .libPaths(),
-    packages = c("DarwinShinyModules", "dplyr")
-  ) |> 
-    renv::lockfile_write(
-      file = testthat::test_path(
-        "data",
-        "renv.lock"
-      )
-    )
   lockfile_data <- renv::lockfile_read(
     file = testLockfile
   )
@@ -259,16 +229,6 @@ test_that("installCellar try loop", {
     "data",
     "renv.lock"
   )
-  renv::lockfile_create(
-    libpaths = .libPaths(),
-    packages = c("DarwinShinyModules", "dplyr")
-  ) |> 
-    renv::lockfile_write(
-      file = testthat::test_path(
-        "data",
-        "renv.lock"
-      )
-    )
   checkmate::assertFileExists(testLockfile)
   testCellarDir <- file.path(
     tempdir(),
