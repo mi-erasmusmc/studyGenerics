@@ -248,3 +248,48 @@ test_that("downloadGithub package to cellar", {
     recursive = TRUE
   )
 })
+
+test_that("installCellar try loop", {
+  # PREP ----------
+  unlink(
+    renv::paths$root("cellar"),
+    recursive = TRUE
+  )
+  testLockfile <- testthat::test_path(
+    "data",
+    "renv.lock"
+  )
+  renv::lockfile_create(
+    libpaths = .libPaths(),
+    packages = c("DarwinShinyModules", "dplyr")
+  ) |> 
+    renv::lockfile_write(
+      file = testthat::test_path(
+        "data",
+        "renv.lock"
+      )
+    )
+  checkmate::assertFileExists(testLockfile)
+  testCellarDir <- file.path(
+    tempdir(),
+    "test_cellar"
+  )
+  dir.create(testCellarDir)
+  # EXECUTION -------
+  packageCellar(
+    lockfile = testLockfile,
+    cellarDir = testCellarDir,
+    type = "complete"
+  )
+  # TEST ------------
+  expect_no_error({
+    installCellar(
+      path = testCellarDir
+    )
+  })
+  # EXIT ------------
+  unlink(
+    testCellarDir,
+    recursive = TRUE
+  )
+})

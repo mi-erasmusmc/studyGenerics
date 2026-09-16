@@ -145,3 +145,56 @@ downloadGithub <- function(
     cellarDir
   )
 }
+
+#' `installCellar()` install files already saved in a cellar
+#'
+#' @param path A valid path to the cellar (generally renv/cellar)
+#' @param cellarDir A valid path to the cellar in character. If no value is assigned, it will create renv/cellar 
+#' @param type A choice in characcter from either "complete" or "github" to download only packages from GH.
+#' 
+#' @returns Invisible
+#'
+#' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
+#' @importFrom renv lockfile_validate retrieve paths lockfile_read 
+#' @importFrom purrr walk
+#' @importFrom usethis proj_get
+#' @export
+#' @keywords internal
+installCellar <- function(path) {
+  if (missing(path)) {
+    path <- renv::paths$root("cellar")
+  }
+  path <- normalizePath(path)
+  checkmate::assertDirectoryExists(path)
+  package_name <- list.files(
+    path
+  ) 
+  packages <- list.files(
+    path,
+    full.names = TRUE
+  )
+  for (i in seq_along(packages)) {
+    installed <- tryCatch(
+      expr = {
+        install.packages(
+          pkgs = packages[i],
+          repos = NULL,
+          type = "source",
+          quiet = FALSE
+        )
+        TRUE
+      },
+      error = function(e) {
+        cli::cli_alert_warning(
+          glue::glue(
+            "Could not install {package_name[i]} {e$message}"
+          )
+        )
+        FALSE
+      }
+    )
+    if (!installed) {
+      next
+    }
+  }
+}
