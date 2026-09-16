@@ -4,16 +4,16 @@ test_that("packageCellar saves single cran and github package to cellar", {
     "data",
     "renv.lock"
   )
-  renv::lockfile_create(
-    libpaths = .libPaths(),
-    packages = c("DarwinShinyModules", "dplyr")
-  ) |> 
-    renv::lockfile_write(
-      file = testthat::test_path(
-        "data",
-        "renv.lock"
-      )
-    )
+  # renv::lockfile_create(
+  #   libpaths = .libPaths(),
+  #   packages = c("DarwinShinyModules", "dplyr")
+  # ) |> 
+  #   renv::lockfile_write(
+  #     file = testthat::test_path(
+  #       "data",
+  #       "renv.lock"
+  #     )
+  #   )
   checkmate::assertFileExists(testLockfile)
   testCellarDir <- file.path(
     tempdir(),
@@ -46,16 +46,6 @@ test_that("packageCellar saves multiple github packages to cellar", {
     "data",
     "renv.lock"
   )
-  renv::lockfile_create(
-    libpaths = .libPaths(),
-    packages = c("DarwinShinyModules", "CohortDiagnostics", "dplyr")
-  ) |> 
-    renv::lockfile_write(
-      file = testthat::test_path(
-        "data",
-        "renv.lock"
-      )
-    )
   checkmate::assertFileExists(testLockfile)
   testCellarDir <- file.path(
     tempdir(),
@@ -90,16 +80,6 @@ test_that("packageCellar saves single github package to cellar", {
     "data",
     "renv.lock"
   )
-  renv::lockfile_create(
-    libpaths = .libPaths(),
-    packages = c("DarwinShinyModules", "dplyr")
-  ) |> 
-    renv::lockfile_write(
-      file = testthat::test_path(
-        "data",
-        "renv.lock"
-      )
-    )
   checkmate::assertFileExists(testLockfile)
   testCellarDir <- file.path(
     tempdir(),
@@ -186,16 +166,6 @@ test_that("extractGithubList", {
     "data",
     "renv.lock"
   )
-  renv::lockfile_create(
-    libpaths = .libPaths(),
-    packages = c("DarwinShinyModules", "dplyr")
-  ) |> 
-    renv::lockfile_write(
-      file = testthat::test_path(
-        "data",
-        "renv.lock"
-      )
-    )
   lockfile_data <- renv::lockfile_read(
     file = testLockfile
   )
@@ -245,6 +215,58 @@ test_that("downloadGithub package to cellar", {
 
   unlink(
     testCellarDir,
+    recursive = TRUE
+  )
+})
+
+test_that("installCellar", {
+  # PREP ----------
+  testLockfile <- testthat::test_path(
+    "data",
+    "renv.lock"
+  )
+  unlink(
+    renv::paths$root("cellar"),
+    recursive = TRUE
+  )
+  test_pkg_path <- withr::local_tempdir()
+  renv::init(
+    project = test_pkg_path,
+    load = FALSE
+  ) 
+  file.copy(
+    from = testLockfile,
+    to = test_pkg_path,
+    overwrite = TRUE
+  )
+  # EXECUTION -------
+  usethis::with_project(test_pkg_path, {
+    packageCellar()
+     # TEST ------------
+    expect_no_error({
+      installCellar()
+    })
+    testProject <- usethis::proj_path()
+    cellar_length <- file.path(
+      testProject,
+      "renv",
+      "cellar"
+    ) |> 
+      list.files() |>
+      length()
+    file.path(
+      testProject,
+      "renv",
+      "library"
+    ) |> 
+      list.files() |> 
+      expect_length(
+        107
+      )
+  })
+  # EXIT ------------
+  unlink(
+    test_pkg_path,
     recursive = TRUE
   )
 })

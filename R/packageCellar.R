@@ -7,9 +7,9 @@
 #' @returns Invisible
 #'
 #' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
-#' @importFrom renv lockfile_validate retrieve paths lockfile_read 
+#' @importFrom renv lockfile_validate retrieve lockfile_read 
 #' @importFrom purrr walk
-#' @importFrom usethis proj_get
+#' @importFrom usethis proj_set
 #' @export
 #' @keywords internal
 packageCellar <- function(
@@ -19,12 +19,16 @@ packageCellar <- function(
 ) {
   if (missing(lockfile)) {
     lockfile <- file.path(
-      usethis::proj_get(),
+      usethis::proj_path(),
       "renv.lock"
     )
   }
   if (missing(cellarDir)) {
-    cellarDir <- renv::paths$root("cellar")
+    cellarDir <- file.path(
+      usethis::proj_path(),
+      "renv",
+      "cellar"
+    )
     if (!dir.exists(cellarDir)) {
       dir.create(
         cellarDir,
@@ -144,4 +148,72 @@ downloadGithub <- function(
     },
     cellarDir
   )
+}
+
+#' `installCellar()` install files already saved in a cellar
+#'
+#' @param path A valid path to the cellar (generally renv/cellar)
+#' @param cellarDir A valid path to the cellar in character. If no value is assigned, it will create renv/cellar 
+#' @param type A choice in characcter from either "complete" or "github" to download only packages from GH.
+#' 
+#' @returns Invisible
+#'
+#' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
+#' @importFrom renv lockfile_validate retrieve lockfile_read 
+#' @importFrom purrr walk
+#' @importFrom usethis proj_set
+#' @export
+installCellar <- function() {
+  project <- usethis::proj_path()
+  cellar <- file.path(
+    project,
+    "renv",
+    "cellar"
+  ) |>
+    normalizePath()
+  checkmate::assertDirectoryExists(cellar)
+  library <- file.path(
+    project,
+    "renv",
+    "library"
+  ) 
+  library |> 
+    dir.create()
+  library <- library |> 
+    normalizePath()
+  checkmate::assertDirectoryExists(library)
+  lockfile <- file.path(
+    project,
+    "renv.lock"
+  ) 
+  checkmate::assertFileExists(lockfile)
+  packages <- cellar |> 
+    list.files()
+  if (length(packages) == 0) {
+    cli::cli_abort(
+      glue::glue(
+        "No packages found in cellar {path}"
+      )
+    )
+  }
+  cli::cli_alert_warning(
+    "renv use of cache set to FALSE"
+  )
+  renv::settings$use.cache(
+    FALSE,
+    project = project
+  )
+  Sys.setenv(RENV_PATHS_ROOT = library)
+  Sys.setenv(RENV_PATHS_LIBRARY = library)
+  Sys.setenv(RENV_PATHS_LIBRARY_ROOT = library)
+  Sys.setenv(RENV_PATHS_LOCKFILE = lockfile)
+  Sys.setenv(RENV_PATHS_CELLAR = cellar)  	 
+  renv::restore(
+    project = project,
+    library = library,
+    lockfile = lockfile,
+    rebuild = TRUE,
+    prompt = FALSE
+  )
+  return(invisible())
 }
