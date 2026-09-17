@@ -6,6 +6,7 @@ export(createResultsDir)
 export(developCheckout)
 export(getPkgZips)
 export(insertStructure)
+export(installCellar)
 export(issueOpen)
 export(packageCellar)
 export(pullRequest)
@@ -49,11 +50,9 @@ importFrom(glue,
 importFrom(here,here)
 importFrom(httr,HEAD)
 importFrom(jsonlite,toJSON)
-importFrom(purrr,walk)
 importFrom(renv,
   lockfile_read,
   lockfile_validate,
-  paths,
   retrieve
 )
 importFrom(stats,setNames)
@@ -63,7 +62,7 @@ importFrom(stringr,
   str_replace_all,
   str_to_lower
 )
-importFrom(usethis,proj_get)
+importFrom(usethis,proj_set)
 importFrom(utils,download.file)
 importFrom(zip,
   unzip,

@@ -44,13 +44,15 @@ Suggests:
     desc,
     gert,
     gh,
-    knitr,
     jsonvalidate,
+    knitr,
     omopgenerics,
     purrr,
     rmarkdown,
     ROhdsiWebApi,    
     testthat (>= 3.0.0)
+Remotes:
+    ohdsi/ROhdsiWebApi
 Config/testthat/edition: 3
 URL: https://mi-erasmusmc.github.io/studyGenerics/
 VignetteBuilder: knitr

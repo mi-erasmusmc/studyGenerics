@@ -4,12 +4,14 @@
 \alias{packageCellar}
 \title{\code{packageCellar()} saves files from a renv.lock file into the 'cellar' folder in renv}
 \usage{
-packageCellar(lockfile, cellarDir, type = "complete")
+packageCellar(path, project, lockfile, type = "complete")
 }
 \arguments{
-\item{lockfile}{A valid path to a lockfile in character.}
+\item{path}{Cellar path in character. If missing defaults to 'renv/cellar'.}
 
-\item{cellarDir}{A valid path to the cellar in character. If no value is assigned, it will create renv/cellar}
+\item{project}{Project path in character. If missing defaults to \code{usethis::proj_get()}.}
+
+\item{lockfile}{Lockfile file path in character. If missing defaults to 'renv.lock' at the project base level provided by \code{usethis::proj_get()}.}
 
 \item{type}{A choice in characcter from either "complete" or "github" to download only packages from GH.}
 }
