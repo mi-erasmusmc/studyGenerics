@@ -8,7 +8,7 @@
 #'
 #' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
 #' @importFrom renv lockfile_validate retrieve lockfile_read 
-#' @importFrom usethis proj_set
+#' @importFrom usethis proj_get
 #' @export
 #' 
 #' @examples
@@ -38,12 +38,12 @@ packageCellar <- function(
       "renv",
       "cellar"
     )
-    if (!dir.exists(path)) {
-      dir.create(
-        path,
-        recursive = TRUE
-      )
-    }
+  }
+  if (!dir.exists(path)) {
+    dir.create(
+      path,
+      recursive = TRUE
+    )
   }
   checkmate::assertFileExists(lockfile)
   renv::lockfile_validate(lockfile = lockfile)
@@ -169,7 +169,7 @@ downloadGithub <- function(
 #' @returns Invisible
 #'
 #' @importFrom checkmate assertFileExists assertDirectoryExists
-#' @importFrom usethis proj_set
+#' @importFrom usethis proj_get
 #' @export
 #' 
 #' @examples

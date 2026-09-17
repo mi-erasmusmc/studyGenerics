@@ -1,10 +1,6 @@
 test_that("packageCellar saves single cran and github package to cellar", {
   skip_on_cran()
   # PREP ----------
-  testLockfile <- testthat::test_path(
-    "data",
-    "renv.lock"
-  )
   # renv::lockfile_create(
   #   libpaths = .libPaths(),
   #   packages = c("DarwinShinyModules", "dplyr")
@@ -15,101 +11,92 @@ test_that("packageCellar saves single cran and github package to cellar", {
   #       "renv.lock"
   #     )
   #   )
-  checkmate::assertFileExists(testLockfile)
-  testCellarDir <- file.path(
-    tempdir(),
-    "test_cellar"
-  )
-  dir.create(testCellarDir)
-  # EXECUTION -------
-  packageCellar(
-    lockfile = testLockfile,
-    path = testCellarDir,
-    type = "complete"
-  )
-  # TEST ------------
-  list.files(
-    testCellarDir
-  ) |> 
-    stringr::str_detect("DarwinShinyModules_260ebe58bc7d5e13fcdc8bc4254749abc85f0320.tar.gz") |> 
-    any() |> 
-    expect_true()
-  # EXIT ------------
-  unlink(
-    testCellarDir,
-    recursive = TRUE
-  )
-})
-
-test_that("packageCellar saves multiple github packages to cellar", {
-  skip_on_cran()
-  # PREP ----------
   testLockfile <- testthat::test_path(
     "data",
     "renv.lock"
   )
   checkmate::assertFileExists(testLockfile)
-  testCellarDir <- file.path(
-    tempdir(),
-    "test_cellar"
+  testProject <- withr::local_tempdir()
+  renv::init(
+    project = testProject,
+    load = FALSE
+  ) 
+  file.copy(
+    from = testLockfile,
+    to = testProject,
+    overwrite = TRUE
   )
-  dir.create(testCellarDir)
   # EXECUTION -------
-  packageCellar(
-    path = testCellarDir,
-    lockfile = testLockfile,
-    type = "github"
-  )
-  # TEST ------------
-  list.files(
-    testCellarDir
-  ) |> 
-    stringr::str_detect(
-      "DarwinShinyModules"
+  usethis::with_project(testProject, {
+    cellar_path <- file.path(
+      testProject,
+      "renv",
+      "cellar"
+    )
+    expect_no_error(
+      packageCellar(
+        path = cellar_path
+      )
+    )
+    # TEST ------------
+    list.files(
+      cellar_path
     ) |> 
-    any() |> 
-    expect_true()
-  # EXIT ------------
+      stringr::str_detect("DarwinShinyModules_260ebe58bc7d5e13fcdc8bc4254749abc85f0320.tar.gz") |> 
+      any() |> 
+      expect_true()
+    # EXIT ------------
+  })
   unlink(
-    testCellarDir,
+    testProject,
     recursive = TRUE
   )
-})
+  })
 
 test_that("packageCellar saves single github package to cellar", {
   skip_on_cran()
-  # PREP ----------
   testLockfile <- testthat::test_path(
     "data",
     "renv.lock"
   )
   checkmate::assertFileExists(testLockfile)
-  testCellarDir <- file.path(
-    tempdir(),
-    "test_cellar"
+  testProject <- withr::local_tempdir()
+  renv::init(
+    project = testProject,
+    load = FALSE
+  ) 
+  file.copy(
+    from = testLockfile,
+    to = testProject,
+    overwrite = TRUE
   )
-  dir.create(testCellarDir)
   # EXECUTION -------
-  packageCellar(
-    path = testCellarDir,
-    lockfile = testLockfile,
-    type = "github"
-  )
-  # TEST ------------
-  list.files(
-    testCellarDir
-  ) |> 
-    stringr::str_detect(
-      "DarwinShinyModules"
+  usethis::with_project(testProject, {
+    cellar_path <- file.path(
+      testProject,
+      "renv",
+      "cellar"
+    )
+    packageCellar(
+      path = cellar_path,
+      type = "github"
+    )
+    # TEST ------------
+    list.files(
+      cellar_path
     ) |> 
-    any() |> 
-    expect_true()
+      stringr::str_detect(
+        "DarwinShinyModules"
+      ) |> 
+      any() |> 
+      expect_true()
+  })
   # EXIT ------------
   unlink(
-    testCellarDir,
+    testProject,
     recursive = TRUE
   )
-})
+  })
 
 test_that("retrieveGithub packages to cellar", {
   skip_on_cran()
@@ -235,18 +222,18 @@ test_that("installCellar", {
     renv::paths$root("cellar"),
     recursive = TRUE
   )
-  test_pkg_path <- withr::local_tempdir()
+  testProject <- withr::local_tempdir()
   renv::init(
-    project = test_pkg_path,
+    project = testProject,
     load = FALSE
   ) 
   file.copy(
     from = testLockfile,
-    to = test_pkg_path,
+    to = testProject,
     overwrite = TRUE
   )
   # EXECUTION -------
-  usethis::with_project(test_pkg_path, {
+  usethis::with_project(testProject, {
     packageCellar()
      # TEST ------------
     expect_no_error({
@@ -273,7 +260,7 @@ test_that("installCellar", {
   })
   # EXIT ------------
   unlink(
-    test_pkg_path,
+    testProject,
     recursive = TRUE
   )
 })

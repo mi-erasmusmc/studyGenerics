@@ -99,6 +99,7 @@ installPackageBundle <- function(path) {
       "IncidencePrevalence",
       "DrugUtilisation",
       "CohortCharacteristics",
+      "survival",
       "CohortSurvival",
       "visOmopResults"
     ),
