@@ -1,8 +1,10 @@
+# studyGenerics 0.1.5
+
+* Dependency on R >= 4.2.0 added to DESCRIPTION.
+
 # studyGenerics 0.1.4
 
 * `pullConceptsAtlas()` now integrates required functions from ROhdsiWebApi in order to submit to CRAN. 
-
-* Dependency on R >= 4.2.0 added to DESCRIPTION.
 
 # studyGenerics 0.1.3
 
