@@ -8,7 +8,7 @@ test_that("insertStructure works", {
   )
   renv::init(project = testProject, load = FALSE) # load = FALSE prevents changing the wd
   renv::install(
-    c("usethis", "survival", "Matrix"),
+    c("usethis", "lattice", "Matrix", "survival"),
     project = testProject
   )
 
