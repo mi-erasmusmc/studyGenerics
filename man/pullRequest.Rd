@@ -25,8 +25,8 @@ in the background as with \code{gh} https://gh.r-lib.org/articles/managing-perso
 \dontrun{
 # It requires GITHUB_PAT
 pullRequest(
-   title = "A PR title",
-   body = "Description of PR",
+   title = "Add study outcome",
+   body = "Describe the implemented change.",
    base = "develop"
 )
 }

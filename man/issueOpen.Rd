@@ -26,9 +26,9 @@ in the background as with \code{gh} https://gh.r-lib.org/articles/managing-perso
 \dontrun{
 # It requires GITHUB_PAT
 issueOpen(
-   title = "An issue title",
-   body = "Description of issue",
-   newBranch = FALSE
+   title = "Add study outcome",
+   body = "Describe the planned change.",
+   newBranch = TRUE
 )
 }
 }

@@ -19,9 +19,9 @@
 #' \dontrun{
 #' # It requires GITHUB_PAT
 #' issueOpen(
-#'    title = "An issue title",
-#'    body = "Description of issue",
-#'    newBranch = FALSE
+#'    title = "Add study outcome",
+#'    body = "Describe the planned change.",
+#'    newBranch = TRUE
 #' )
 #' }
 issueOpen <- function(
@@ -109,8 +109,8 @@ issueOpen <- function(
 #' \dontrun{
 #' # It requires GITHUB_PAT
 #' pullRequest(
-#'    title = "A PR title",
-#'    body = "Description of PR",
+#'    title = "Add study outcome",
+#'    body = "Describe the implemented change.",
 #'    base = "develop"
 #' )
 #' }

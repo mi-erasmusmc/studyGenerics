@@ -5,22 +5,16 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/mi-erasmusmc/StudyToolBelt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mi-erasmusmc/StudyToolBelt/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/studyGenerics)](https://CRAN.R-project.org/package=studyGenerics)
+[![R-CMD-check](https://github.com/mi-erasmusmc/studyGenerics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mi-erasmusmc/studyGenerics/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/mi-erasmusmc/studyGenerics/graph/badge.svg)](https://app.codecov.io/gh/mi-erasmusmc/studyGenerics)
 <!-- badges: end -->
 
-Code should be readable, and it is the main means of communication for
-software developers. The objective of `studyGenerics()` is to centralise
-common functions (including functions considered trivial!) used in
-epidemiological analyses performed at the Erasmus MC Department of
+`studyGenerics` provides small, tested functions for common tasks in
+OMOP-CDM study packages developed at the Erasmus MC Department of
 Medical Informatics.
-
-More than trying to ‘standardise’ how to write a study package, we use
-this project to save (and, more importantly, test) frequently used
-functions that make our life easier.
-
-The intention is to break our own silos and learn how to better
-communicate our ideas and best practices, so we can work more
-effectively as a team on common ground. Please feel free to contribute.
 
 ## Installation
 
@@ -32,63 +26,74 @@ You can install the development version of studyGenerics from
 remotes::install_github("mi-erasmusmc/studyGenerics")
 ```
 
-### Sharing the same structure
+### Create a study package
 
-For instance, we have a function that creates the specific structure we
-need for a study.
+Create the standard study-package folders, scripts, tests, and
+documentation. Use `n_obj` to set the number of objective scripts.
 
 ``` r
 studyGenerics::insertStructure(
-    path = ".",
-    n_obj = 3
-  ) 
+  path = ".",
+  n_obj = 3
+)
 ```
 
-The file structure of the package will contain most of the elements that
-we use more frequently.
+It adds the following files and folders to an existing study package:
 
-    |-studyPackage
-      |-R/
-        |-createCohorts.R
-        |-runStudy.R
-        |-objective1.R
-        |-objective2.R
-        |-objective3.R
-        ...
-      |-inst/
-        |-concept_set/
-        |-cohorts/
-      |-LICENSE
-      |-README.rmd
-      |-extras/
-        |-CodeToRun.R
-        |-pullFromATLAS.R
-        |-shiny/
-      |-tests/
-      |-renv/
+    studyPackage/
+    ├── R/
+    │   ├── createCohorts.R
+    │   ├── runStudy.R
+    │   ├── runDiagnostics.R
+    │   ├── utils.R
+    │   ├── globals.R
+    │   ├── merge.R
+    │   └── objective1.R, ..., objective<n_obj>.R
+    ├── inst/
+    │   ├── cohorts/
+    │   └── concept_sets/
+    ├── extras/
+    │   ├── CodeToRun.R
+    │   └── pullConceptSetsFromAtlas.R
+    ├── man/
+    ├── tests/
+    │   └── testthat/test-*.R
+    ├── LICENSE.md
+    ├── NEWS.md
+    └── README.Rmd
 
-### Unifying approaches
+### Download concept sets from ATLAS
 
-Even in the same development team, people may prefer different tools for
-routine tasks (such as logging or even saving zip files). Here we try to
-find common ground, test functions, and avoid unnecessary bugs from
-small and less complicated methods, from asserting data partner names to
-making sure we are zipping results to the correct folder.
+Use `pullConceptsAtlas()` to save ATLAS concept-set definitions in
+`inst/concept_sets/<conceptSetType>/`. It requires access to the ATLAS
+WebAPI.
 
 ``` r
-studyGenerics::arrangeCdmNames(
-  labels
-  )
+studyGenerics::pullConceptsAtlas(
+  conceptSetList = c(12345),
+  conceptSetType = "example",
+  baseUrl = "https://atlas.darwin-eu.org/WebAPI"
+)
+```
+
+### Manage study files
+
+Use the shared functions to validate data-partner names and create,
+archive, or extract study results.
+
+``` r
+studyGenerics::arrangeCdmNames(labels)
 
 studyGenerics::createResultsDir(
-   outputDir,
-   dbname
+  outputDir,
+  dbname
 )
 
 studyGenerics::zipStudyFiles(
   resultsDirName,
   outputDir,
-  dbname)
+  dbname
+)
 
 studyGenerics::unZipStudyFiles(
   path,
@@ -96,24 +101,58 @@ studyGenerics::unZipStudyFiles(
   negate,
   recursive,
   outputDir
-  )
+)
 ```
 
-### Smoother processes
+### Updating summarised results
 
-Furthermore, in `studyGenerics()` we also develop functions that make
-our life easier, such as saving an R virtual environment in a cellar on
-macOS and later using that folder to `renv::restore()` on a Windows
-machine without internet access.
+Use `updateColumnValues()` to replace values in a summarised-result
+column, for example when preparing clearer cohort labels for
+presentation.
 
 ``` r
+studyGenerics::updateColumnValues(
+  summarised_result = summarised_result,
+  names_map = c(
+    "old_cohort_name" = "Clear cohort name"
+  ),
+  variable = "group_level"
+)
+```
 
-studyGenerics::getPkgZips(
-  lockfile_path, 
-  supplement, 
-  override_lock,
-  r_rels_vect,
-  backupRrel,
-  outDir
-  ) 
+### Prepare dependencies for offline installation
+
+Save packages from `renv.lock` to `renv/cellar`, then use that cellar to
+restore the environment on a machine without internet access.
+
+``` r
+# Save packages in renv/cellar
+studyGenerics::packageCellar()
+
+# Restore packages from renv/cellar
+studyGenerics::installCellar()
+```
+
+### Version control workflow
+
+Configure `GITHUB_PAT` in `.Renviron`, then create an issue and branch,
+open a pull request, and return to the latest `develop` branch.
+
+``` r
+# Create a GitHub issue and check out a branch named after it
+studyGenerics::issueOpen(
+  title = "Add study outcome",
+  body = "Describe the planned change.",
+  newBranch = TRUE
+)
+
+# After committing and pushing the branch, create a pull request to develop
+studyGenerics::pullRequest(
+  title = "Add study outcome",
+  body = "Describe the implemented change.",
+  base = "develop"
+)
+
+# After the pull request is merged, return to the latest develop branch
+studyGenerics::devCheckout()
 ```
