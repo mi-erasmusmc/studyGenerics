@@ -59,7 +59,7 @@ importFrom(stringr,
   str_replace_all,
   str_to_lower
 )
-importFrom(usethis,proj_set)
+importFrom(usethis,proj_get)
 importFrom(zip,
   unzip,
   zip

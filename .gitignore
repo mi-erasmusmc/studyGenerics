@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+.Renviron
+.renviron
 .positai
 .DS_Store
 # Generated pkgdown site. The published copy is maintained on the gh-pages branch.

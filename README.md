@@ -16,10 +16,13 @@ Medical Informatics.
 
 ## Installation
 
-You can install the development version of studyGenerics from
-[GitHub](https://github.com/) with:
+You can install studyGenerics from CRAN or the latest development
+version from [GitHub](https://github.com/) with:
 
 ``` r
+# CRAN download
+install.packages("studyGenerics")
+
 # install.packages("remotes")
 remotes::install_github("mi-erasmusmc/studyGenerics")
 ```
