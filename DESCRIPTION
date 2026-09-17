@@ -1,6 +1,6 @@
 Package: studyGenerics
 Type: Package
-Title: A centralised repository of tested and frequently used methods for OMOP-CDM studies
+Title: A Centralised Repository of Tested and Frequently Used Methods for OMOP-CDM Studies
 Version: 0.1.2
 Authors@R: c(
     person(
@@ -26,7 +26,7 @@ Authors@R: c(
 Description: Provides generic functions for routine tasks required to run OMOP-CDM studies.
   In addition to testing these recurring methods, studyGenerics aims to centralise
   collaboration and speed up the development of these types of projects. The optional
-  ROhdsiWebApi package is available from https://github.com/OHDSI/ROhdsiWebApi.
+  ROhdsiWebApi package is available from <https://github.com/OHDSI/ROhdsiWebApi>.
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
