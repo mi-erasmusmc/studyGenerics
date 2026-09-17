@@ -21,3 +21,10 @@ Invisible
 \description{
 \code{installCellar()} install files already saved in a cellar
 }
+\examples{
+
+\dontrun{
+# It will install all packages in the cellar
+installCellar()
+}
+}

@@ -1,5 +1,9 @@
 #' `issueOpen()` is a wrapper for gh::gh() to swiftly post 
-#' in the GitHub repository of the current project
+#' in the GitHub repository of the current project. 
+#' 
+#' @description
+#' Set GITHUB_PAT in .Renviron. It will use the same authentication
+#' in the background as with `gh` https://gh.r-lib.org/articles/managing-personal-access-tokens.html
 #'
 #' @param title of the issue in character
 #' @param body of the issue in character
@@ -8,7 +12,18 @@
 #'
 #' @returns A message with the link of the PR
 #' @importFrom checkmate assertCharacter assertLogical assertTRUE checkClass
+#' 
 #' @export
+#' 
+#' @examples
+#' \dontrun{
+#' # It requires GITHUB_PAT
+#' issueOpen(
+#'    title = "An issue title",
+#'    body = "Description of issue",
+#'    newBranch = FALSE
+#' )
+#' }
 issueOpen <- function(
   title, 
   body,
@@ -77,14 +92,28 @@ issueOpen <- function(
 
 #' `pullRequest()` is a wrapper for gh::gh() to swiftly ask merging
 #' code from the current branch
+#' 
+#' @description
+#' Set GITHUB_PAT in .Renviron. It will use the same authentication
+#' in the background as with `gh` https://gh.r-lib.org/articles/managing-personal-access-tokens.html
 #'
-#' @param title of the issue in character
-#' @param body of the issue in character
+#' @param title of the PR in character
+#' @param body of the PR in character
 #' @param base The target branch, in character. Defaults to "develop"
 #'
-#' @returns A message with the link of the issue
+#' @returns A message with the link of the PR
 #' @importFrom checkmate assertCharacter assertLogical assertTRUE checkClass
 #' @export
+#' 
+#' @examples
+#' \dontrun{
+#' # It requires GITHUB_PAT
+#' pullRequest(
+#'    title = "An PR title",
+#'    body = "Description of PR",
+#'    base = "develop"
+#' )
+#' }
 pullRequest <- function(
   title,
   body,
@@ -130,12 +159,23 @@ pullRequest <- function(
   }
 }
 
-#' `developCheckout()` is a wrapper for gert functions to swiftly default to develop
+#' `devCheckout()` is a wrapper for gert functions to swiftly default to develop
 #' and pull latest changes
+#' 
+#' @description
+#' Set GITHUB_PAT in .Renviron. It will use the same authentication
+#' in the background as with `gh` https://gh.r-lib.org/articles/managing-personal-access-tokens.html
 #'
 #' @returns Git log messages after checking out and pulling 'develop'
 #' @export
-developCheckout <- function() {
+#' 
+#' @examples
+#' \dontrun{
+#' # It requires GITHUB_PAT
+#' devCheckout(
+#' )
+#' }
+devCheckout <- function() {
   requireInstall("gert")
   branch <- "develop"
   if (gert::git_branch_exists(branch)) {

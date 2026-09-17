@@ -5,6 +5,7 @@
 #' @param dbname Character database identifier.
 #' 
 #' @returns A message stating the location of the compressed results
+#' @returns Character file name of the generated zip archive.
 #'
 #' @importFrom checkmate assertDirectoryExists assertFileExists
 #' @importFrom zip zip
@@ -28,7 +29,6 @@
 #'   dbname = dbname
 #' )
 #' unlink(outputDir, recursive = TRUE)
-#' @returns Character file name of the generated zip archive.
 zipStudyFiles <- function(
     outputDir,
     resultsDirName,

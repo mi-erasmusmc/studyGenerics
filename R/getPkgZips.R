@@ -1,6 +1,9 @@
 #' Download zip-compressed Windows binaries from a renv.lock file
 #'
 #' A function that locates and downloads Windows binaries (.zip) from CRAN based on packages specified in a renv.lock file.
+#' @details
+#' If the package version is not found under any of the R minor releases, the package will be downloaded from the specified `backupRrel` regardless of package version specified in renv.lock
+#'
 #' @param lockfile_path Path to renv.lock file, if empty will search for renv.lock in project directory
 #' @param supplement Nested list of packages to supplement or use in place of a renv.lock file
 #'
@@ -10,6 +13,12 @@
 #' @param outDir Path to output directory for package zips. If left empty, an output directory will be created in project 'renv' directory
 #'
 #' @return In addition to downloading the specified packages into the outDir, returns a list of packages that were searched for as well as the URLs, versions (if found), etc.
+#' @importFrom renv lockfile_read
+#' @importFrom cli cli_alert_success cli_alert_warning cli_alert_danger
+#' @importFrom httr HEAD
+#' @importFrom here here
+#' @importFrom stats setNames
+#' @importFrom utils download.file
 #' @export
 #'
 #' @examples
@@ -21,14 +30,6 @@
 #' supp <- list(Packages = list(devtools = devtools, duckdb = duckdb))
 #' pkg_status_list <- getPkgZips(supplement = supp)
 #' }
-#' @details
-#' If the package version is not found under any of the R minor releases, the package will be downloaded from the specified `backupRrel` regardless of package version specified in renv.lock
-#' @importFrom renv lockfile_read
-#' @importFrom cli cli_alert_success cli_alert_warning cli_alert_danger
-#' @importFrom httr HEAD
-#' @importFrom here here
-#' @importFrom stats setNames
-#' @importFrom utils download.file
 getPkgZips <- function(
   lockfile_path = NULL,
   supplement = NULL,

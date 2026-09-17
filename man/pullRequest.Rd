@@ -8,16 +8,26 @@ code from the current branch}
 pullRequest(title, body, base = "develop")
 }
 \arguments{
-\item{title}{of the issue in character}
+\item{title}{of the PR in character}
 
-\item{body}{of the issue in character}
+\item{body}{of the PR in character}
 
 \item{base}{The target branch, in character. Defaults to "develop"}
 }
 \value{
-A message with the link of the issue
+A message with the link of the PR
 }
 \description{
-\code{pullRequest()} is a wrapper for gh::gh() to swiftly ask merging
-code from the current branch
+Set GITHUB_PAT in .Renviron. It will use the same authentication
+in the background as with \code{gh} https://gh.r-lib.org/articles/managing-personal-access-tokens.html
+}
+\examples{
+\dontrun{
+# It requires GITHUB_PAT
+pullRequest(
+   title = "An PR title",
+   body = "Description of PR",
+   base = "develop"
+)
+}
 }

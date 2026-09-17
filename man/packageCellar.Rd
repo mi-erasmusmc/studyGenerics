@@ -21,4 +21,10 @@ Invisible
 \description{
 \code{packageCellar()} saves files from a renv.lock file into the 'cellar' folder in renv
 }
-\keyword{internal}
+\examples{
+
+\dontrun{
+# It will download the tar files for every package in the renv.lock
+packageCellar()
+}
+}

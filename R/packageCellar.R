@@ -10,7 +10,13 @@
 #' @importFrom renv lockfile_validate retrieve lockfile_read 
 #' @importFrom usethis proj_set
 #' @export
-#' @keywords internal
+#' 
+#' @examples
+#' 
+#' \dontrun{
+#' # It will download the tar files for every package in the renv.lock
+#' packageCellar()
+#' }
 packageCellar <- function(
   path,
   project,
@@ -165,6 +171,13 @@ downloadGithub <- function(
 #' @importFrom checkmate assertFileExists assertDirectoryExists
 #' @importFrom usethis proj_set
 #' @export
+#' 
+#' @examples
+#' 
+#' \dontrun{
+#' # It will install all packages in the cellar
+#' installCellar()
+#' }
 installCellar <- function(
   path,
   project,
