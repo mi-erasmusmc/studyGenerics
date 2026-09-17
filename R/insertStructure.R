@@ -199,6 +199,7 @@ insertStudyFiles <- function(
   usethis::use_r("createCohorts", open = FALSE)
   writeLines(createCohortsFun(), file.path(path, "R", "createCohorts.R"))
   usethis::use_r("runStudy", open = FALSE)
+  writeLines(runStudyFun(n_obj), file.path(path, "R", "runStudy.R"))
   usethis::use_r("runDiagnostics", open = FALSE)
   writeLines(runDiagnosticsFun(), file.path(path, "R", "runDiagnostics.R"))
   usethis::use_r("utils", open = FALSE)
@@ -336,6 +337,85 @@ createCohortsFun <- function(path = ".") {
       "  return(cdm)",
       "}"
     )
+}
+
+#' Load default content for runStudy.R
+#'
+#' @param n_obj Number of study objectives to include in the workflow,
+#' default `3`.
+#'
+#' @return
+#' A character vector containing the default contents of `runStudy.R`.
+runStudyFun <- function(n_obj = 3) {
+  objective_calls <- unlist(lapply(seq_len(n_obj), function(i) {
+    objective <- paste0("objective", i)
+    c(
+      "",
+      paste0("  # --- Run ", objective, " ---"),
+      paste0("  ", objective, "_results <- ", objective, "("),
+      "    cdm = cdm,",
+      "    resultsDir = resultsDir,",
+      "    minCell = minCell",
+      "  )"
+    )
+  }))
+
+  c(
+    "#' Runs the study workflow.",
+    "#'",
+    "#' Validates the database identifier, creates the result folders and log files,",
+    "#' runs each study objective, and creates a zip archive with the results.",
+    "#'",
+    "#' @param cdm A cdm reference.",
+    "#' @param dbname Character string giving the data source name.",
+    "#' @param outputDir Character string giving the base output directory. If `NULL`,",
+    "#' the current working directory is used.",
+    "#' @param test Logical indicating whether to run in test mode with a minimum",
+    "#' cell count of `0` instead of `5`.",
+    "#'",
+    "#' @returns Invisibly returns `NULL`. The main side effects are writing study",
+    "#' results to `outputDir` and creating a zip archive of the results.",
+    "#'",
+    "#' @importFrom ParallelLogger logInfo",
+    "#' @importFrom studyGenerics assertCdmNames createResultsDir setLoggers zipStudyFiles",
+    "#'",
+    "#' @export",
+    "",
+    "runStudy <- function(",
+    "  cdm,",
+    "  dbname = 'TEST_DATA',",
+    "  outputDir = NULL,",
+    "  test = FALSE",
+    ") {",
+    "",
+    "  # --- Validate database name ---",
+    "  assertCdmNames(dbname)",
+    "",
+    "  # --- Create results folders ---",
+    "  logInfo(\"Defining output directories\")",
+    "  directories <- createResultsDir(outputDir, dbname)",
+    "  outputDir <- directories$outputDir",
+    "  resultsDir <- directories$resultsDir",
+    "  resultsDirName <- directories$resultsDirName",
+    "",
+    "  # --- Create log files ---",
+    "  setLoggers(resultsDir)",
+    "",
+    "  if (test) {",
+    "    minCell <- 0",
+    "  } else {",
+    "    minCell <- 5",
+    "  }",
+    "",
+    "  # Define each objective function in its corresponding objective<n>.R file.",
+    objective_calls,
+    "",
+    "  # --- Export results ---",
+    "  zipStudyFiles(outputDir, resultsDirName, dbname)",
+    "  logInfo(\"-- Thank you for running the study!\")",
+    "  invisible()",
+    "}"
+  )
 }
 
 #' Load default content for runDiagnostics.R
