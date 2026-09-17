@@ -247,22 +247,23 @@ test_that("installCellar", {
       installCellar()
     })
     testProject <- usethis::proj_path()
-    cellar_length <- file.path(
-      testProject,
-      "renv",
-      "cellar"
-    ) |> 
-      list.files() |>
-      length()
-    file.path(
+    testLibrary <- file.path(
       testProject,
       "renv",
       "library"
-    ) |> 
-      list.files() |> 
-      expect_length(
-        112
+    )
+    lockfileData <- renv::lockfile_read(
+      file.path(testProject, "renv.lock")
+    )
+    expectedPackages <- names(lockfileData$Packages)
+    installedPackages <- rownames(
+      utils::installed.packages(
+        lib.loc = testLibrary
       )
+    )
+    expect_true(
+      all(expectedPackages %in% installedPackages)
+    )
   })
   # EXIT ------------
   unlink(
