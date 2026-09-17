@@ -1,3 +1,7 @@
+# studyGenerics 0.1.3
+
+* Initial CRAN release.
+
 # studyGenerics 0.1.2
 
 * `packageCellar()` documentation fixed and exported.
@@ -8,4 +12,4 @@
 
 # studyGenerics 0.1.0
 
-* Initial CRAN release.
+* Initial version.

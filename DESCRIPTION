@@ -1,7 +1,7 @@
 Package: studyGenerics
 Type: Package
 Title: A Centralised Repository of Tested and Frequently Used Methods for OMOP-CDM Studies
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(
     person(
       "Cesar", "Barboza",
