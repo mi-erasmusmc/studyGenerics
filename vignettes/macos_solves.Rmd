@@ -2,7 +2,7 @@
 title: "macOS solves"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{macos_solves}
+  %\VignetteIndexEntry{macOS solves}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,11 +14,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-A reference of recurrent instructions specific for macOS.
+A reference for recurring macOS-specific instructions.
 
 ## R + Java
 
-Depends a bit on how you've installed java (package manager vs. direct download)
+This depends on how Java was installed (package manager versus direct download).
 
 ### 1. Terminal
 
@@ -29,8 +29,8 @@ ls /opt/homebrew/opt/openjdk # expected installation location
 brew --prefix openjdk # prints actual installation path (should be /opt/homebrew/opt/openjdk)
 brew list | grep openjdk  
 
-# Look for installs on computer
-/usr/libexec/java_home -V  # list all java installs on computer
+# Look for installations on the computer
+/usr/libexec/java_home -V  # list all Java installations on the computer
 
 
 # R CMD javareconf # R reconfiguration
@@ -48,15 +48,15 @@ install.packages("rJava") # should work now
 
 ## R + gettext
 
-Might get an error linked to gettext when trying to install a package in R
+You might receive an error related to gettext when installing an R package.
 
 ### 1. Terminal
 
 ```bash
-# Install gettext with homebrew
+# Install gettext with Homebrew
 brew install gettext 
 
-# Update Makeovers
+# Update Makevars
 cd ~/.R
 ls 
 nano Makevars # or whatever text editor

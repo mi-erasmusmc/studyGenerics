@@ -2,22 +2,22 @@
 % Please edit documentation in R/zipStudyFiles.R
 \name{zipStudyFiles}
 \alias{zipStudyFiles}
-\title{`zipStudyFiles()` compress study results}
+\title{\code{zipStudyFiles()} compresses study results}
 \usage{
-zipStudyFiles(resultsDirName, outputDir, dbname)
+zipStudyFiles(outputDir, resultsDirName, dbname)
 }
 \arguments{
-\item{resultsDirName}{Location of the results. Character.}
+\item{outputDir}{Character string giving the path to the base output directory.}
 
-\item{outputDir}{The directory where the results folder is located. Character}
+\item{resultsDirName}{Character string giving the name or path of the results subfolder.}
 
-\item{dbname}{The database name. Character}
+\item{dbname}{Character string giving the database identifier.}
 }
 \value{
-A message stating the location of the compressed results
+Character string containing the file name of the generated zip archive.
 }
 \description{
-`zipStudyFiles()` compress study results
+\code{zipStudyFiles()} compresses study results
 }
 \examples{
 outputDir <- file.path(

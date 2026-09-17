@@ -8,12 +8,12 @@ insertTests(path = ".")
 }
 \arguments{
 \item{path}{Character string identifying the path to the study project,
-default `"."`.}
+default \code{"."}.}
 }
 \value{
 No return value.
 }
 \description{
-Creates the `tests` folder and populates the `tests/testthat` folder with
-a default test file for each script found in the `R` folder.
+Creates the \code{tests} folder and populates the \code{tests/testthat} folder with
+a default test file for each script found in the \code{R} folder.
 }

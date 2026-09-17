@@ -1,5 +1,6 @@
 test_that("updateColumnValues updates summarised result correctly", {
   
+  requireInstall("omopgenerics")
   # Create mock summarised result
   x <- dplyr::tibble(
     "result_id" = 1L,

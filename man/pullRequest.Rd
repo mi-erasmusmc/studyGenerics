@@ -2,22 +2,32 @@
 % Please edit documentation in R/versionControl.R
 \name{pullRequest}
 \alias{pullRequest}
-\title{`pullRequest()` is a wrapper for gh::gh() to swiftly ask merging
-code from the current branch}
+\title{\code{pullRequest()} is a wrapper for gh::gh() to quickly create a pull request
+to merge the current branch.}
 \usage{
 pullRequest(title, body, base = "develop")
 }
 \arguments{
-\item{title}{of the issue in character}
+\item{title}{A character string giving the pull request title.}
 
-\item{body}{of the issue in character}
+\item{body}{A character string giving the pull request body.}
 
-\item{base}{The target branch, in character. Defaults to "develop"}
+\item{base}{A character string giving the target branch. Defaults to "develop".}
 }
 \value{
-A message with the link of the issue
+URL of the created pull request.
 }
 \description{
-`pullRequest()` is a wrapper for gh::gh() to swiftly ask merging
-code from the current branch
+Set GITHUB_PAT in .Renviron. It will use the same authentication
+in the background as with \code{gh} https://gh.r-lib.org/articles/managing-personal-access-tokens.html
+}
+\examples{
+\dontrun{
+# It requires GITHUB_PAT
+pullRequest(
+   title = "Add study outcome",
+   body = "Describe the implemented change.",
+   base = "develop"
+)
+}
 }

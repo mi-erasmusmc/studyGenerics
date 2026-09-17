@@ -2,23 +2,33 @@
 % Please edit documentation in R/versionControl.R
 \name{issueOpen}
 \alias{issueOpen}
-\title{`issueOpen()` is a wrapper for gh::gh() to swiftly post 
-in the GitHub repository of the current project}
+\title{\code{issueOpen()} is a wrapper for gh::gh() to quickly create an issue
+in the current GitHub repository.}
 \usage{
 issueOpen(title, body, newBranch = FALSE)
 }
 \arguments{
-\item{title}{of the issue in character}
+\item{title}{A character string giving the issue title.}
 
-\item{body}{of the issue in character}
+\item{body}{A character string giving the issue body.}
 
-\item{newBranch}{Logical. Default TRUE, will open a new
-branch in GitHub format}
+\item{newBranch}{Logical. Whether to create and check out a branch named
+after the new issue. Defaults to \code{FALSE}.}
 }
 \value{
-A message with the link of the PR
+URL of the created issue.
 }
 \description{
-`issueOpen()` is a wrapper for gh::gh() to swiftly post 
-in the GitHub repository of the current project
+Set GITHUB_PAT in .Renviron. It will use the same authentication
+in the background as with \code{gh} https://gh.r-lib.org/articles/managing-personal-access-tokens.html
+}
+\examples{
+\dontrun{
+# It requires GITHUB_PAT
+issueOpen(
+   title = "Add study outcome",
+   body = "Describe the planned change.",
+   newBranch = TRUE
+)
+}
 }

@@ -1,15 +1,15 @@
-# studyGenerics 0.0.9002
+# studyGenerics 0.1.3
 
-* New article about `insertStructure()`
+* Initial CRAN release.
 
-* New `updateColumnValues()`
+# studyGenerics 0.1.2
 
-* 'macOS solves' article
+* `packageCellar()` documentation fixed and exported.
 
-# studyGenerics 0.0.9001
+# studyGenerics 0.1.1
 
-* Version control functions: `issueOpen()`, `pullRequest`, `developCheckout`
+* `packageCellar()` now tries to find default `renv.lock` and `cellarDir` if parameters are missing. 
 
-# studyGenerics 0.0.9000
+# studyGenerics 0.1.0
 
-* readme and initial functions.
+* Initial version.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/setLoggers.R
 \name{setLoggers}
 \alias{setLoggers}
-\title{`setLoggers()` as text files in the results directory}
+\title{Configure study loggers that write text files to the results directory}
 \usage{
 setLoggers(
   resultsDir,
@@ -15,11 +15,11 @@ setLoggers(
 \arguments{
 \item{resultsDir}{A valid folder where to save the results of a study.
 This function will work best with the folder structure formed by
-`createsResultsDir()`}
+\code{createResultsDir()}}
 
-\item{logFileName}{A file name in character. Default 'log'}
+\item{logFileName}{A character string specifying the file name. Default 'log'}
 
-\item{errorFileName}{A file name in character. Default 'error'}
+\item{errorFileName}{A character string specifying the file name. Default 'error'}
 
 \item{eventLevel}{TRACE is the default, captures all the output from
 the console}
@@ -30,10 +30,10 @@ the console}
 Invisible
 }
 \description{
-Sets `ohdsi/ParallelLogger` log and error report for a study. Logger
-registered as 'OMOP_STUDY_LOGGER' and error report as 'OMOP_STUDY_ERROR_REPORT'.
-Please note: avoid using inside a tryCatch() or similar because events
-will not be 'obsorbed' and not recorded by ParallelLogger.
+Configures the \code{ohdsi/ParallelLogger} logger and error report for a study. The logger
+is registered as 'OMOP_STUDY_LOGGER' and the error report as 'OMOP_STUDY_ERROR_REPORT'.
+Please note: avoid using it inside \code{tryCatch()} or similar because events
+will not be observed or recorded by ParallelLogger.
 }
 \examples{
 outputDir <- file.path(

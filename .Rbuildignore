@@ -13,3 +13,8 @@
 ^README.html$
 ^extras$
 ^vignettes/articles$
+^\.posit/assistant$
+^cran-comments\.md$
+^doc$
+^Meta$
+^AGENTS\.md$

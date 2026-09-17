@@ -6,6 +6,9 @@
 \usage{
 installPackageBundle(path)
 }
+\arguments{
+\item{path}{A valid path to the study project in character.}
+}
 \value{
 An invisible list of the installed packages.
 }

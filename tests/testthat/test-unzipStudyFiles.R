@@ -1,7 +1,6 @@
 test_that(
   "results to correct output folder with default settings;
   simulate set of results from 3 data partners", {
-
     # -- params
     path <- testthat::test_path(
       "data",
@@ -11,15 +10,13 @@ test_that(
       tempdir(),
       "results"
     )
-
     # -- FUN
     unZipStudyFiles(
       path = path,
-      negate = TRUE,
+      negate = FALSE,
       recursive = FALSE,
       outputDir = outputDir
       )
-
     # -- test
     list.files(
       path = outputDir
@@ -29,12 +26,10 @@ test_that(
           "results_DP-B",
           "results_DP-C")
       )
-
     unlink(
       outputDir,
       recursive = TRUE
     )
-
   })
 
 test_that(
@@ -59,8 +54,9 @@ test_that(
         recursive = FALSE,
         outputDir = outputDir
       )
-    })
-
+    }, 
+    class = "No files found"
+    )
     unlink(
       outputDir,
       recursive = TRUE
@@ -70,7 +66,6 @@ test_that(
 
 test_that(
   "Filtering only files that contain pattern 'DED'", {
-
     # -- params
     path <- testthat::test_path(
       "data",
@@ -80,7 +75,6 @@ test_that(
       tempdir(),
       "results"
     )
-
     # -- FUN
     # -- test
     expect_no_error({
@@ -92,7 +86,6 @@ test_that(
         outputDir = outputDir
       )
     })
-
     # -- test
     list.files(
       path = outputDir
@@ -102,12 +95,10 @@ test_that(
           "DED_DP-B",
           "DED_DP-C")
       )
-
     unlink(
       outputDir,
       recursive = TRUE
     )
-
   })
 
 test_that(

@@ -3,37 +3,64 @@
 export(arrangeCdmNames)
 export(assertCdmNames)
 export(createResultsDir)
-export(developCheckout)
-export(getPkgZips)
+export(devCheckout)
 export(insertStructure)
+export(installCellar)
 export(issueOpen)
+export(packageCellar)
+export(pullConceptsAtlas)
 export(pullRequest)
 export(setLoggers)
 export(unZipStudyFiles)
+export(updateColumnValues)
 export(zipStudyFiles)
-importFrom(ParallelLogger,createFileAppender)
-importFrom(ParallelLogger,createLogger)
-importFrom(ParallelLogger,layoutParallel)
-importFrom(ParallelLogger,registerLogger)
-importFrom(checkmate,assertCharacter)
-importFrom(checkmate,assertDirectoryExists)
-importFrom(checkmate,assertFileExists)
-importFrom(checkmate,assertLogical)
-importFrom(checkmate,assertTRUE)
-importFrom(checkmate,checkClass)
-importFrom(cli,cli_abort)
-importFrom(cli,cli_alert_danger)
-importFrom(cli,cli_alert_info)
-importFrom(cli,cli_alert_success)
-importFrom(cli,cli_alert_warning)
+importFrom(ParallelLogger,
+  createFileAppender,
+  createLogger,
+  layoutParallel,
+  logInfo,
+  registerLogger
+)
+importFrom(checkmate,
+  assertCharacter,
+  assertChoice,
+  assertDirectoryExists,
+  assertDouble,
+  assertFileExists,
+  assertList,
+  assertLogical,
+  assertTRUE,
+  checkClass
+)
+importFrom(cli,
+  cli_abort,
+  cli_alert_info,
+  cli_alert_success
+)
+importFrom(dplyr,
+  bind_rows,
+  tibble
+)
 importFrom(fs,path_ext_set)
-importFrom(glue,glue)
-importFrom(glue,glue_collapse)
+importFrom(glue,
+  glue,
+  glue_collapse
+)
 importFrom(here,here)
-importFrom(httr,HEAD)
-importFrom(renv,lockfile_read)
-importFrom(stats,setNames)
-importFrom(stringr,str_detect)
-importFrom(utils,download.file)
-importFrom(zip,unzip)
-importFrom(zip,zip)
+importFrom(jsonlite,toJSON)
+importFrom(renv,
+  lockfile_read,
+  lockfile_validate,
+  retrieve
+)
+importFrom(stringr,
+  str_detect,
+  str_remove,
+  str_replace_all,
+  str_to_lower
+)
+importFrom(usethis,proj_set)
+importFrom(zip,
+  unzip,
+  zip
+)
