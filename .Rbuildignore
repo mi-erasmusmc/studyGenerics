@@ -1,4 +1,5 @@
 ^renv$
+^\.[Rr]environ$
 ^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$

@@ -4,6 +4,8 @@
 
 * This is a new release.
 
-* ROhdsiWebApi is an optional Suggests dependency used only by
-  pullConceptsAtlas(). It is available from
-  https://github.com/OHDSI/ROhdsiWebApi and is used conditionally.
+* Concept-set retrieval helpers from ROhdsiWebApi are bundled under
+  Apache-2.0, with upstream copyright notices, source revision, and changes
+  documented in R/pullConceptsAtlas.R and inst/COPYRIGHTS. The package no
+  longer depends on ROhdsiWebApi. The replacement optional dependencies
+  (httr, RJSONIO, lubridate, and rlang) are available on CRAN.

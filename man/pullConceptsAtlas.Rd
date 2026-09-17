@@ -9,7 +9,8 @@ pullConceptsAtlas(
   conceptSetType,
   baseUrl = "https://atlas.darwin-eu.org/WebAPI",
   deletePrevious = TRUE,
-  patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_")
+  patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_"),
+  authHeader = Sys.getenv("ATLAS_TOKEN")
 )
 }
 \arguments{
@@ -25,15 +26,26 @@ the target \verb{<conceptSetType>} folder before downloading the new concept set
 
 \item{patternToRemove}{A vector of regular expressions containing the pattern(s)
 to be removed from the ATLAS concept set names before creating the output JSON files.}
+
+\item{authHeader}{Authorization header for the WebAPI. Defaults to
+\code{Sys.getenv("ATLAS_TOKEN")}. Use \code{""} for a public WebAPI.}
 }
 \value{
 A tibble with one row per downloaded concept set and the columns
-\code{conceptSetId}, \code{originalName}, \code{cleanName}, and \code{jsonPath}.
+\code{conceptSetId}, \code{originalName}, \code{cleanName}, and \code{fileName}.
 }
 \description{
 Retrieves each concept set definition from the ATLAS WebAPI, cleans the
 concept set name for use as a file name and writes the JSON definition to
 \verb{inst/concept_sets/<conceptSetType>/}.
+}
+\details{
+Requires the optional CRAN packages \code{httr}, \code{RJSONIO}, \code{lubridate}, and \code{rlang}.
+For a protected WebAPI, set \code{ATLAS_TOKEN} in your local \code{.Renviron} file and
+restart R. The token may include the \code{Bearer } prefix. It is sent only to
+the supplied WebAPI. Do not commit the token to version control.
+The internal retrieval helpers are adapted from OHDSI's \code{ROhdsiWebApi}
+under the Apache License 2.0; see \code{inst/COPYRIGHTS} in the package source.
 }
 \examples{
 
