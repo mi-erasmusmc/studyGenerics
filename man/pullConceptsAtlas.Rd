@@ -35,4 +35,16 @@ Retrieves each concept set definition from the ATLAS WebAPI, cleans the
 concept set name for use as a file name and writes the JSON definition to
 \verb{inst/concept_sets/<conceptSetType>/}.
 }
-\keyword{internal}
+\examples{
+
+\dontrun{
+# It requires a connection to an API
+pullConceptsAtlas(
+   conceptSetList,
+   conceptSetType,
+   baseUrl = "https://atlas.darwin-eu.org/WebAPI",
+   deletePrevious = TRUE,
+   patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_") 
+)
+}
+}

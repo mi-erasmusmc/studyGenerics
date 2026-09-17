@@ -9,6 +9,8 @@
 #' @param negate Logical passed to `stringr::str_detect()` to negate the optional pattern argument.
 #' @param outputDir Character directory where files will be unzipped.
 #'
+#' @returns Invisible called for its side effects.
+#'
 #' @importFrom checkmate assertDirectoryExists assertLogical
 #' @importFrom stringr str_detect
 #' @importFrom zip unzip
@@ -19,6 +21,7 @@
 #'
 #' @examples
 #'  \dontrun{
+#' # It will unzip folders in temp file
 #' path <- testthat::test_path(
 #'    "data",
 #'    "results_execution"
@@ -33,7 +36,6 @@
 #' )
 #' unlink(outputDir, recursive = TRUE)
 #' }
-#' @returns Invisible called for its side effects.
 unZipStudyFiles <- function(
     path,
     recursive = FALSE,

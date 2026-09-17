@@ -23,7 +23,21 @@
 #' @importFrom dplyr tibble bind_rows
 #' @importFrom stringr str_to_lower str_remove str_replace_all
 #' @importFrom ParallelLogger logInfo
-#' @keywords internal
+#' 
+#' @export
+#' 
+#' @examples
+#' 
+#' \dontrun{
+#' # It requires a connection to an API
+#' pullConceptsAtlas(
+#'    conceptSetList,
+#'    conceptSetType,
+#'    baseUrl = "https://atlas.darwin-eu.org/WebAPI",
+#'    deletePrevious = TRUE,
+#'    patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_") 
+#' )
+#' }
 pullConceptsAtlas <- function(
     conceptSetList,
     conceptSetType,

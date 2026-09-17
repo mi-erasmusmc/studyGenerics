@@ -26,6 +26,7 @@ Finds zip files under \code{path} and extracts them to \code{outputDir}.
 }
 \examples{
  \dontrun{
+# It will unzip folders in temp file
 path <- testthat::test_path(
    "data",
    "results_execution"
