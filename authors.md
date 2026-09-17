@@ -30,13 +30,13 @@ Source:
 
 Barboza C, Di Tullio C, Alamshahi A (2026). *studyGenerics: A
 Centralised Repository of Tested and Frequently Used Methods for
-OMOP-CDM Studies*. R package version 0.1.4,
-<https://mi-erasmusmc.github.io/studyGenerics/>.
+Observational Medical Outcomes Partnership Common Data Model Studies*. R
+package version 0.1.5, <https://mi-erasmusmc.github.io/studyGenerics/>.
 
     @Manual{,
-      title = {studyGenerics: A Centralised Repository of Tested and Frequently Used Methods for OMOP-CDM Studies},
+      title = {studyGenerics: A Centralised Repository of Tested and Frequently Used Methods for Observational Medical Outcomes Partnership Common Data Model Studies},
       author = {Cesar Barboza and Cristiana {Di Tullio} and Arianna Alamshahi},
       year = {2026},
-      note = {R package version 0.1.4},
+      note = {R package version 0.1.5},
       url = {https://mi-erasmusmc.github.io/studyGenerics/},
     }
