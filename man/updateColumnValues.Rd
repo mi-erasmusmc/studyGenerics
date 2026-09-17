@@ -7,7 +7,7 @@
 updateColumnValues(summarised_result, names_map, variable)
 }
 \arguments{
-\item{summarised_result}{The summarised result with values to update.}
+\item{summarised_result}{The summarised-result object whose values will be updated.}
 
 \item{names_map}{A named vector containing the mapping between old and new names.}
 
@@ -50,7 +50,7 @@ x <- dplyr::tibble(
 ) |>
  omopgenerics::newSummarisedResult()
 names_map <- c(
- "acetaminophen" = "Acetamoniphen cohort",
+ "acetaminophen" = "Acetaminophen cohort",
  "diclofenac" ="Diclofenac cohort (outdated)",
  "ibuprofen" = "Ibuprofen cohort"
 )

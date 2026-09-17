@@ -20,9 +20,9 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/mi-erasmusmc/StudyToolBelt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mi-erasmusmc/StudyToolBelt/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-Code should be readable, and it is the main means of communication for software developers. The objective of `studyGenerics()` is to centralise common functions (including functions considered trivial!) used in epidemiological analyses performed at the Erasmus MC Department of Medical Informatics.
+Code should be readable, and it is the main means of communication for software developers. The objective of `studyGenerics` is to centralise common functions (including functions considered trivial!) used in epidemiological analyses performed at the Erasmus MC Department of Medical Informatics.
 
-More than trying to 'standardise' how to write a study package, we use this project to save (and, more importantly, test) frequently used functions that make our life easier.
+Rather than trying to 'standardise' how to write a study package, we use this project to save (and, more importantly, test) frequently used functions that make our life easier.
 
 The intention is to break our own silos and learn how to better communicate our ideas and best practices, so we can work more effectively as a team on common ground. Please feel free to contribute.
 
@@ -45,7 +45,7 @@ studyGenerics::insertStructure(
   ) 
 ```
 
-The file structure of the package will contain most of the elements that we use more frequently.
+The generated study package structure will contain most of the elements that we use most frequently.
 
 ```
 |-studyPackage
@@ -57,13 +57,13 @@ The file structure of the package will contain most of the elements that we use 
     |-objective3.R
     ...
   |-inst/
-    |-concept_set/
+    |-concept_sets/
     |-cohorts/
   |-LICENSE
   |-README.rmd
   |-extras/
     |-CodeToRun.R
-    |-pullFromATLAS.R
+    |-pullConceptSetsFromAtlas.R
     |-shiny/
   |-tests/
   |-renv/

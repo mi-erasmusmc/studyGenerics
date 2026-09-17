@@ -1,9 +1,9 @@
-#' `packageCellar()` saves files from a renv.lock file into the 'cellar' folder in renv
+#' `packageCellar()` saves files from a renv.lock file into the 'cellar' folder in `renv`
 #'
-#' @param path Cellar path in character. If missing defaults to 'renv/cellar'.
-#' @param project Project path in character. If missing defaults to `usethis::proj_get()`.
-#' @param lockfile Lockfile file path in character. If missing defaults to 'renv.lock' at the project base level provided by `usethis::proj_get()`.
-#' @param type A choice in characcter from either "complete" or "github" to download only packages from GH.
+#' @param path Character string giving the cellar path. If omitted, defaults to `renv/cellar`.
+#' @param project Character string giving the project path. If omitted, defaults to `usethis::proj_get()`.
+#' @param lockfile Character string giving the lockfile path. If omitted, defaults to `renv.lock` at the project base level provided by `usethis::proj_get()`.
+#' @param type Character string specifying whether to download all packages (`"complete"`) or only packages from GitHub (`"github"`).
 #' @returns Invisible
 #'
 #' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
@@ -161,10 +161,10 @@ downloadGithub <- function(
 
 #' `installCellar()` install files already saved in a cellar
 #'
-#' @param path Cellar path in character. If missing defaults to 'renv/cellar'.
-#' @param project Project path in character. If missing defaults to `usethis::proj_get()`.
-#' @param library Library path in characcter. If missing defauls to 'renv/library'.
-#' @param lockfile Lockfile file path in character. If missing defaults to 'renv.lock' at the project base level provided by `usethis::proj_get()`.
+#' @param path Character string giving the cellar path. If omitted, defaults to `renv/cellar`.
+#' @param project Character string giving the project path. If omitted, defaults to `usethis::proj_get()`.
+#' @param library Character string giving the library path. If omitted, defaults to `renv/library`.
+#' @param lockfile Character string giving the lockfile path. If omitted, defaults to `renv.lock` at the project base level provided by `usethis::proj_get()`.
 #'  
 #' @returns Invisible
 #'

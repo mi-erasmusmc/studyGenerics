@@ -1,16 +1,16 @@
-#' `issueOpen()` is a wrapper for gh::gh() to swiftly post 
-#' in the GitHub repository of the current project. 
+#' `issueOpen()` is a wrapper for gh::gh() to quickly create an issue
+#' in the current GitHub repository.
 #' 
 #' @description
 #' Set GITHUB_PAT in .Renviron. It will use the same authentication
 #' in the background as with `gh` https://gh.r-lib.org/articles/managing-personal-access-tokens.html
 #'
-#' @param title of the issue in character
-#' @param body of the issue in character
-#' @param newBranch Logical. Default TRUE, will open a new
-#' branch in GitHub format
+#' @param title A character string giving the issue title.
+#' @param body A character string giving the issue body.
+#' @param newBranch Logical. Whether to create and check out a branch named
+#' after the new issue. Defaults to `FALSE`.
 #'
-#' @returns A message with the link of the PR
+#' @returns URL of the created issue.
 #' @importFrom checkmate assertCharacter assertLogical assertTRUE checkClass
 #' 
 #' @export
@@ -90,18 +90,18 @@ issueOpen <- function(
   }
 }
 
-#' `pullRequest()` is a wrapper for gh::gh() to swiftly ask merging
-#' code from the current branch
+#' `pullRequest()` is a wrapper for gh::gh() to quickly create a pull request
+#' to merge the current branch.
 #' 
 #' @description
 #' Set GITHUB_PAT in .Renviron. It will use the same authentication
 #' in the background as with `gh` https://gh.r-lib.org/articles/managing-personal-access-tokens.html
 #'
-#' @param title of the PR in character
-#' @param body of the PR in character
-#' @param base The target branch, in character. Defaults to "develop"
+#' @param title A character string giving the pull request title.
+#' @param body A character string giving the pull request body.
+#' @param base A character string giving the target branch. Defaults to "develop".
 #'
-#' @returns A message with the link of the PR
+#' @returns URL of the created pull request.
 #' @importFrom checkmate assertCharacter assertLogical assertTRUE checkClass
 #' @export
 #' 
@@ -109,7 +109,7 @@ issueOpen <- function(
 #' \dontrun{
 #' # It requires GITHUB_PAT
 #' pullRequest(
-#'    title = "An PR title",
+#'    title = "A PR title",
 #'    body = "Description of PR",
 #'    base = "develop"
 #' )
@@ -159,19 +159,17 @@ pullRequest <- function(
   }
 }
 
-#' `devCheckout()` is a wrapper for gert functions to swiftly default to develop
-#' and pull latest changes
+#' `devCheckout()` checks out the `develop` branch and pulls its latest changes.
 #' 
 #' @description
-#' Set GITHUB_PAT in .Renviron. It will use the same authentication
-#' in the background as with `gh` https://gh.r-lib.org/articles/managing-personal-access-tokens.html
+#' Checks out the `develop` branch and pulls changes from its remote.
 #'
 #' @returns Git log messages after checking out and pulling 'develop'
 #' @export
 #' 
 #' @examples
 #' \dontrun{
-#' # It requires GITHUB_PAT
+#' # Requires access to the configured Git remote
 #' devCheckout(
 #' )
 #' }

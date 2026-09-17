@@ -2,12 +2,12 @@
 #'
 #' Finds zip files under `path` and extracts them to `outputDir`.
 #'
-#' @param path Character directory where zip files are searched.
+#' @param path Character string giving the directory where zip files are searched.
 #' @param recursive Logical indicating whether to search recursively for zip files.
 #' @param pattern Optional regular expression used to filter zip file paths.
-#' For instance, just unzip those files that do not belong to a 'DED' folder.
+#' For example, use this to exclude files that belong to a 'DED' folder.
 #' @param negate Logical passed to `stringr::str_detect()` to negate the optional pattern argument.
-#' @param outputDir Character directory where files will be unzipped.
+#' @param outputDir Character string giving the directory where files will be unzipped.
 #'
 #' @returns Invisible called for its side effects.
 #'
@@ -21,7 +21,7 @@
 #'
 #' @examples
 #'  \dontrun{
-#' # It will unzip folders in temp file
+#' # Extracts files to a temporary directory
 #' path <- testthat::test_path(
 #'    "data",
 #'    "results_execution"

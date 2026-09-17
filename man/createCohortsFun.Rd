@@ -11,7 +11,7 @@ createCohortsFun(path = ".")
 default \code{"."}.}
 }
 \value{
-No return value.
+A character vector containing the default contents of \code{createCohorts.R}.
 }
 \description{
 Load default content for createCohorts.R

@@ -5,7 +5,7 @@
 #' (e.g., changing cohort names to a more polished version for Shiny app labels)
 #' according to a given name mapping.
 #'
-#' @param summarised_result The summarised result with values to update.
+#' @param summarised_result The summarised-result object whose values will be updated.
 #' @param names_map A named vector containing the mapping between old and new names.
 #' @param variable The column name(s) containing the values to be updated in the
 #' summarised result object.
@@ -42,7 +42,7 @@
 #') |>
 #'  omopgenerics::newSummarisedResult()
 #'names_map <- c(
-#'  "acetaminophen" = "Acetamoniphen cohort",
+#'  "acetaminophen" = "Acetaminophen cohort",
 #'  "diclofenac" ="Diclofenac cohort (outdated)",
 #'  "ibuprofen" = "Ibuprofen cohort"
 #')

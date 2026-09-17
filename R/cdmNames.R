@@ -1,8 +1,8 @@
-#' `assertCdmNames()` verifies if data partner's names are correct and display an error if incorrect
+#' `assertCdmNames()` verifies whether data partner names are valid and displays an error if they are not.
 #'
 #' @param labels A character vector of data partner acronyms
 #' @param expected A character vector of expected data partner acronyms. If omitted, the package's built-in CDM names are used.
-#' @returns Invisible if labels are correct
+#' @returns Returns invisibly if all labels are valid.
 #' @importFrom checkmate assertCharacter
 #' @importFrom cli cli_abort
 #' @importFrom glue glue glue_collapse
@@ -41,10 +41,10 @@ assertCdmNames <- function(labels, expected) {
     }
   }
 
-#' `arrangeCdmNames()` verifies if data partner's acronyms are valid
-#' and returns a vector ordered by country alphabetical order.
+#' `arrangeCdmNames()` verifies whether data partners' acronyms are valid
+#' and returns a vector ordered alphabetically by country.
 #'
-#' @param labels A character vector of data partners acronyms
+#' @param labels A character vector of data partners' acronyms
 #'
 #' @returns A character vector
 #' @importFrom checkmate assertCharacter

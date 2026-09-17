@@ -7,16 +7,16 @@
 unZipStudyFiles(path, recursive = FALSE, pattern, negate = TRUE, outputDir)
 }
 \arguments{
-\item{path}{Character directory where zip files are searched.}
+\item{path}{Character string giving the directory where zip files are searched.}
 
 \item{recursive}{Logical indicating whether to search recursively for zip files.}
 
 \item{pattern}{Optional regular expression used to filter zip file paths.
-For instance, just unzip those files that do not belong to a 'DED' folder.}
+For example, use this to exclude files that belong to a 'DED' folder.}
 
 \item{negate}{Logical passed to \code{stringr::str_detect()} to negate the optional pattern argument.}
 
-\item{outputDir}{Character directory where files will be unzipped.}
+\item{outputDir}{Character string giving the directory where files will be unzipped.}
 }
 \value{
 Invisible called for its side effects.
@@ -26,7 +26,7 @@ Finds zip files under \code{path} and extracts them to \code{outputDir}.
 }
 \examples{
  \dontrun{
-# It will unzip folders in temp file
+# Extracts files to a temporary directory
 path <- testthat::test_path(
    "data",
    "results_execution"

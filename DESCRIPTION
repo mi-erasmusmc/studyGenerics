@@ -10,7 +10,7 @@ Authors@R: c(
     ),
     person(
       "Cristiana", "Di Tullio",
-      email = "a.alamshahi@mi-erasmusmc.nl",
+      email = "c.ditullio@mi-erasmusmc.nl",
       role = c("aut")
     ),
     person(
@@ -19,14 +19,14 @@ Authors@R: c(
       role = c("aut")
     )
   )
-Description: This set of generic functions wraps routine and basic functions required to run an OMOP-CDM study. 
-  But besides testing this recurrent methods, studyGenerics aims to centralise colaboration to speed-up development of this type of projects. 
+Description: Provides generic functions for routine tasks required to run OMOP-CDM studies.
+  In addition to testing these recurring methods, studyGenerics aims to centralise
+  collaboration and speed up the development of these types of projects.
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
 Imports: 
     cli,
-    httr,
     renv,
     ParallelLogger,
     checkmate,

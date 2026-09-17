@@ -29,10 +29,12 @@
 #' @examples
 #' 
 #' \dontrun{
-#' # It requires a connection to an API
+#' # Requires a connection to the ATLAS WebAPI
+#' conceptSetList <- c(12345)
+#' conceptSetType <- "example"
 #' pullConceptsAtlas(
-#'    conceptSetList,
-#'    conceptSetType,
+#'    conceptSetList = conceptSetList,
+#'    conceptSetType = conceptSetType,
 #'    baseUrl = "https://atlas.darwin-eu.org/WebAPI",
 #'    deletePrevious = TRUE,
 #'    patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_") 

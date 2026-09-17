@@ -250,7 +250,7 @@
     },
     "httr": {
       "Package": "httr",
-      "Version": "1.4.8",
+      "Version": "1.4.9",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -261,7 +261,7 @@
         "mime",
         "openssl"
       ],
-      "Hash": "10bcae7793493db63a6872096132e10c"
+      "Hash": "bc0b2d531d78701c4cd1221adbf052ce"
     },
     "httr2": {
       "Package": "httr2",
@@ -602,7 +602,7 @@
     },
     "withr": {
       "Package": "withr",
-      "Version": "3.0.2",
+      "Version": "3.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -610,7 +610,7 @@
         "grDevices",
         "graphics"
       ],
-      "Hash": "cc2d62c76458d425210d1eb1478b30b4"
+      "Hash": "d979712ec72df779bc2d30bcc5d0d541"
     },
     "xml2": {
       "Package": "xml2",
@@ -634,13 +634,13 @@
     },
     "zip": {
       "Package": "zip",
-      "Version": "3.0.0",
+      "Version": "3.0.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "cli"
       ],
-      "Hash": "b6637f22cadc4e12ad70c4b7d8d63e15"
+      "Hash": "5807bea03035bfdd7535c1d3eb258cb0"
     }
   }
 }

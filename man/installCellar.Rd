@@ -7,13 +7,13 @@
 installCellar(path, project, library, lockfile)
 }
 \arguments{
-\item{path}{Cellar path in character. If missing defaults to 'renv/cellar'.}
+\item{path}{Character string giving the cellar path. If omitted, defaults to \code{renv/cellar}.}
 
-\item{project}{Project path in character. If missing defaults to \code{usethis::proj_get()}.}
+\item{project}{Character string giving the project path. If omitted, defaults to \code{usethis::proj_get()}.}
 
-\item{library}{Library path in characcter. If missing defauls to 'renv/library'.}
+\item{library}{Character string giving the library path. If omitted, defaults to \code{renv/library}.}
 
-\item{lockfile}{Lockfile file path in character. If missing defaults to 'renv.lock' at the project base level provided by \code{usethis::proj_get()}.}
+\item{lockfile}{Character string giving the lockfile path. If omitted, defaults to \code{renv.lock} at the project base level provided by \code{usethis::proj_get()}.}
 }
 \value{
 Invisible

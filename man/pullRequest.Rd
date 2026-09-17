@@ -2,20 +2,20 @@
 % Please edit documentation in R/versionControl.R
 \name{pullRequest}
 \alias{pullRequest}
-\title{\code{pullRequest()} is a wrapper for gh::gh() to swiftly ask merging
-code from the current branch}
+\title{\code{pullRequest()} is a wrapper for gh::gh() to quickly create a pull request
+to merge the current branch.}
 \usage{
 pullRequest(title, body, base = "develop")
 }
 \arguments{
-\item{title}{of the PR in character}
+\item{title}{A character string giving the pull request title.}
 
-\item{body}{of the PR in character}
+\item{body}{A character string giving the pull request body.}
 
-\item{base}{The target branch, in character. Defaults to "develop"}
+\item{base}{A character string giving the target branch. Defaults to "develop".}
 }
 \value{
-A message with the link of the PR
+URL of the created pull request.
 }
 \description{
 Set GITHUB_PAT in .Renviron. It will use the same authentication
@@ -25,7 +25,7 @@ in the background as with \code{gh} https://gh.r-lib.org/articles/managing-perso
 \dontrun{
 # It requires GITHUB_PAT
 pullRequest(
-   title = "An PR title",
+   title = "A PR title",
    body = "Description of PR",
    base = "develop"
 )

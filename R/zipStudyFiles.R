@@ -1,11 +1,10 @@
-#' `zipStudyFiles()` compress study results
+#' `zipStudyFiles()` compresses study results
 #'
-#' @param outputDir Character path to the base output directory.
-#' @param resultsDirName Character name or path to the results subfolder.
-#' @param dbname Character database identifier.
+#' @param outputDir Character string giving the path to the base output directory.
+#' @param resultsDirName Character string giving the name or path of the results subfolder.
+#' @param dbname Character string giving the database identifier.
 #' 
-#' @returns A message stating the location of the compressed results
-#' @returns Character file name of the generated zip archive.
+#' @returns Character string containing the file name of the generated zip archive.
 #'
 #' @importFrom checkmate assertDirectoryExists assertFileExists
 #' @importFrom zip zip

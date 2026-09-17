@@ -2,24 +2,24 @@
 % Please edit documentation in R/packageCellar.R
 \name{packageCellar}
 \alias{packageCellar}
-\title{\code{packageCellar()} saves files from a renv.lock file into the 'cellar' folder in renv}
+\title{\code{packageCellar()} saves files from a renv.lock file into the 'cellar' folder in \code{renv}}
 \usage{
 packageCellar(path, project, lockfile, type = "complete")
 }
 \arguments{
-\item{path}{Cellar path in character. If missing defaults to 'renv/cellar'.}
+\item{path}{Character string giving the cellar path. If omitted, defaults to \code{renv/cellar}.}
 
-\item{project}{Project path in character. If missing defaults to \code{usethis::proj_get()}.}
+\item{project}{Character string giving the project path. If omitted, defaults to \code{usethis::proj_get()}.}
 
-\item{lockfile}{Lockfile file path in character. If missing defaults to 'renv.lock' at the project base level provided by \code{usethis::proj_get()}.}
+\item{lockfile}{Character string giving the lockfile path. If omitted, defaults to \code{renv.lock} at the project base level provided by \code{usethis::proj_get()}.}
 
-\item{type}{A choice in characcter from either "complete" or "github" to download only packages from GH.}
+\item{type}{Character string specifying whether to download all packages (\code{"complete"}) or only packages from GitHub (\code{"github"}).}
 }
 \value{
 Invisible
 }
 \description{
-\code{packageCellar()} saves files from a renv.lock file into the 'cellar' folder in renv
+\code{packageCellar()} saves files from a renv.lock file into the 'cellar' folder in \code{renv}
 }
 \examples{
 

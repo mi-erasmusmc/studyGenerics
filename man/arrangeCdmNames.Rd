@@ -2,20 +2,20 @@
 % Please edit documentation in R/cdmNames.R
 \name{arrangeCdmNames}
 \alias{arrangeCdmNames}
-\title{\code{arrangeCdmNames()} verifies if data partner's acronyms are valid
-and returns a vector ordered by country alphabetical order.}
+\title{\code{arrangeCdmNames()} verifies whether data partners' acronyms are valid
+and returns a vector ordered alphabetically by country.}
 \usage{
 arrangeCdmNames(labels)
 }
 \arguments{
-\item{labels}{A character vector of data partners acronyms}
+\item{labels}{A character vector of data partners' acronyms}
 }
 \value{
 A character vector
 }
 \description{
-\code{arrangeCdmNames()} verifies if data partner's acronyms are valid
-and returns a vector ordered by country alphabetical order.
+\code{arrangeCdmNames()} verifies whether data partners' acronyms are valid
+and returns a vector ordered alphabetically by country.
 }
 \examples{
 # Verifies acronyms are valid and sorts them in the correct order

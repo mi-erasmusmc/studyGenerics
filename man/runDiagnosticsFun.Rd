@@ -11,7 +11,7 @@ runDiagnosticsFun(path = ".")
 default \code{"."}.}
 }
 \value{
-No return value.
+A character vector containing the default contents of \code{runDiagnostics.R}.
 }
 \description{
 Load default content for runDiagnostics.R

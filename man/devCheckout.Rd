@@ -2,8 +2,7 @@
 % Please edit documentation in R/versionControl.R
 \name{devCheckout}
 \alias{devCheckout}
-\title{\code{devCheckout()} is a wrapper for gert functions to swiftly default to develop
-and pull latest changes}
+\title{\code{devCheckout()} checks out the \code{develop} branch and pulls its latest changes.}
 \usage{
 devCheckout()
 }
@@ -11,12 +10,11 @@ devCheckout()
 Git log messages after checking out and pulling 'develop'
 }
 \description{
-Set GITHUB_PAT in .Renviron. It will use the same authentication
-in the background as with \code{gh} https://gh.r-lib.org/articles/managing-personal-access-tokens.html
+Checks out the \code{develop} branch and pulls changes from its remote.
 }
 \examples{
 \dontrun{
-# It requires GITHUB_PAT
+# Requires access to the configured Git remote
 devCheckout(
 )
 }
