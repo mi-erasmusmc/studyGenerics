@@ -17,6 +17,10 @@ Authors@R: c(
       "Arianna", "Alamshahi",
       email = "a.alamshahi@mi-erasmusmc.nl",
       role = c("aut")
+    ),
+    person(
+      "Erasmus MC",
+      role = "cph"
     )
   )
 Description: Provides generic functions for routine tasks required to run OMOP-CDM studies.
