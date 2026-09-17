@@ -65,7 +65,7 @@ pullConceptsAtlas <- function(
   checkmate::assertLogical(deletePrevious)
   checkmate::assertCharacter(patternToRemove)
   for (package in c("httr", "RJSONIO", "lubridate", "rlang")) {
-    studyGenerics:::requireInstall(package)
+    requireInstall(package)
   }
   checkmate::assertString(authHeader)
 
@@ -215,7 +215,7 @@ pullConceptsAtlas <- function(
 getConceptSetDefinition <- function(conceptSetId, baseUrl,
                                     authHeader = Sys.getenv("ATLAS_TOKEN")) {
   for (package in c("httr", "RJSONIO", "lubridate", "rlang")) {
-    studyGenerics:::requireInstall(package)
+    requireInstall(package)
   }
   checkmate::assertInt(conceptSetId, lower = 1)
   checkmate::assertString(baseUrl, min.chars = 1)
@@ -301,8 +301,8 @@ getWebApiVersion <- function(baseUrl, authHeader = "") {
 }
 
 .request <- function(url, method, authHeader = "") {
-  studyGenerics:::requireInstall("httr")
-  studyGenerics:::requireInstall("rlang")
+  requireInstall("httr")
+  requireInstall("rlang")
   checkmate::assertChoice(method, "GET")
   headers <- httr::accept_json()
   if (nzchar(authHeader)) {
@@ -347,7 +347,7 @@ getWebApiVersion <- function(baseUrl, authHeader = "") {
 }
 
 .convertToDateTime <- function(x) {
-  studyGenerics:::requireInstall("lubridate")
+  requireInstall("lubridate")
   if (is.numeric(x)) {
     x <- .millisecondsToDate(x)
   } else if (is.character(x)) {

@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      # Use the CI library for coverage and its test subprocesses.
+      RENV_CONFIG_AUTOLOADER_ENABLED: "false"
 
     steps:
       - uses: actions/checkout@v6
