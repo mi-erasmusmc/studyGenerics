@@ -1,9 +1,9 @@
 #' `packageCellar()` saves files from a renv.lock file into the 'cellar' folder in renv
 #'
-#' @param lockfile A valid path to a lockfile in character.
-#' @param cellarDir A valid path to the cellar in character. If no value is assigned, it will create renv/cellar 
+#' @param path Cellar path in character. If missing defaults to 'renv/cellar'.
+#' @param project Project path in character. If missing defaults to `usethis::proj_get()`.
+#' @param lockfile Lockfile file path in character. If missing defaults to 'renv.lock' at the project base level provided by `usethis::proj_get()`.
 #' @param type A choice in characcter from either "complete" or "github" to download only packages from GH.
-#' 
 #' @returns Invisible
 #'
 #' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
@@ -13,43 +13,47 @@
 #' @export
 #' @keywords internal
 packageCellar <- function(
+  path,
+  project,
   lockfile,
-  cellarDir,
   type = "complete"
 ) {
+  if (missing(project)) {
+    project <- usethis::proj_get()
+  }
   if (missing(lockfile)) {
     lockfile <- file.path(
-      usethis::proj_path(),
+      project,
       "renv.lock"
     )
   }
-  if (missing(cellarDir)) {
-    cellarDir <- file.path(
-      usethis::proj_path(),
+  if (missing(path)) {
+    path <- file.path(
+      project,
       "renv",
       "cellar"
     )
-    if (!dir.exists(cellarDir)) {
+    if (!dir.exists(path)) {
       dir.create(
-        cellarDir,
+        path,
         recursive = TRUE
       )
     }
   }
   checkmate::assertFileExists(lockfile)
   renv::lockfile_validate(lockfile = lockfile)
-  checkmate::assertDirectoryExists(cellarDir)
+  checkmate::assertDirectoryExists(path)
   checkmate::assertChoice(type, c("complete", "github"))
   requireInstall("purrr")
   switch(
     type,
     complete = renv::retrieve(
       lockfile = lockfile,
-      destdir = cellarDir
+      destdir = path
     ),
     github = retrieveGithub(
       lockfile = lockfile,
-      cellarDir = cellarDir
+      path = path
     )
   )
   return(invisible())
@@ -57,16 +61,16 @@ packageCellar <- function(
 
 retrieveGithub <- function(
   lockfile,
-  cellarDir
+  path
 ) {
-  checkmate::assertDirectoryExists(cellarDir)
+  checkmate::assertDirectoryExists(path)
   checkmate::assertFileExists(lockfile)
   packageList(
     lockfile = lockfile,
     type = "github"
   ) |> 
     downloadGithub(
-      cellarDir
+      path
   )
 }
 
@@ -126,27 +130,27 @@ extractGithubList <- function(lockfile_data) {
 
 downloadGithub <- function(
   packageData,
-  cellarDir
+  path
 ) {
   checkmate::assertList(packageData)
-  checkmate::assertDirectoryExists(cellarDir)
+  checkmate::assertDirectoryExists(path)
   purrr::walk(
     packageData,
     function(
-      DarwinShinyModules,
-      cellarDir
+      package,
+      path
     ) {
       packages <- paste(
-        DarwinShinyModules$RemoteUsername,
-        DarwinShinyModules$RemoteRepo,
+        package$RemoteUsername,
+        package$RemoteRepo,
         sep = "/"
       )
       renv::retrieve(
         packages = packages,
-        destdir = cellarDir
+        destdir = path
       )
     },
-    cellarDir
+    path
   )
 }
 
