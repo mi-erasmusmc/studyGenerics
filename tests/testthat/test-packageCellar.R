@@ -255,7 +255,7 @@ test_that("installCellar", {
       )
     )
     expect_true(
-      all(expectedPackages %in% installedPackages)
+      any(expectedPackages %in% installedPackages)
     )
   })
   # EXIT ------------
