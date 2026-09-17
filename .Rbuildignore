@@ -1,4 +1,5 @@
 ^renv$
+^\.[Rr]environ$
 ^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
@@ -18,3 +19,4 @@
 ^doc$
 ^Meta$
 ^AGENTS\.md$
+^CRAN-SUBMISSION$

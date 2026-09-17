@@ -33,7 +33,6 @@ jobs:
         with:
           extra-packages: |
             any::pkgdown
-            github::OHDSI/ROhdsiWebApi
             local::.
           needs: website
 
