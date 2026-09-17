@@ -11,14 +11,12 @@ test_that("insertStructure works", {
     c("usethis", "lattice", "Matrix", "survival"),
     project = testProject
   )
-
   usethis::with_project(testProject, {
     insertStructure(
       path = testProject,
       # path = ".",
       n_obj = 3)
   })
-
   # Expect installed packages
   expect_true(dir.exists(file.path(testProject, "renv")))
   expect_true(file.exists(file.path(testProject, "renv.lock")))
@@ -39,12 +37,10 @@ test_that("insertStructure works", {
   for (pkg in installed_pkgs) {
     expect_true(grepl(pkg, imported_pkgs))
   }
-
   # Expect inserted docs
   expect_true(file.exists(file.path(testProject, "NEWS.md")))
   expect_true(file.exists(file.path(testProject, "README.Rmd")))
   expect_true(file.exists(file.path(testProject, "LICENSE.md")))
-
   # Expect inserted study files
   expect_true(dir.exists(file.path(testProject, "R")))
   r_files <- length(list.files(file.path(testProject, "R")))
@@ -63,7 +59,6 @@ test_that("insertStructure works", {
   expect_true(dir.exists(file.path(testProject, "extras")))
   expect_true(file.exists(file.path(testProject, "extras", "CodeToRun.R")))
   expect_true(file.exists(file.path(testProject, "extras", "pullConceptSetsFromAtlas.R")))
-
   # Expect inserted tests
   for (script in list.files(file.path(testProject, "R"))) {
     if (script == "globals.R") {
