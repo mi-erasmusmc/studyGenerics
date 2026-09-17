@@ -1,12 +1,63 @@
+#' Set up study structure
+#'
+#' Creates the standard structure required for a new OMOP study package.
+#' It includes standard folders, R scripts, test and documentation files and it
+#' installs a default list of DARWIN EU®/OHDSI packages.
+#'
+#' It assumes an active R project has already been created and renv
+#' initialized.
+#'
+#' @param path Character string identifying the path to the study project,
+#' default `"."`.
+#' @param n_obj Number of study objectives, default `n_obj = 3`.
+#'
+#' @return
+#' No return value.
+#'
+#' @export
+insertStructure <- function(
+    path = ".",
+    n_obj = 3
+  ) {
+
+  # Need an existing package to run the function
+  if (!file.exists(file.path(path, "DESCRIPTION"))) {
+    cli::cli_abort(
+      message = c(
+        "!" = "The path doesn't correspond to a package folder.",
+        "x" = "A package must contain a DESCRIPTION file. No DESCRIPTION detected at {.path {path}}.",
+        "i" = "Create a package first with {.fn usethis::create_package} or through the RStudio interface."
+      )
+    )
+  }
+
+  # Set up structure at specified project path
+  cli::cli_h1("Setting up study package structure")
+
+  cli::cli_alert_info("Installing package bundle...")
+  installPackageBundle(path)
+
+  cli::cli_alert_info("Inserting documentation files...")
+  insertDocs(path)
+
+  cli::cli_alert_info("Inserting study files...")
+  insertStudyFiles(path, n_obj)
+
+  cli::cli_alert_info("Inserting test files...")
+  insertTests(path)
+
+  cli::cli_alert_success("Package structure created successfully.")
+}
+
 #' Install default package bundle
 #' 
-#' @param path A valid path to the study project in character.
-#'
 #' Installs a predefined set of DARWIN EU®/OHDSI packages into the study project
 #' and updates their dependencies. The standard package list includes the packages
 #' omopgenerics, PhenotypeR, DrugExposureDiagnostics, CohortConstructor,
 #' IncidencePrevalence, DrugUtilisation, CohortCharacteristics, CohortSurvival,
 #' visOmopResults and DarwinShinyModules.
+#'
+#' @param path A valid path to the study project in character.
 #'
 #' @return
 #' An invisible list of the installed packages.
@@ -83,9 +134,9 @@ installPackageBundle <- function(path) {
 
 #' Insert default documentation files
 #' 
-#' @param path A valid path to the study project in character.
-#'
 #' Creates default `NEWS.md`, `README.Rmd` and `LICENSE.md` (Apache License 2.0) files.
+#'
+#' @param path A valid path to the study project in character.
 #'
 #' @return
 #' No return value.
@@ -180,57 +231,6 @@ insertTests <- function(
       usethis::use_test(substr(script, 1, nchar(script) -2), open = FALSE)
     }
   }
-}
-
-#' Set up study structure
-#'
-#' Creates the standard structure required for a new OMOP study package.
-#' It includes standard folders, R scripts, test and documentation files and it
-#' installs a default list of DARWIN EU®/OHDSI packages.
-#'
-#' It assumes an active R project has already been created and renv
-#' initialized.
-#'
-#' @param path Character string identifying the path to the study project,
-#' default `"."`.
-#' @param n_obj Number of study objectives, default `n_obj = 3`.
-#'
-#' @return
-#' No return value.
-#'
-#' @export
-insertStructure <- function(
-    path = ".",
-    n_obj = 3
-  ) {
-
-  # Need an existing package to run the function
-  if (!file.exists(file.path(path, "DESCRIPTION"))) {
-    cli::cli_abort(
-      message = c(
-        "!" = "The path doesn't correspond to a package folder.",
-        "x" = "A package must contain a DESCRIPTION file. No DESCRIPTION detected at {.path {path}}.",
-        "i" = "Create a package first with {.fn usethis::create_package} or through the RStudio interface."
-      )
-    )
-  }
-
-  # Set up structure at specified project path
-  cli::cli_h1("Setting up study package structure")
-
-  cli::cli_alert_info("Installing package bundle...")
-  installPackageBundle(path)
-
-  cli::cli_alert_info("Inserting documentation files...")
-  insertDocs(path)
-
-  cli::cli_alert_info("Inserting study files...")
-  insertStudyFiles(path, n_obj)
-
-  cli::cli_alert_info("Inserting test files...")
-  insertTests(path)
-
-  cli::cli_alert_success("Package structure created successfully.")
 }
 
 #' Load default content for createCohorts.R
