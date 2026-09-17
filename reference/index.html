@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">studyGenerics</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,11 +19,12 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/macos_solves.html">macOS solves</a></li>
-    <li><a class="dropdown-item" href="../articles/new_study_package.html">Inserting a New Package Structure</a></li>
+    <li><a class="dropdown-item" href="../articles/new_study_package.html">Create a Study Package</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mi-erasmusmc/studyGenerics/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -50,14 +51,21 @@
           <code><a href="arrangeCdmNames.html">arrangeCdmNames()</a></code>
 
         </dt>
-        <dd>`arrangeCdmNames()` verifies if data partner's acronyms are valie and returns a vector ordered by country alphabetical order</dd>
+        <dd><code><a href="../reference/arrangeCdmNames.html">arrangeCdmNames()</a></code> verifies whether data partners' acronyms are valid and returns a vector ordered alphabetically by country.</dd>
 
         <dt>
 
           <code><a href="assertCdmNames.html">assertCdmNames()</a></code>
 
         </dt>
-        <dd>`assertCdmNames()` verifies if data partner's names are correct and display an error if incorrect</dd>
+        <dd><code><a href="../reference/assertCdmNames.html">assertCdmNames()</a></code> verifies whether data partner names are valid and displays an error if they are not.</dd>
+
+        <dt>
+
+          <code><a href="createCohortsFun.html">createCohortsFun()</a></code>
+
+        </dt>
+        <dd>Load default content for createCohorts.R</dd>
 
         <dt>
 
@@ -68,17 +76,10 @@
 
         <dt>
 
-          <code><a href="developCheckout.html">developCheckout()</a></code>
+          <code><a href="devCheckout.html">devCheckout()</a></code>
 
         </dt>
-        <dd>`developCheckout()` is a wrapper for gert functions to swiftly default to develop and pull latest changes</dd>
-
-        <dt>
-
-          <code><a href="getPkgZips.html">getPkgZips()</a></code>
-
-        </dt>
-        <dd>Download zip-compressed Windows binaries from a renv.lock file</dd>
+        <dd><code><a href="../reference/devCheckout.html">devCheckout()</a></code> checks out the <code>develop</code> branch and pulls its latest changes.</dd>
 
         <dt>
 
@@ -110,6 +111,13 @@
 
         <dt>
 
+          <code><a href="installCellar.html">installCellar()</a></code>
+
+        </dt>
+        <dd><code><a href="../reference/installCellar.html">installCellar()</a></code> install files already saved in a cellar</dd>
+
+        <dt>
+
           <code><a href="installPackageBundle.html">installPackageBundle()</a></code>
 
         </dt>
@@ -120,28 +128,56 @@
           <code><a href="issueOpen.html">issueOpen()</a></code>
 
         </dt>
-        <dd>`issueOpen()` is a wrapper for gh::gh() to swiftly post in the GitHub repository of the current project</dd>
+        <dd><code><a href="../reference/issueOpen.html">issueOpen()</a></code> is a wrapper for gh::gh() to quickly create an issue in the current GitHub repository.</dd>
+
+        <dt>
+
+          <code><a href="packageCellar.html">packageCellar()</a></code>
+
+        </dt>
+        <dd><code><a href="../reference/packageCellar.html">packageCellar()</a></code> saves files from a renv.lock file into the 'cellar' folder in <code>renv</code></dd>
+
+        <dt>
+
+          <code><a href="pullConceptsAtlas.html">pullConceptsAtlas()</a></code>
+
+        </dt>
+        <dd>Download concept sets from ATLAS and save them in the package.</dd>
 
         <dt>
 
           <code><a href="pullRequest.html">pullRequest()</a></code>
 
         </dt>
-        <dd>`pullRequest()` is a wrapper for gh::gh() to swiftly ask merging code from the current branch</dd>
+        <dd><code><a href="../reference/pullRequest.html">pullRequest()</a></code> is a wrapper for gh::gh() to quickly create a pull request to merge the current branch.</dd>
+
+        <dt>
+
+          <code><a href="runDiagnosticsFun.html">runDiagnosticsFun()</a></code>
+
+        </dt>
+        <dd>Load default content for runDiagnostics.R</dd>
+
+        <dt>
+
+          <code><a href="runStudyFun.html">runStudyFun()</a></code>
+
+        </dt>
+        <dd>Load default content for runStudy.R</dd>
 
         <dt>
 
           <code><a href="setLoggers.html">setLoggers()</a></code>
 
         </dt>
-        <dd>`setLoggers()` as text files in the results directory</dd>
+        <dd>Configure study loggers that write text files to the results directory</dd>
 
         <dt>
 
           <code><a href="unZipStudyFiles.html">unZipStudyFiles()</a></code>
 
         </dt>
-        <dd>`unZipStudyFiles()` uncompress study results</dd>
+        <dd>Unzip study result files</dd>
 
         <dt>
 
@@ -155,7 +191,7 @@
           <code><a href="zipStudyFiles.html">zipStudyFiles()</a></code>
 
         </dt>
-        <dd>`zipStudyFiles()` compress study results</dd>
+        <dd><code><a href="../reference/zipStudyFiles.html">zipStudyFiles()</a></code> compresses study results</dd>
       </dl></div>
   </main></div>
 

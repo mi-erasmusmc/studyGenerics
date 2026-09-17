@@ -1,7 +1,7 @@
-# \`arrangeCdmNames()\` verifies if data partner's acronyms are valie and returns a vector ordered by country alphabetical order
+# `arrangeCdmNames()` verifies whether data partners' acronyms are valid and returns a vector ordered alphabetically by country.
 
-\`arrangeCdmNames()\` verifies if data partner's acronyms are valie and
-returns a vector ordered by country alphabetical order
+`arrangeCdmNames()` verifies whether data partners' acronyms are valid
+and returns a vector ordered alphabetically by country.
 
 ## Usage
 
@@ -13,7 +13,7 @@ arrangeCdmNames(labels)
 
 - labels:
 
-  A character vector of data partners acronyms
+  A character vector of data partners' acronyms
 
 ## Value
 

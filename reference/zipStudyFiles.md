@@ -1,30 +1,30 @@
-# \`zipStudyFiles()\` compress study results
+# `zipStudyFiles()` compresses study results
 
-\`zipStudyFiles()\` compress study results
+`zipStudyFiles()` compresses study results
 
 ## Usage
 
 ``` r
-zipStudyFiles(resultsDirName, outputDir, dbname)
+zipStudyFiles(outputDir, resultsDirName, dbname)
 ```
 
 ## Arguments
 
-- resultsDirName:
-
-  Location of the results. Character.
-
 - outputDir:
 
-  The directory where the results folder is located. Character
+  Character string giving the path to the base output directory.
+
+- resultsDirName:
+
+  Character string giving the name or path of the results subfolder.
 
 - dbname:
 
-  The database name. Character
+  Character string giving the database identifier.
 
 ## Value
 
-A message stating the location of the compressed results
+Character string containing the file name of the generated zip archive.
 
 ## Examples
 
@@ -45,6 +45,7 @@ zipStudyFiles(
   dbname = dbname
 )
 #> ℹ Exporting results to zip format
-#> ✔ Results exported to /tmp/Rtmp8Kosri/examples/results_IPCI/results_IPCI_20260825.zip
+#> ✔ Results exported to /tmp/Rtmp0pZY7y/examples/results_IPCI/results_IPCI_20260917.zip
+#> results_IPCI_20260917.zip
 unlink(outputDir, recursive = TRUE)
 ```

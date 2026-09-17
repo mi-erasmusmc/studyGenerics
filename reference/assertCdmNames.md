@@ -1,7 +1,7 @@
-# \`assertCdmNames()\` verifies if data partner's names are correct and display an error if incorrect
+# `assertCdmNames()` verifies whether data partner names are valid and displays an error if they are not.
 
-\`assertCdmNames()\` verifies if data partner's names are correct and
-display an error if incorrect
+`assertCdmNames()` verifies whether data partner names are valid and
+displays an error if they are not.
 
 ## Usage
 
@@ -22,7 +22,7 @@ assertCdmNames(labels, expected)
 
 ## Value
 
-Invisible if labels are correct
+Returns invisibly if all labels are valid.
 
 ## Examples
 

@@ -15,11 +15,11 @@ insertStructure(path = ".", n_obj = 3)
 - path:
 
   Character string identifying the path to the study project, default
-  \`"."\`.
+  `"."`.
 
 - n_obj:
 
-  Number of study objectives, default \`n_obj = 3\`.
+  Number of study objectives, default `n_obj = 3`.
 
 ## Value
 
@@ -27,5 +27,34 @@ No return value.
 
 ## Details
 
-It assumes an active R project has already been created and the \`renv\`
+It assumes an active R project has already been created and renv
 initialized.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+
+# Creating package structure in current project
+
+# - Initialize renv
+renv::init()
+
+# - Install package development tools
+renv::install(c("usethis",
+                "devtools",
+                "studyGenerics"))
+
+# - Initialize DESCRIPTION
+usethis::use_description()
+
+# - Initialize package structure
+studyGenerics::insertStructure()
+
+# - Initialize NAMESPACE
+devtools::document()
+
+# - Check package is valid
+devtools::check()
+} # }
+```

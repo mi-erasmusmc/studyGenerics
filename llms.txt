@@ -1,18 +1,8 @@
 # studyGenerics
 
-Code should be readable, and it is the main means of communication for
-software developers. The objective of `studyGenerics()` is to centralise
-common functions (including functions considered trivial!) used in
-epidemiological analyses performed at the Erasmus MC Department of
+`studyGenerics` provides small, tested functions for common tasks in
+OMOP-CDM study packages developed at the Erasmus MC Department of
 Medical Informatics.
-
-More than trying to ‘standardise’ how to write a study package, we use
-this project to save (and, more importantly, test) frequently used
-functions that make our life easier.
-
-The intention is to break our own silos and learn how to better
-communicate our ideas and best practices, so we can work more
-effectively as a team on common ground. Please feel free to contribute.
 
 ## Installation
 
@@ -25,67 +15,81 @@ You can install the development version of studyGenerics from
 remotes::install_github("mi-erasmusmc/studyGenerics")
 ```
 
-### Sharing the same structure
+### Create a study package
 
-For instance, we have a function that creates the specific structure we
-need for a study.
+Create the standard study-package folders, scripts, tests, and
+documentation. Use `n_obj` to set the number of objective scripts.
 
 ``` r
 
 studyGenerics::insertStructure(
-    path = ".",
-    n_obj = 3
-  ) 
+  path = ".",
+  n_obj = 3
+)
 ```
 
-The file structure of the package will contain most of the elements that
-we use more frequently.
+It adds the following files and folders to an existing study package:
 
 ``` R
-|-studyPackage
-  |-R/
-    |-createCohorts.R
-    |-runStudy.R
-    |-objective1.R
-    |-objective2.R
-    |-objective3.R
-    ...
-  |-inst/
-    |-concept_set/
-    |-cohorts/
-  |-LICENSE
-  |-README.rmd
-  |-extras/
-    |-CodeToRun.R
-    |-pullFromATLAS.R
-    |-shiny/
-  |-tests/
-  |-renv/
+studyPackage/
+├── R/
+│   ├── createCohorts.R
+│   ├── runStudy.R
+│   ├── runDiagnostics.R
+│   ├── utils.R
+│   ├── globals.R
+│   ├── merge.R
+│   └── objective1.R, ..., objective<n_obj>.R
+├── inst/
+│   ├── cohorts/
+│   └── concept_sets/
+├── extras/
+│   ├── CodeToRun.R
+│   └── pullConceptSetsFromAtlas.R
+├── man/
+├── tests/
+│   └── testthat/test-*.R
+├── LICENSE.md
+├── NEWS.md
+└── README.Rmd
 ```
 
-### Unifying approaches
+### Download concept sets from ATLAS
 
-Even in the same development team, people may prefer different tools for
-routine tasks (such as logging or even saving zip files). Here we try to
-find common ground, test functions, and avoid unnecessary bugs from
-small and less complicated methods, from asserting data partner names to
-making sure we are zipping results to the correct folder.
+Use
+[`pullConceptsAtlas()`](https://mi-erasmusmc.github.io/studyGenerics/reference/pullConceptsAtlas.md)
+to save ATLAS concept-set definitions in
+`inst/concept_sets/<conceptSetType>/`. It requires access to the ATLAS
+WebAPI.
 
 ``` r
 
-studyGenerics::arrangeCdmNames(
-  labels
-  )
+studyGenerics::pullConceptsAtlas(
+  conceptSetList = c(12345),
+  conceptSetType = "example",
+  baseUrl = "https://atlas.darwin-eu.org/WebAPI"
+)
+```
+
+### Manage study files
+
+Use the shared functions to validate data-partner names and create,
+archive, or extract study results.
+
+``` r
+
+studyGenerics::arrangeCdmNames(labels)
 
 studyGenerics::createResultsDir(
-   outputDir,
-   dbname
+  outputDir,
+  dbname
 )
 
 studyGenerics::zipStudyFiles(
   resultsDirName,
   outputDir,
-  dbname)
+  dbname
+)
 
 studyGenerics::unZipStudyFiles(
   path,
@@ -93,28 +97,64 @@ studyGenerics::unZipStudyFiles(
   negate,
   recursive,
   outputDir
-  )
+)
 ```
 
-### Smoother processes
+### Updating summarised results
 
-Furthermore, in `studyGenerics()` we also develop functions that make
-our life easier, such as saving an R virtual environment in a cellar on
-macOS and later using that folder to
-[`renv::restore()`](https://rstudio.github.io/renv/reference/restore.html)
-on a Windows machine without internet access.
+Use
+[`updateColumnValues()`](https://mi-erasmusmc.github.io/studyGenerics/reference/updateColumnValues.md)
+to replace values in a summarised-result column, for example when
+preparing clearer cohort labels for presentation.
 
 ``` r
 
+studyGenerics::updateColumnValues(
+  summarised_result = summarised_result,
+  names_map = c(
+    "old_cohort_name" = "Clear cohort name"
+  ),
+  variable = "group_level"
+)
+```
 
-studyGenerics::getPkgZips(
-  lockfile_path, 
-  supplement, 
-  override_lock,
-  r_rels_vect,
-  backupRrel,
-  outDir
-  ) 
+### Prepare dependencies for offline installation
+
+Save packages from `renv.lock` to `renv/cellar`, then use that cellar to
+restore the environment on a machine without internet access.
+
+``` r
+
+# Save packages in renv/cellar
+studyGenerics::packageCellar()
+
+# Restore packages from renv/cellar
+studyGenerics::installCellar()
+```
+
+### Version control workflow
+
+Configure `GITHUB_PAT` in `.Renviron`, then create an issue and branch,
+open a pull request, and return to the latest `develop` branch.
+
+``` r
+
+# Create a GitHub issue and check out a branch named after it
+studyGenerics::issueOpen(
+  title = "Add study outcome",
+  body = "Describe the planned change.",
+  newBranch = TRUE
+)
+
+# After committing and pushing the branch, create a pull request to develop
+studyGenerics::pullRequest(
+  title = "Add study outcome",
+  body = "Describe the implemented change.",
+  base = "develop"
+)
+
+# After the pull request is merged, return to the latest develop branch
+studyGenerics::devCheckout()
 ```
 
 # Package index
@@ -122,42 +162,96 @@ studyGenerics::getPkgZips(
 ## All functions
 
 - [`arrangeCdmNames()`](https://mi-erasmusmc.github.io/studyGenerics/reference/arrangeCdmNames.md)
-  : \`arrangeCdmNames()\` verifies if data partner's acronyms are valie
-  and returns a vector ordered by country alphabetical order
+  :
+
+  [`arrangeCdmNames()`](https://mi-erasmusmc.github.io/studyGenerics/reference/arrangeCdmNames.md)
+  verifies whether data partners' acronyms are valid and returns a
+  vector ordered alphabetically by country.
+
 - [`assertCdmNames()`](https://mi-erasmusmc.github.io/studyGenerics/reference/assertCdmNames.md)
-  : \`assertCdmNames()\` verifies if data partner's names are correct
-  and display an error if incorrect
+  :
+
+  [`assertCdmNames()`](https://mi-erasmusmc.github.io/studyGenerics/reference/assertCdmNames.md)
+  verifies whether data partner names are valid and displays an error if
+  they are not.
+
+- [`createCohortsFun()`](https://mi-erasmusmc.github.io/studyGenerics/reference/createCohortsFun.md)
+  : Load default content for createCohorts.R
+
 - [`createResultsDir()`](https://mi-erasmusmc.github.io/studyGenerics/reference/createResultsDir.md)
   : Create directory for analysis results
-- [`developCheckout()`](https://mi-erasmusmc.github.io/studyGenerics/reference/developCheckout.md)
-  : \`developCheckout()\` is a wrapper for gert functions to swiftly
-  default to develop and pull latest changes
-- [`getPkgZips()`](https://mi-erasmusmc.github.io/studyGenerics/reference/getPkgZips.md)
-  : Download zip-compressed Windows binaries from a renv.lock file
+
+- [`devCheckout()`](https://mi-erasmusmc.github.io/studyGenerics/reference/devCheckout.md)
+  :
+
+  [`devCheckout()`](https://mi-erasmusmc.github.io/studyGenerics/reference/devCheckout.md)
+  checks out the `develop` branch and pulls its latest changes.
+
 - [`insertDocs()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertDocs.md)
   : Insert default documentation files
+
 - [`insertStructure()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertStructure.md)
   : Set up study structure
+
 - [`insertStudyFiles()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertStudyFiles.md)
   : Insert default study files
+
 - [`insertTests()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertTests.md)
   : Insert default test files
+
+- [`installCellar()`](https://mi-erasmusmc.github.io/studyGenerics/reference/installCellar.md)
+  :
+
+  [`installCellar()`](https://mi-erasmusmc.github.io/studyGenerics/reference/installCellar.md)
+  install files already saved in a cellar
+
 - [`installPackageBundle()`](https://mi-erasmusmc.github.io/studyGenerics/reference/installPackageBundle.md)
   : Install default package bundle
+
 - [`issueOpen()`](https://mi-erasmusmc.github.io/studyGenerics/reference/issueOpen.md)
-  : \`issueOpen()\` is a wrapper for gh::gh() to swiftly post in the
-  GitHub repository of the current project
+  :
+
+  [`issueOpen()`](https://mi-erasmusmc.github.io/studyGenerics/reference/issueOpen.md)
+  is a wrapper for gh::gh() to quickly create an issue in the current
+  GitHub repository.
+
+- [`packageCellar()`](https://mi-erasmusmc.github.io/studyGenerics/reference/packageCellar.md)
+  :
+
+  [`packageCellar()`](https://mi-erasmusmc.github.io/studyGenerics/reference/packageCellar.md)
+  saves files from a renv.lock file into the 'cellar' folder in `renv`
+
+- [`pullConceptsAtlas()`](https://mi-erasmusmc.github.io/studyGenerics/reference/pullConceptsAtlas.md)
+  : Download concept sets from ATLAS and save them in the package.
+
 - [`pullRequest()`](https://mi-erasmusmc.github.io/studyGenerics/reference/pullRequest.md)
-  : \`pullRequest()\` is a wrapper for gh::gh() to swiftly ask merging
-  code from the current branch
+  :
+
+  [`pullRequest()`](https://mi-erasmusmc.github.io/studyGenerics/reference/pullRequest.md)
+  is a wrapper for gh::gh() to quickly create a pull request to merge
+  the current branch.
+
+- [`runDiagnosticsFun()`](https://mi-erasmusmc.github.io/studyGenerics/reference/runDiagnosticsFun.md)
+  : Load default content for runDiagnostics.R
+
+- [`runStudyFun()`](https://mi-erasmusmc.github.io/studyGenerics/reference/runStudyFun.md)
+  : Load default content for runStudy.R
+
 - [`setLoggers()`](https://mi-erasmusmc.github.io/studyGenerics/reference/setLoggers.md)
-  : \`setLoggers()\` as text files in the results directory
+  : Configure study loggers that write text files to the results
+  directory
+
 - [`unZipStudyFiles()`](https://mi-erasmusmc.github.io/studyGenerics/reference/unZipStudyFiles.md)
-  : \`unZipStudyFiles()\` uncompress study results
+  : Unzip study result files
+
 - [`updateColumnValues()`](https://mi-erasmusmc.github.io/studyGenerics/reference/updateColumnValues.md)
   : Update values in a summarised result
+
 - [`zipStudyFiles()`](https://mi-erasmusmc.github.io/studyGenerics/reference/zipStudyFiles.md)
-  : \`zipStudyFiles()\` compress study results
+  :
+
+  [`zipStudyFiles()`](https://mi-erasmusmc.github.io/studyGenerics/reference/zipStudyFiles.md)
+  compresses study results
 
 # Articles
 
@@ -165,5 +259,5 @@ studyGenerics::getPkgZips(
 
 - [macOS
   solves](https://mi-erasmusmc.github.io/studyGenerics/articles/macos_solves.md):
-- [Inserting a New Package
-  Structure](https://mi-erasmusmc.github.io/studyGenerics/articles/new_study_package.md):
+- [Create a Study
+  Package](https://mi-erasmusmc.github.io/studyGenerics/articles/new_study_package.md):

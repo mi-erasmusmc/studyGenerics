@@ -1,44 +1,47 @@
-# \`unZipStudyFiles()\` uncompress study results
+# Unzip study result files
 
-\`unZipStudyFiles()\` uncompress study results
+Finds zip files under `path` and extracts them to `outputDir`.
 
 ## Usage
 
 ``` r
-unZipStudyFiles(path, pattern, negate = FALSE, recursive = TRUE, outputDir)
+unZipStudyFiles(path, recursive = FALSE, pattern, negate = TRUE, outputDir)
 ```
 
 ## Arguments
 
 - path:
 
-  The path to the directory where the .zip files are located. Character.
-
-- pattern:
-
-  A character string to filter the files from the location provided.
-  Default is NULL.
-
-- negate:
-
-  If TRUE it will filter the opposite from 'pattern'. Default is FALSE.
+  Character string giving the directory where zip files are searched.
 
 - recursive:
 
-  If TRUE it will search recursively for .zip files. Default is TRUE.
+  Logical indicating whether to search recursively for zip files.
+
+- pattern:
+
+  Optional regular expression used to filter zip file paths. For
+  example, use this to exclude files that belong to a 'DED' folder.
+
+- negate:
+
+  Logical passed to
+  [`stringr::str_detect()`](https://stringr.tidyverse.org/reference/str_detect.html)
+  to negate the optional pattern argument.
 
 - outputDir:
 
-  The path to the main output folder. Character.
+  Character string giving the directory where files will be unzipped.
 
 ## Value
 
-A message stating the location of the uncompressed results
+Invisible called for its side effects.
 
 ## Examples
 
 ``` r
  if (FALSE) { # \dontrun{
+# Extracts files to a temporary directory
 path <- testthat::test_path(
    "data",
    "results_execution"

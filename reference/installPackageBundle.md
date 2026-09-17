@@ -13,6 +13,12 @@ DarwinShinyModules.
 installPackageBundle(path)
 ```
 
+## Arguments
+
+- path:
+
+  A valid path to the study project in character.
+
 ## Value
 
 An invisible list of the installed packages.

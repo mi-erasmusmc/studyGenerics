@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>A centralised repository of tested and frequently used methods for OMOP-CDM studies • studyGenerics</title>
+<title>A Centralised Repository of Tested and Frequently Used Methods for OMOP-CDM Studies • studyGenerics</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A centralised repository of tested and frequently used methods for OMOP-CDM studies">
-<meta name="description" content="This set of generic functions wraps routine and basic functions required to run an OMOP-CDM study. But besides testing this recurrent methods, studyGenerics aims to centralise colaboration to speed-up development of this type of projects.">
-<meta property="og:description" content="This set of generic functions wraps routine and basic functions required to run an OMOP-CDM study. But besides testing this recurrent methods, studyGenerics aims to centralise colaboration to speed-up development of this type of projects.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A Centralised Repository of Tested and Frequently Used Methods for OMOP-CDM Studies">
+<meta name="description" content="Provides generic functions for routine tasks required to run OMOP-CDM studies. In addition to testing these recurring methods, studyGenerics aims to centralise collaboration and speed up the development of these types of projects. The optional ROhdsiWebApi package is available from &lt;https://github.com/OHDSI/ROhdsiWebApi&gt;.">
+<meta property="og:description" content="Provides generic functions for routine tasks required to run OMOP-CDM studies. In addition to testing these recurring methods, studyGenerics aims to centralise collaboration and speed up the development of these types of projects. The optional ROhdsiWebApi package is available from &lt;https://github.com/OHDSI/ROhdsiWebApi&gt;.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">studyGenerics</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/macos_solves.html">macOS solves</a></li>
-    <li><a class="dropdown-item" href="articles/new_study_package.html">Inserting a New Package Structure</a></li>
+    <li><a class="dropdown-item" href="articles/new_study_package.html">Create a Study Package</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -45,6 +45,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mi-erasmusmc/studyGenerics/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -57,9 +58,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>Code should be readable, and it is the main means of communication for software developers. The objective of <code>studyGenerics()</code> is to centralise common functions (including functions considered trivial!) used in epidemiological analyses performed at the Erasmus MC Department of Medical Informatics.</p>
-<p>More than trying to ‘standardise’ how to write a study package, we use this project to save (and, more importantly, test) frequently used functions that make our life easier.</p>
-<p>The intention is to break our own silos and learn how to better communicate our ideas and best practices, so we can work more effectively as a team on common ground. Please feel free to contribute.</p>
+<p><code>studyGenerics</code> provides small, tested functions for common tasks in OMOP-CDM study packages developed at the Erasmus MC Department of Medical Informatics.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -68,53 +67,65 @@
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mi-erasmusmc/studyGenerics"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="sharing-the-same-structure">Sharing the same structure<a class="anchor" aria-label="anchor" href="#sharing-the-same-structure"></a>
+<h3 id="create-a-study-package">Create a study package<a class="anchor" aria-label="anchor" href="#create-a-study-package"></a>
 </h3>
-<p>For instance, we have a function that creates the specific structure we need for a study.</p>
+<p>Create the standard study-package folders, scripts, tests, and documentation. Use <code>n_obj</code> to set the number of objective scripts.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/insertStructure.html">insertStructure</a></span><span class="op">(</span></span>
-<span>    path <span class="op">=</span> <span class="st">"."</span>,</span>
-<span>    n_obj <span class="op">=</span> <span class="fl">3</span></span>
-<span>  <span class="op">)</span> </span></code></pre></div>
-<p>The file structure of the package will contain most of the elements that we use more frequently.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="sc">|-</span>studyPackage</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="sc">|-</span>R<span class="sc">/</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="er">|</span><span class="sc">-</span>createCohorts.R</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="sc">|-</span>runStudy.R</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="sc">|-</span>objective1.R</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="sc">|-</span>objective2.R</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="sc">|-</span>objective3.R</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    ...</span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="sc">|-</span>inst<span class="sc">/</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    <span class="er">|</span><span class="sc">-</span>concept_set<span class="sc">/</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    <span class="er">|</span><span class="sc">-</span>cohorts<span class="sc">/</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  <span class="er">|</span><span class="sc">-</span>LICENSE</span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="sc">|-</span>README.rmd</span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>  <span class="sc">|-</span>extras<span class="sc">/</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>    <span class="er">|</span><span class="sc">-</span>CodeToRun.R</span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    <span class="sc">|-</span>pullFromATLAS.R</span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    <span class="sc">|-</span>shiny<span class="sc">/</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>  <span class="er">|</span><span class="sc">-</span>tests<span class="sc">/</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>  <span class="er">|</span><span class="sc">-</span>renv<span class="sc">/</span></span></code></pre></div>
+<span>  path <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  n_obj <span class="op">=</span> <span class="fl">3</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>It adds the following files and folders to an existing study package:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>studyPackage<span class="sc">/</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>├── R<span class="sc">/</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>│   ├── createCohorts.R</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>│   ├── runStudy.R</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>│   ├── runDiagnostics.R</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>│   ├── utils.R</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>│   ├── globals.R</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>│   ├── merge.R</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>│   └── objective1.R, ..., objective<span class="sc">&lt;</span>n_obj<span class="sc">&gt;</span>.R</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>├── inst<span class="sc">/</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>│   ├── cohorts<span class="sc">/</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>│   └── concept_sets<span class="sc">/</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>├── extras<span class="sc">/</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>│   ├── CodeToRun.R</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>│   └── pullConceptSetsFromAtlas.R</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>├── man<span class="sc">/</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>├── tests<span class="sc">/</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>│   └── testthat<span class="sc">/</span>test<span class="sc">-</span><span class="er">*</span>.R</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>├── LICENSE.md</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>├── NEWS.md</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>└── README.Rmd</span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="unifying-approaches">Unifying approaches<a class="anchor" aria-label="anchor" href="#unifying-approaches"></a>
+<h3 id="download-concept-sets-from-atlas">Download concept sets from ATLAS<a class="anchor" aria-label="anchor" href="#download-concept-sets-from-atlas"></a>
 </h3>
-<p>Even in the same development team, people may prefer different tools for routine tasks (such as logging or even saving zip files). Here we try to find common ground, test functions, and avoid unnecessary bugs from small and less complicated methods, from asserting data partner names to making sure we are zipping results to the correct folder.</p>
+<p>Use <code><a href="reference/pullConceptsAtlas.html">pullConceptsAtlas()</a></code> to save ATLAS concept-set definitions in <code>inst/concept_sets/&lt;conceptSetType&gt;/</code>. It requires access to the ATLAS WebAPI.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/arrangeCdmNames.html">arrangeCdmNames</a></span><span class="op">(</span></span>
-<span>  <span class="va">labels</span></span>
-<span>  <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/pullConceptsAtlas.html">pullConceptsAtlas</a></span><span class="op">(</span></span>
+<span>  conceptSetList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>,</span>
+<span>  conceptSetType <span class="op">=</span> <span class="st">"example"</span>,</span>
+<span>  baseUrl <span class="op">=</span> <span class="st">"https://atlas.darwin-eu.org/WebAPI"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="manage-study-files">Manage study files<a class="anchor" aria-label="anchor" href="#manage-study-files"></a>
+</h3>
+<p>Use the shared functions to validate data-partner names and create, archive, or extract study results.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/arrangeCdmNames.html">arrangeCdmNames</a></span><span class="op">(</span><span class="va">labels</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/createResultsDir.html">createResultsDir</a></span><span class="op">(</span></span>
-<span>   <span class="va">outputDir</span>,</span>
-<span>   <span class="va">dbname</span></span>
+<span>  <span class="va">outputDir</span>,</span>
+<span>  <span class="va">dbname</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/zipStudyFiles.html">zipStudyFiles</a></span><span class="op">(</span></span>
 <span>  <span class="va">resultsDirName</span>,</span>
 <span>  <span class="va">outputDir</span>,</span>
-<span>  <span class="va">dbname</span><span class="op">)</span></span>
+<span>  <span class="va">dbname</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/unZipStudyFiles.html">unZipStudyFiles</a></span><span class="op">(</span></span>
 <span>  <span class="va">path</span>,</span>
@@ -122,26 +133,65 @@
 <span>  <span class="va">negate</span>,</span>
 <span>  <span class="va">recursive</span>,</span>
 <span>  <span class="va">outputDir</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="smoother-processes">Smoother processes<a class="anchor" aria-label="anchor" href="#smoother-processes"></a>
+<h3 id="updating-summarised-results">Updating summarised results<a class="anchor" aria-label="anchor" href="#updating-summarised-results"></a>
 </h3>
-<p>Furthermore, in <code>studyGenerics()</code> we also develop functions that make our life easier, such as saving an R virtual environment in a cellar on macOS and later using that folder to <code><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">renv::restore()</a></code> on a Windows machine without internet access.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/getPkgZips.html">getPkgZips</a></span><span class="op">(</span></span>
-<span>  <span class="va">lockfile_path</span>, </span>
-<span>  <span class="va">supplement</span>, </span>
-<span>  <span class="va">override_lock</span>,</span>
-<span>  <span class="va">r_rels_vect</span>,</span>
-<span>  <span class="va">backupRrel</span>,</span>
-<span>  <span class="va">outDir</span></span>
-<span>  <span class="op">)</span> </span></code></pre></div>
+<p>Use <code><a href="reference/updateColumnValues.html">updateColumnValues()</a></code> to replace values in a summarised-result column, for example when preparing clearer cohort labels for presentation.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/updateColumnValues.html">updateColumnValues</a></span><span class="op">(</span></span>
+<span>  summarised_result <span class="op">=</span> <span class="va">summarised_result</span>,</span>
+<span>  names_map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"old_cohort_name"</span> <span class="op">=</span> <span class="st">"Clear cohort name"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  variable <span class="op">=</span> <span class="st">"group_level"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="prepare-dependencies-for-offline-installation">Prepare dependencies for offline installation<a class="anchor" aria-label="anchor" href="#prepare-dependencies-for-offline-installation"></a>
+</h3>
+<p>Save packages from <code>renv.lock</code> to <code>renv/cellar</code>, then use that cellar to restore the environment on a machine without internet access.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Save packages in renv/cellar</span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/packageCellar.html">packageCellar</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Restore packages from renv/cellar</span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/installCellar.html">installCellar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="version-control-workflow">Version control workflow<a class="anchor" aria-label="anchor" href="#version-control-workflow"></a>
+</h3>
+<p>Configure <code>GITHUB_PAT</code> in <code>.Renviron</code>, then create an issue and branch, open a pull request, and return to the latest <code>develop</code> branch.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a GitHub issue and check out a branch named after it</span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/issueOpen.html">issueOpen</a></span><span class="op">(</span></span>
+<span>  title <span class="op">=</span> <span class="st">"Add study outcome"</span>,</span>
+<span>  body <span class="op">=</span> <span class="st">"Describe the planned change."</span>,</span>
+<span>  newBranch <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># After committing and pushing the branch, create a pull request to develop</span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/pullRequest.html">pullRequest</a></span><span class="op">(</span></span>
+<span>  title <span class="op">=</span> <span class="st">"Add study outcome"</span>,</span>
+<span>  body <span class="op">=</span> <span class="st">"Describe the implemented change."</span>,</span>
+<span>  base <span class="op">=</span> <span class="st">"develop"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># After the pull request is merged, return to the latest develop branch</span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/devCheckout.html">devCheckout</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="license">
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/mi-erasmusmc/studyGenerics/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/mi-erasmusmc/studyGenerics/issues" class="external-link">Report a bug</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
@@ -163,13 +213,15 @@
 <li>Cesar Barboza <br><small class="roles"> Author, maintainer </small>   </li>
 <li>Cristiana Di Tullio <br><small class="roles"> Author </small>   </li>
 <li>Arianna Alamshahi <br><small class="roles"> Author </small>   </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/mi-erasmusmc/StudyToolBelt/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/mi-erasmusmc/StudyToolBelt/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/mi-erasmusmc/studyGenerics/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/mi-erasmusmc/studyGenerics/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/mi-erasmusmc/studyGenerics" class="external-link"><img src="https://codecov.io/gh/mi-erasmusmc/studyGenerics/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 

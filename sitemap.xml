@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/404.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/AGENTS.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/LICENSE.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/articles/index.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/articles/macos_solves.html</loc></url>
@@ -9,17 +10,22 @@
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/news/index.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/arrangeCdmNames.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/assertCdmNames.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/createCohortsFun.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/createResultsDir.html</loc></url>
-<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/developCheckout.html</loc></url>
-<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/getPkgZips.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/devCheckout.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/index.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/insertDocs.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/insertStructure.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/insertStudyFiles.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/insertTests.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/installCellar.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/installPackageBundle.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/issueOpen.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/packageCellar.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/pullConceptsAtlas.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/pullRequest.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/runDiagnosticsFun.html</loc></url>
+<url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/runStudyFun.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/setLoggers.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/unZipStudyFiles.html</loc></url>
 <url><loc>https://mi-erasmusmc.github.io/studyGenerics/reference/updateColumnValues.html</loc></url>

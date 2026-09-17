@@ -1,49 +1,79 @@
-# Inserting a New Package Structure
+# Create a Study Package
 
-## Create an empty project
+Use
+[`insertStructure()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertStructure.md)
+to set up a new OMOP study package with common folders, starter scripts,
+tests, and package dependencies.
 
-First, create a new empty project for your new study package with the
-package use this or from the menu in RStudio (Menu \> File \> New
-Project). The package will open a new instance of Positron or Rstudio.
+## Before you start
+
+Create an empty R package and make sure you have internet access. The
+setup installs the standard study-package dependencies.
+
+## 1. Create an empty package
+
+Create a package with `usethis`, or use **File \> New Project** in
+RStudio.
 
 ``` r
-
-library(usethis)
 
 usethis::create_package(
   path = "~/P1C1001"
-  )
+)
 ```
 
-## Initiate an environment
+## 2. Initialize the environment
 
-Inside the new study package use `renv` to initialise a new environment
-to start installing packages and install `studyGenerics`
+Inside the new package, initialize `renv` and install `studyGenerics`.
 
 ``` r
-
-library(renv)
 
 renv::init()
 
 renv::install("mi-erasmusmc/studyGenerics")
 ```
 
-## Insert the structure
+## 3. Insert the study structure
 
-Finally, use the function
-[`studyGenerics::insertStructure`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertStructure.md)
-to create a common configuration of packages and files to start
-developing a study package. You can use the parameter `n_obj` to define
-the number of objectives in your study. This will create a file to write
-a script for each objective in the /R folder.
+Run
+[`insertStructure()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertStructure.md)
+from the package directory. `n_obj` sets the number of objective scripts
+to create.
 
 ``` r
 
-library(studyGenerics)
-
 studyGenerics::insertStructure(
-  path = ".", # Default to create the study structure in the package you are currently in
-  n_obj = 3 # Default 3, in number.
+  path = ".",
+  n_obj = 3
 )
 ```
+
+The package will include:
+
+    studyPackage/
+    ├── R/
+    │   ├── createCohorts.R
+    │   ├── runStudy.R
+    │   ├── runDiagnostics.R
+    │   ├── utils.R
+    │   ├── globals.R
+    │   ├── merge.R
+    │   └── objective1.R, ..., objective<n_obj>.R
+    ├── inst/
+    │   ├── cohorts/
+    │   └── concept_sets/
+    ├── extras/
+    │   ├── CodeToRun.R
+    │   └── pullConceptSetsFromAtlas.R
+    ├── man/
+    ├── tests/
+    │   └── testthat/test-*.R
+    ├── LICENSE.md
+    ├── NEWS.md
+    └── README.Rmd
+
+## 4. Next steps
+
+Add concept sets to `inst/concept_sets/`, develop the study code in
+`R/`, then generate documentation with `devtools::document()` and check
+the package with `devtools::check()`.

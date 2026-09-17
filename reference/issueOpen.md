@@ -1,7 +1,8 @@
-# \`issueOpen()\` is a wrapper for gh::gh() to swiftly post in the GitHub repository of the current project
+# `issueOpen()` is a wrapper for gh::gh() to quickly create an issue in the current GitHub repository.
 
-\`issueOpen()\` is a wrapper for gh::gh() to swiftly post in the GitHub
-repository of the current project
+Set GITHUB_PAT in .Renviron. It will use the same authentication in the
+background as with `gh`
+https://gh.r-lib.org/articles/managing-personal-access-tokens.html
 
 ## Usage
 
@@ -13,16 +14,30 @@ issueOpen(title, body, newBranch = FALSE)
 
 - title:
 
-  of the issue in character
+  A character string giving the issue title.
 
 - body:
 
-  of the issue in character
+  A character string giving the issue body.
 
 - newBranch:
 
-  Logical. Default TRUE, will open a new branch in GitHub format
+  Logical. Whether to create and check out a branch named after the new
+  issue. Defaults to `FALSE`.
 
 ## Value
 
-A message with the link of the PR
+URL of the created issue.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# It requires GITHUB_PAT
+issueOpen(
+   title = "Add study outcome",
+   body = "Describe the planned change.",
+   newBranch = TRUE
+)
+} # }
+```
