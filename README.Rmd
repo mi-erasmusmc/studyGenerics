@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 # studyGenerics
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/studyGenerics)](https://CRAN.R-project.org/package=studyGenerics)
 [![R-CMD-check](https://github.com/mi-erasmusmc/studyGenerics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mi-erasmusmc/studyGenerics/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/mi-erasmusmc/studyGenerics/graph/badge.svg)](https://app.codecov.io/gh/mi-erasmusmc/studyGenerics)
 <!-- badges: end -->
