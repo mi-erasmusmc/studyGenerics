@@ -51,6 +51,8 @@ test_that("insertStructure works", {
   expect_equal(r_files, 9)
   readLines(file.path(test_pkg_path, "R", "createCohorts.R")) |>
     expect_equal(createCohortsFun())
+  readLines(file.path(test_pkg_path, "R", "runStudy.R")) |>
+    expect_equal(runStudyFun(n_obj = 3))
   readLines(file.path(test_pkg_path, "R", "runDiagnostics.R")) |>
     expect_equal(runDiagnosticsFun())
   expect_false(file.exists(file.path(test_pkg_path, "R", "hello.R")))
@@ -120,4 +122,12 @@ test_that("runDiagnosticsFun inserted into runDiagnostics.R", {
   writeLines(runDiagnosticsFun(), path)
   readLines(path) |>
     expect_equal(runDiagnosticsFun())
+})
+
+test_that("runStudyFun creates a workflow for each objective", {
+  workflow <- runStudyFun(n_obj = 2)
+
+  expect_true("  objective1_results <- objective1(" %in% workflow)
+  expect_true("  objective2_results <- objective2(" %in% workflow)
+  expect_false(any(grepl("objective3", workflow)))
 })
