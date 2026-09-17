@@ -1,4 +1,5 @@
 test_that("insertStructure works", {
+  skip_on_cran()
   requireInstall("desc")
   test_pkg_path <- withr::local_tempdir()
   usethis::create_package(
@@ -72,6 +73,7 @@ test_that("insertStructure works", {
 })
 
 test_that("createCohortsFun inserted into createCohorts.R", {
+  skip_on_cran()
   test_pkg_path <- withr::local_tempdir()
   usethis::create_package(
     test_pkg_path,
@@ -96,6 +98,7 @@ test_that("createCohortsFun inserted into createCohorts.R", {
 })
 
 test_that("runDiagnosticsFun inserted into runDiagnostics.R", {
+  skip_on_cran()
   test_pkg_path <- withr::local_tempdir()
   usethis::create_package(
     test_pkg_path,

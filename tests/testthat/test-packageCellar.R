@@ -1,4 +1,5 @@
 test_that("packageCellar saves single cran and github package to cellar", {
+  skip_on_cran()
   # PREP ----------
   testLockfile <- testthat::test_path(
     "data",
@@ -41,6 +42,7 @@ test_that("packageCellar saves single cran and github package to cellar", {
 })
 
 test_that("packageCellar saves multiple github packages to cellar", {
+  skip_on_cran()
   # PREP ----------
   testLockfile <- testthat::test_path(
     "data",
@@ -75,6 +77,7 @@ test_that("packageCellar saves multiple github packages to cellar", {
 })
 
 test_that("packageCellar saves single github package to cellar", {
+  skip_on_cran()
   # PREP ----------
   testLockfile <- testthat::test_path(
     "data",
@@ -109,6 +112,7 @@ test_that("packageCellar saves single github package to cellar", {
 })
 
 test_that("retrieveGithub packages to cellar", {
+  skip_on_cran()
   testLockfile <- testthat::test_path(
      "data",
      "renv.lock"
@@ -187,6 +191,7 @@ test_that("extractGithubList", {
 })
 
 test_that("downloadGithub package to cellar", {
+  skip_on_cran()
   testLockfile <- testthat::test_path(
     "data",
     "renv.lock"
@@ -220,6 +225,7 @@ test_that("downloadGithub package to cellar", {
 })
 
 test_that("installCellar", {
+  skip_on_cran()
   # PREP ----------
   testLockfile <- testthat::test_path(
     "data",

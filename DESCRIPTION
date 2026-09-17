@@ -21,7 +21,8 @@ Authors@R: c(
   )
 Description: Provides generic functions for routine tasks required to run OMOP-CDM studies.
   In addition to testing these recurring methods, studyGenerics aims to centralise
-  collaboration and speed up the development of these types of projects.
+  collaboration and speed up the development of these types of projects. The optional
+  ROhdsiWebApi package is available from https://github.com/OHDSI/ROhdsiWebApi.
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
@@ -51,8 +52,6 @@ Suggests:
     rmarkdown,
     ROhdsiWebApi,    
     testthat (>= 3.0.0)
-Remotes:
-    ohdsi/ROhdsiWebApi
 Config/testthat/edition: 3
 URL: https://mi-erasmusmc.github.io/studyGenerics/
 VignetteBuilder: knitr

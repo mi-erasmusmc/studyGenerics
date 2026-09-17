@@ -1,5 +1,7 @@
 test_that("pullConceptsAtlas downloads concept sets correctly", {
 
+  skip_on_cran()
+  skip_if_not_installed("ROhdsiWebApi")
   skip_if(Sys.getenv("ATLAS_TOKEN") == "")
 
   require(ROhdsiWebApi)

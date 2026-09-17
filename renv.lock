@@ -248,21 +248,6 @@
       ],
       "Hash": "e5114f2abe04168238181913a8572358"
     },
-    "httr": {
-      "Package": "httr",
-      "Version": "1.4.9",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "R6",
-        "curl",
-        "jsonlite",
-        "mime",
-        "openssl"
-      ],
-      "Hash": "bc0b2d531d78701c4cd1221adbf052ce"
-    },
     "httr2": {
       "Package": "httr2",
       "Version": "1.2.2",
@@ -301,6 +286,12 @@
       ],
       "Hash": "b0776f526d36d8bd4a3344a88fe165c4"
     },
+    "jsonvalidate": {
+      "Package": "jsonvalidate",
+      "Version": "1.5.0",
+      "Source": "Repository",
+      "Repository": "CRAN"
+    },
     "lifecycle": {
       "Package": "lifecycle",
       "Version": "1.0.5",
@@ -334,16 +325,6 @@
         "utils"
       ],
       "Hash": "5cfd074e79d5443c523360bbe203d904"
-    },
-    "mime": {
-      "Package": "mime",
-      "Version": "0.13",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "tools"
-      ],
-      "Hash": "0ec19f34c72fab674d8f2b4b1c6410e1"
     },
     "openssl": {
       "Package": "openssl",
