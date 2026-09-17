@@ -24,3 +24,30 @@ installs a default list of DARWIN EU®/OHDSI packages.
 It assumes an active R project has already been created and renv
 initialized.
 }
+\examples{
+\dontrun{
+
+# Creating package structure in current project
+
+# - Initialize renv
+renv::init()
+
+# - Install package development tools
+renv::install(c("usethis",
+                "devtools",
+                "studyGenerics"))
+
+# - Initialize DESCRIPTION
+usethis::use_description()
+
+# - Initialize package structure
+studyGenerics::insertStructure()
+
+# - Initialize NAMESPACE
+devtools::document()
+
+# - Check package is valid
+devtools::check()
+}
+
+}

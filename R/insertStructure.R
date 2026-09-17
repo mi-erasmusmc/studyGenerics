@@ -1,5 +1,5 @@
 #' Install default package bundle
-#' 
+#'
 #' @param path A valid path to the study project in character.
 #'
 #' Installs a predefined set of DARWIN EU®/OHDSI packages into the study project
@@ -82,7 +82,7 @@ installPackageBundle <- function(path) {
 }
 
 #' Insert default documentation files
-#' 
+#'
 #' @param path A valid path to the study project in character.
 #'
 #' Creates default `NEWS.md`, `README.Rmd` and `LICENSE.md` (Apache License 2.0) files.
@@ -197,6 +197,32 @@ insertTests <- function(
 #'
 #' @return
 #' No return value.
+#'
+#' @examples
+#' \dontrun{
+#'
+#' # Creating package structure in current project
+#'
+#' # - Initialize renv
+#' renv::init()
+#'
+#' # - Install package development tools
+#' renv::install(c("usethis",
+#'                 "devtools",
+#'                 "studyGenerics"))
+#'
+#' # - Initialize DESCRIPTION
+#' usethis::use_description()
+#'
+#' # - Initialize package structure
+#' studyGenerics::insertStructure()
+#'
+#' # - Initialize NAMESPACE
+#' devtools::document()
+#'
+#' # - Check package is valid
+#' devtools::check()
+#' }
 #'
 #' @export
 insertStructure <- function(
