@@ -23,7 +23,7 @@ test_that("packageCellar saves single cran and github package to cellar", {
   # EXECUTION -------
   packageCellar(
     lockfile = testLockfile,
-    cellarDir = testCellarDir,
+    path = testCellarDir,
     type = "complete"
   )
   # TEST ------------
@@ -54,8 +54,8 @@ test_that("packageCellar saves multiple github packages to cellar", {
   dir.create(testCellarDir)
   # EXECUTION -------
   packageCellar(
+    path = testCellarDir,
     lockfile = testLockfile,
-    cellarDir = testCellarDir,
     type = "github"
   )
   # TEST ------------
@@ -88,8 +88,8 @@ test_that("packageCellar saves single github package to cellar", {
   dir.create(testCellarDir)
   # EXECUTION -------
   packageCellar(
+    path = testCellarDir,
     lockfile = testLockfile,
-    cellarDir = testCellarDir,
     type = "github"
   )
   # TEST ------------
@@ -120,7 +120,7 @@ test_that("retrieveGithub packages to cellar", {
   dir.create(testCellarDir)
   retrieveGithub(
     lockfile = testLockfile,
-    cellarDir = testCellarDir
+    path = testCellarDir
   )
   list.files(
     testCellarDir
@@ -202,7 +202,7 @@ test_that("downloadGithub package to cellar", {
     type = "github"
   ) |> 
     downloadGithub(
-    cellarDir = testCellarDir
+    path = testCellarDir
   )
   list.files(
     testCellarDir
@@ -261,7 +261,7 @@ test_that("installCellar", {
     ) |> 
       list.files() |> 
       expect_length(
-        107
+        112
       )
   })
   # EXIT ------------
