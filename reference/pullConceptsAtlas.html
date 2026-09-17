@@ -11,7 +11,7 @@ inst/concept_sets/&amp;lt;conceptSetType&amp;gt;/."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">studyGenerics</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,8 @@ concept set name for use as a file name and writes the JSON definition to
 <span>  <span class="va">conceptSetType</span>,</span>
 <span>  baseUrl <span class="op">=</span> <span class="st">"https://atlas.darwin-eu.org/WebAPI"</span>,</span>
 <span>  deletePrevious <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  patternToRemove <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p[0-9]{1}_c[0-9]{1}_[0-9]{3}_"</span><span class="op">)</span></span>
+<span>  patternToRemove <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p[0-9]{1}_c[0-9]{1}_[0-9]{3}_"</span><span class="op">)</span>,</span>
+<span>  authHeader <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"ATLAS_TOKEN"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -85,11 +86,25 @@ the target <code>&lt;conceptSetType&gt;</code> folder before downloading the new
 <dd><p>A vector of regular expressions containing the pattern(s)
 to be removed from the ATLAS concept set names before creating the output JSON files.</p></dd>
 
+
+<dt id="arg-authheader">authHeader<a class="anchor" aria-label="anchor" href="#arg-authheader"></a></dt>
+<dd><p>Authorization header for the WebAPI. Defaults to
+<code>Sys.getenv("ATLAS_TOKEN")</code>. Use <code>""</code> for a public WebAPI.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A tibble with one row per downloaded concept set and the columns
-<code>conceptSetId</code>, <code>originalName</code>, <code>cleanName</code>, and <code>jsonPath</code>.</p>
+<code>conceptSetId</code>, <code>originalName</code>, <code>cleanName</code>, and <code>fileName</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Requires the optional CRAN packages <code>httr</code>, <code>RJSONIO</code>, <code>lubridate</code>, and <code>rlang</code>.
+For a protected WebAPI, set <code>ATLAS_TOKEN</code> in your local <code>.Renviron</code> file and
+restart R. The token may include the <code>Bearer </code> prefix. It is sent only to
+the supplied WebAPI. Do not commit the token to version control.
+The internal retrieval helpers are adapted from OHDSI's <code>ROhdsiWebApi</code>
+under the Apache License 2.0; see <code>inst/COPYRIGHTS</code> in the package source.</p>
     </div>
 
     <div class="section level2">

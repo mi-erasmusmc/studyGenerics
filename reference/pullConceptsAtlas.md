@@ -12,7 +12,8 @@ pullConceptsAtlas(
   conceptSetType,
   baseUrl = "https://atlas.darwin-eu.org/WebAPI",
   deletePrevious = TRUE,
-  patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_")
+  patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_"),
+  authHeader = Sys.getenv("ATLAS_TOKEN")
 )
 ```
 
@@ -43,10 +44,25 @@ pullConceptsAtlas(
   removed from the ATLAS concept set names before creating the output
   JSON files.
 
+- authHeader:
+
+  Authorization header for the WebAPI. Defaults to
+  `Sys.getenv("ATLAS_TOKEN")`. Use `""` for a public WebAPI.
+
 ## Value
 
 A tibble with one row per downloaded concept set and the columns
-`conceptSetId`, `originalName`, `cleanName`, and `jsonPath`.
+`conceptSetId`, `originalName`, `cleanName`, and `fileName`.
+
+## Details
+
+Requires the optional CRAN packages `httr`, `RJSONIO`, `lubridate`, and
+`rlang`. For a protected WebAPI, set `ATLAS_TOKEN` in your local
+`.Renviron` file and restart R. The token may include the `Bearer `
+prefix. It is sent only to the supplied WebAPI. Do not commit the token
+to version control. The internal retrieval helpers are adapted from
+OHDSI's `ROhdsiWebApi` under the Apache License 2.0; see
+`inst/COPYRIGHTS` in the package source.
 
 ## Examples
 
