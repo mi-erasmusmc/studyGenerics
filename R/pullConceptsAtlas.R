@@ -33,11 +33,11 @@
 #' @importFrom dplyr tibble bind_rows
 #' @importFrom stringr str_to_lower str_remove str_replace_all
 #' @importFrom ParallelLogger logInfo
-#' 
+#'
 #' @export
-#' 
+#'
 #' @examples
-#' 
+#'
 #' \dontrun{
 #' # Requires a connection to the ATLAS WebAPI
 #' conceptSetList <- c(12345)
@@ -47,7 +47,7 @@
 #'    conceptSetType = conceptSetType,
 #'    baseUrl = "https://atlas.darwin-eu.org/WebAPI",
 #'    deletePrevious = TRUE,
-#'    patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_") 
+#'    patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_")
 #' )
 #' }
 pullConceptsAtlas <- function(
@@ -119,7 +119,7 @@ pullConceptsAtlas <- function(
       stringr::str_replace_all(
         c(
           "^\\s+|\\s+$" = "",  # remove leading or trailing whitespaces
-          "^[0-9]+_" = "",     # remove initial sequence of digits followed by _
+          "^[0-9]+" = "",      # remove initial sequence of digits
           "[\\s()]" = "_"      # replace inner whitespaces, ( or ) with _
         )
       )
@@ -130,6 +130,7 @@ pullConceptsAtlas <- function(
     clean_name <- clean_name |>
       stringr::str_replace_all(
         c(
+          "-+|–+" = "_",       # replace - (hyphen) and – (dash) with _
           "_+" = "_",          # replace multiple _ with single _
           "^_|_$" = ""         # remove any leading or trailing _ if any
         )
