@@ -160,8 +160,8 @@ pullRequest <- function(
 #' @description
 #' Checks out the `develop` branch and pulls changes from its remote.
 #'
-#' @param verbose Logical. Whether to report successful checkout and update of
-#' `develop`. Defaults to `FALSE`.
+#' @param verbose Logical. Whether to show Git pull progress. Defaults to
+#' `FALSE`; a concise completion message is always shown.
 #'
 #' @returns Invisibly, the result of pulling `develop`.
 #' @export
@@ -169,7 +169,7 @@ pullRequest <- function(
 #' @examples
 #' \dontrun{
 #' # Requires access to the configured Git remote
-#' devCheckout(verbose = TRUE)
+#' devCheckout()
 #' }
 devCheckout <- function(verbose = FALSE) {
   requireInstall("gert")
@@ -182,10 +182,8 @@ devCheckout <- function(verbose = FALSE) {
       orphan = FALSE,
       repo = "."
     )
-    pull_result <- gert::git_pull()
-    if (isTRUE(verbose)) {
-      message("Checked out and updated develop.")
-    }
+    pull_result <- gert::git_pull(verbose = verbose)
+    message("Checked out and updated develop.")
     return(invisible(pull_result))
   }
   invisible(NULL)
