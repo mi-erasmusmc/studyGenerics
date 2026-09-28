@@ -4,10 +4,14 @@
 \alias{devCheckout}
 \title{\code{devCheckout()} checks out the \code{develop} branch and pulls its latest changes.}
 \usage{
-devCheckout()
+devCheckout(verbose = FALSE)
+}
+\arguments{
+\item{verbose}{Logical. Whether to report successful checkout and update of
+\code{develop}. Defaults to \code{FALSE}.}
 }
 \value{
-Git log messages after checking out and pulling 'develop'
+Invisibly, the result of pulling \code{develop}.
 }
 \description{
 Checks out the \code{develop} branch and pulls changes from its remote.
@@ -15,7 +19,6 @@ Checks out the \code{develop} branch and pulls changes from its remote.
 \examples{
 \dontrun{
 # Requires access to the configured Git remote
-devCheckout(
-)
+devCheckout(verbose = TRUE)
 }
 }

@@ -60,33 +60,31 @@ issueOpen <- function(
     "gh_response"
   )
   if (isTRUE(issue_created)) {
-    cli::cli_alert_success(
-      "Issue created at:"
-    )
-    cat(issue_data$html_url, "\n")
-    invisible(issue_data$html_url)
-  }
-  if (isTRUE(issue_created) & isTRUE(newBranch)) {
-    branch_title <- stringr::word(title, 1, 2) |> 
-      tolower() |> 
-      stringr::str_replace_all(
-        pattern = " ",
-        replacement = "_"
+    issue_url <- issue_data$html_url
+    if (isTRUE(newBranch)) {
+      branch_title <- stringr::word(title, 1, 2) |>
+        tolower() |>
+        stringr::str_replace_all(
+          pattern = " ",
+          replacement = "_"
+        )
+      branch_name <- glue::glue(
+        "{issue_data$number}_{branch_title}"
       )
-    branch_name <- glue::glue(
-      "{issue_data$number}_{branch_title}"
-    )
-    gert::git_branch_create(
-      branch = branch_name,
-      ref = gert::git_branch(),
-      checkout = TRUE,
-      force = FALSE,
-      repo = "."
-    )
-    gert::git_push(
-      remote = "origin",
-      set_upstream = TRUE
-    )
+      gert::git_branch_create(
+        branch = branch_name,
+        ref = gert::git_branch(),
+        checkout = TRUE,
+        force = FALSE,
+        repo = "."
+      )
+      gert::git_push(
+        remote = "origin",
+        set_upstream = TRUE
+      )
+    }
+    message("Issue created: ", issue_url)
+    return(invisible(issue_url))
   }
 }
 
@@ -151,11 +149,9 @@ pullRequest <- function(
     "gh_response"
   )
   if (isTRUE(pr_created)) {
-    cli::cli_alert_success(
-      "Pull request created at:"
-    )
-    cat(prData$html_url, "\n")
-    invisible(prData$html_url)
+    pr_url <- prData$html_url
+    message("Pull request created: ", pr_url)
+    return(invisible(pr_url))
   }
 }
 
@@ -164,17 +160,20 @@ pullRequest <- function(
 #' @description
 #' Checks out the `develop` branch and pulls changes from its remote.
 #'
-#' @returns Git log messages after checking out and pulling 'develop'
+#' @param verbose Logical. Whether to report successful checkout and update of
+#' `develop`. Defaults to `FALSE`.
+#'
+#' @returns Invisibly, the result of pulling `develop`.
 #' @export
 #' 
 #' @examples
 #' \dontrun{
 #' # Requires access to the configured Git remote
-#' devCheckout(
-#' )
+#' devCheckout(verbose = TRUE)
 #' }
-devCheckout <- function() {
+devCheckout <- function(verbose = FALSE) {
   requireInstall("gert")
+  checkmate::assertLogical(verbose, len = 1, any.missing = FALSE)
   branch <- "develop"
   if (gert::git_branch_exists(branch)) {
     gert::git_branch_checkout(
@@ -183,6 +182,11 @@ devCheckout <- function() {
       orphan = FALSE,
       repo = "."
     )
-    gert::git_pull()
+    pull_result <- gert::git_pull()
+    if (isTRUE(verbose)) {
+      message("Checked out and updated develop.")
+    }
+    return(invisible(pull_result))
   }
+  invisible(NULL)
 }
