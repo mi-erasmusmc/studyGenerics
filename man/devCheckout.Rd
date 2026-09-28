@@ -7,8 +7,8 @@
 devCheckout(verbose = FALSE)
 }
 \arguments{
-\item{verbose}{Logical. Whether to report successful checkout and update of
-\code{develop}. Defaults to \code{FALSE}.}
+\item{verbose}{Logical. Whether to show Git pull progress. Defaults to
+\code{FALSE}; a concise completion message is always shown.}
 }
 \value{
 Invisibly, the result of pulling \code{develop}.
@@ -19,6 +19,6 @@ Checks out the \code{develop} branch and pulls changes from its remote.
 \examples{
 \dontrun{
 # Requires access to the configured Git remote
-devCheckout(verbose = TRUE)
+devCheckout()
 }
 }
