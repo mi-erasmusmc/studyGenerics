@@ -34,7 +34,8 @@ documentation. Use `n_obj` to set the number of objective scripts.
 
 ``` r
 studyGenerics::insertStructure(
-  path = ".",
+  studyName = "P1-C1-001",
+  path = "/path/to/P1-C1-001",
   n_obj = 3
 )
 ```
@@ -65,14 +66,14 @@ It adds the following files and folders to an existing study package:
 
 ### Download concept sets from ATLAS
 
-Use `pullConceptsAtlas()` to save ATLAS concept-set definitions in
-`inst/concept_sets/<conceptSetType>/`. It requires access to the ATLAS
-WebAPI.
+Use `pullConceptsAtlas()` to save ATLAS concept-set definitions in an
+explicit output directory. It requires access to the ATLAS WebAPI.
 
 ``` r
 studyGenerics::pullConceptsAtlas(
   conceptSetList = c(12345),
   conceptSetType = "example",
+  outputDir = file.path(tempdir(), "concept_sets"),
   baseUrl = "https://atlas.darwin-eu.org/WebAPI"
 )
 ```
@@ -127,11 +128,14 @@ Save packages from `renv.lock` to `renv/cellar`, then use that cellar to
 restore the environment on a machine without internet access.
 
 ``` r
-# Save packages in renv/cellar
-studyGenerics::packageCellar()
+# Save packages in an explicit cellar directory
+studyGenerics::packageCellar(path = file.path(tempdir(), "cellar"))
 
-# Restore packages from renv/cellar
-studyGenerics::installCellar()
+# Restore packages into an explicit library directory
+studyGenerics::installCellar(
+  path = file.path(tempdir(), "cellar"),
+  library = file.path(tempdir(), "library")
+)
 ```
 
 ### Version control workflow

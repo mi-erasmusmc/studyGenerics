@@ -1,22 +1,13 @@
 test_that("insertStructure works", {
   skip_on_cran()
-  requireInstall("desc")
-  testProject <- withr::local_tempdir()
-  usethis::create_package(
-    testProject,
-    open = FALSE
+  testParent <- withr::local_tempdir()
+  testProject <- file.path(testParent, "P1-C1-001")
+  dir.create(testProject)
+  insertStructure(
+    studyName = "P1-C1-001",
+    path = testProject,
+    n_obj = 3
   )
-  renv::init(project = testProject, load = FALSE) # load = FALSE prevents changing the wd
-  renv::install(
-    c("usethis", "lattice", "Matrix", "survival"),
-    project = testProject
-  )
-  usethis::with_project(testProject, {
-    insertStructure(
-      path = testProject,
-      # path = ".",
-      n_obj = 3)
-  })
   # Expect installed packages
   expect_true(dir.exists(file.path(testProject, "renv")))
   expect_true(file.exists(file.path(testProject, "renv.lock")))
@@ -32,8 +23,10 @@ test_that("insertStructure works", {
     "visOmopResults",
     "DarwinShinyModules"
   )
-  desc <- desc::desc(file.path(testProject, "DESCRIPTION"))
-  imported_pkgs <- desc$get("Imports")
+  description <- read.dcf(file.path(testProject, "DESCRIPTION"))
+  expect_equal(unname(description[1, "Package"]), "P1C1001")
+  expect_false(dir.exists(file.path(testParent, "P1C1001")))
+  imported_pkgs <- description[1, "Imports"]
   for (pkg in installed_pkgs) {
     expect_true(grepl(pkg, imported_pkgs))
   }

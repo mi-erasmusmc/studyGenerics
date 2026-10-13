@@ -4,7 +4,7 @@
 \alias{insertTests}
 \title{Insert default test files}
 \usage{
-insertTests(path = ".")
+insertTests(path)
 }
 \arguments{
 \item{path}{Character string identifying the path to the study project,

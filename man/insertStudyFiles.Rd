@@ -4,7 +4,7 @@
 \alias{insertStudyFiles}
 \title{Insert default study files}
 \usage{
-insertStudyFiles(path = ".", n_obj = 3)
+insertStudyFiles(path, n_obj = 3)
 }
 \arguments{
 \item{path}{Character string identifying the path to the study project,
