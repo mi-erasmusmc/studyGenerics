@@ -1,6 +1,6 @@
 #' `packageCellar()` saves files from a renv.lock file into the 'cellar' folder in `renv`
 #'
-#' @param path Character string giving the cellar path. If omitted, defaults to `renv/cellar`.
+#' @param path Character string giving the cellar path. This must be supplied explicitly.
 #' @param project Character string giving the project path. If omitted, defaults to `usethis::proj_get()`.
 #' @param lockfile Character string giving the lockfile path. If omitted, defaults to `renv.lock` at the project base level provided by `usethis::proj_get()`.
 #' @param type Character string specifying whether to download all packages (`"complete"`) or only packages from GitHub (`"github"`).
@@ -15,7 +15,7 @@
 #' 
 #' \dontrun{
 #' # It will download the tar files for every package in the renv.lock
-#' packageCellar()
+#' packageCellar(path = file.path(tempdir(), "cellar"))
 #' }
 packageCellar <- function(
   path,
@@ -33,11 +33,7 @@ packageCellar <- function(
     )
   }
   if (missing(path)) {
-    path <- file.path(
-      project,
-      "renv",
-      "cellar"
-    )
+    cli::cli_abort("{.arg path} must be supplied explicitly.")
   }
   if (!dir.exists(path)) {
     dir.create(
@@ -161,9 +157,9 @@ downloadGithub <- function(
 
 #' `installCellar()` install files already saved in a cellar
 #'
-#' @param path Character string giving the cellar path. If omitted, defaults to `renv/cellar`.
+#' @param path Character string giving the cellar path. This must be supplied explicitly.
 #' @param project Character string giving the project path. If omitted, defaults to `usethis::proj_get()`.
-#' @param library Character string giving the library path. If omitted, defaults to `renv/library`.
+#' @param library Character string giving the library path. This must be supplied explicitly.
 #' @param lockfile Character string giving the lockfile path. If omitted, defaults to `renv.lock` at the project base level provided by `usethis::proj_get()`.
 #'  
 #' @returns Invisible
@@ -176,7 +172,10 @@ downloadGithub <- function(
 #' 
 #' \dontrun{
 #' # It will install all packages in the cellar
-#' installCellar()
+#' installCellar(
+#'   path = file.path(tempdir(), "cellar"),
+#'   library = file.path(tempdir(), "library")
+#' )
 #' }
 installCellar <- function(
   path,
@@ -188,27 +187,16 @@ installCellar <- function(
     project <- usethis::proj_get()
   }
   if (missing(path)) {
-    path <- file.path(
-      project,
-      "renv",
-      "cellar"
-    ) |>
-      normalizePath()
+    cli::cli_abort("{.arg path} must be supplied explicitly.")
   }
   checkmate::assertDirectoryExists(path)
   if (missing(library)) {
-    library <- file.path(
-      project,
-      "renv",
-      "library"
-    ) 
-    library |> 
-      dir.create(
-        recursive = TRUE
-      )
-    library <- library |> 
-      normalizePath()
+    cli::cli_abort("{.arg library} must be supplied explicitly.")
   }
+  if (!dir.exists(library)) {
+    dir.create(library, recursive = TRUE)
+  }
+  library <- normalizePath(library)
   checkmate::assertDirectoryExists(library)
   if (missing(lockfile)) {
     lockfile <- file.path(

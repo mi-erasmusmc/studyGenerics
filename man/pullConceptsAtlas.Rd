@@ -7,6 +7,7 @@
 pullConceptsAtlas(
   conceptSetList,
   conceptSetType,
+  outputDir,
   baseUrl = "https://atlas.darwin-eu.org/WebAPI",
   deletePrevious = TRUE,
   patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_"),
@@ -17,7 +18,10 @@ pullConceptsAtlas(
 \item{conceptSetList}{A numeric vector of ATLAS concept set IDs to download.}
 
 \item{conceptSetType}{A character string used to group the downloaded concept
-set JSON files under \verb{inst/concept_sets/}.}
+set JSON files under \verb{outputDir/}.}
+
+\item{outputDir}{Character string identifying the directory in which the
+\verb{<conceptSetType>} folder will be created.}
 
 \item{baseUrl}{A character string with the base URL of the ATLAS WebAPI.}
 
@@ -37,7 +41,7 @@ A tibble with one row per downloaded concept set and the columns
 \description{
 Retrieves each concept set definition from the ATLAS WebAPI, cleans the
 concept set name for use as a file name and writes the JSON definition to
-\verb{inst/concept_sets/<conceptSetType>/}.
+a caller-supplied output directory.
 }
 \details{
 Requires the optional CRAN packages \code{httr}, \code{RJSONIO}, \code{lubridate}, and \code{rlang}.
@@ -56,9 +60,10 @@ conceptSetType <- "example"
 pullConceptsAtlas(
    conceptSetList = conceptSetList,
    conceptSetType = conceptSetType,
+   outputDir = file.path(tempdir(), "concept_sets"),
    baseUrl = "https://atlas.darwin-eu.org/WebAPI",
    deletePrevious = TRUE,
-   patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_") 
+   patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_")
 )
 }
 }

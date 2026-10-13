@@ -234,17 +234,15 @@ test_that("installCellar", {
   )
   # EXECUTION -------
   usethis::with_project(testProject, {
-    packageCellar()
+    cellar_path <- file.path(testProject, "cellar")
+    library_path <- file.path(testProject, "library")
+    packageCellar(path = cellar_path)
      # TEST ------------
     expect_no_error({
-      installCellar()
+      installCellar(path = cellar_path, library = library_path)
     })
     testProject <- usethis::proj_path()
-    testLibrary <- file.path(
-      testProject,
-      "renv",
-      "library"
-    )
+    testLibrary <- library_path
     lockfileData <- renv::lockfile_read(
       file.path(testProject, "renv.lock")
     )

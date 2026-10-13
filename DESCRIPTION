@@ -52,7 +52,6 @@ Imports:
     glue,
     stringr,
     zip,
-    here,
     fs,
     usethis,
     dplyr,

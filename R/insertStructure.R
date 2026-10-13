@@ -4,11 +4,10 @@
 #' It includes standard folders, R scripts, test and documentation files and it
 #' installs a default list of DARWIN EU®/OHDSI packages.
 #'
-#' It assumes an active R project has already been created and renv
-#' initialized.
-#'
-#' @param path Character string identifying the path to the study project,
-#' default `"."`.
+#' @param studyName Character string identifying the study, for example
+#' `"P1-C1-001"`. Hyphens are removed to create the package name.
+#' @param path Character string identifying an existing study folder in which
+#' the package will be created.
 #' @param n_obj Number of study objectives, default `n_obj = 3`.
 #'
 #' @return
@@ -17,21 +16,13 @@
 #' @examples
 #' \dontrun{
 #'
-#' # Creating package structure in current project
-#'
-#' # - Initialize renv
-#' renv::init()
-#'
-#' # - Install package development tools
-#' renv::install(c("usethis",
-#'                 "devtools",
-#'                 "studyGenerics"))
-#'
-#' # - Initialize DESCRIPTION
-#' usethis::use_description()
-#'
-#' # - Initialize package structure
-#' studyGenerics::insertStructure()
+#' # Create the package in an existing study folder
+#' study_path <- file.path(tempdir(), "P1-C1-001")
+#' dir.create(study_path)
+#' studyGenerics::insertStructure(
+#'   studyName = "P1-C1-001",
+#'   path = study_path
+#' )
 #'
 #' # - Initialize NAMESPACE
 #' devtools::document()
@@ -42,20 +33,32 @@
 #'
 #' @export
 insertStructure <- function(
-    path = ".",
+    studyName,
+    path,
     n_obj = 3
   ) {
-
-  # Need an existing package to run the function
-  if (!file.exists(file.path(path, "DESCRIPTION"))) {
+  checkmate::assertCharacter(studyName, len = 1, any.missing = FALSE)
+  checkmate::assertDirectoryExists(path)
+  package_name <- gsub("-", "", studyName, fixed = TRUE)
+  if (!grepl("^[A-Za-z][A-Za-z0-9.]*$", package_name)) {
     cli::cli_abort(
       message = c(
-        "!" = "The path doesn't correspond to a package folder.",
-        "x" = "A package must contain a DESCRIPTION file. No DESCRIPTION detected at {.path {path}}.",
-        "i" = "Create a package first with {.fn usethis::create_package} or through the RStudio interface."
+        "x" = "{.arg studyName} must produce a valid R package name.",
+        "i" = "Use a study name beginning with a letter and containing only letters, numbers, periods, and hyphens."
       )
     )
   }
+  if (file.exists(file.path(path, "DESCRIPTION"))) {
+    cli::cli_abort("{.path {path}} already contains a package DESCRIPTION file.")
+  }
+
+  usethis::create_package(
+    path = path,
+    fields = list(Package = package_name),
+    check_name = FALSE,
+    open = FALSE
+  )
+  renv::init(project = path, bare = TRUE, load = FALSE, restart = FALSE)
 
   # Set up structure at specified project path
   cli::cli_h1("Setting up study package structure")
@@ -143,9 +146,11 @@ installPackageBundle <- function(path) {
       )
     }
 
-    for (pkg in pkg_names) {
-      usethis::use_package(pkg)
-    }
+    withr::with_dir(path, {
+      for (pkg in pkg_names) {
+        usethis::use_package(pkg)
+      }
+    })
 
     # Update lockfile
     renv::snapshot(
@@ -189,25 +194,27 @@ insertDocs <- function(path) {
 #' @return
 #' No return value.
 insertStudyFiles <- function(
-    path = ".",
+    path,
     n_obj = 3
     ) {
-  # R/
-  if ("hello.R" %in% list.files(file.path(path, "R"))) {
-    unlink(file.path(path, "R", "hello.R"))
-  }
-  usethis::use_r("createCohorts", open = FALSE)
-  writeLines(createCohortsFun(), file.path(path, "R", "createCohorts.R"))
-  usethis::use_r("runStudy", open = FALSE)
-  writeLines(runStudyFun(n_obj), file.path(path, "R", "runStudy.R"))
-  usethis::use_r("runDiagnostics", open = FALSE)
-  writeLines(runDiagnosticsFun(), file.path(path, "R", "runDiagnostics.R"))
-  usethis::use_r("utils", open = FALSE)
-  usethis::use_r("globals", open = FALSE)
-  usethis::use_r("merge", open = FALSE)
-  for (i in 1:n_obj) {
-    usethis::use_r(paste0("objective", i), open = FALSE)
-  }
+  withr::with_dir(path, {
+    # R/
+    if ("hello.R" %in% list.files(file.path(path, "R"))) {
+      unlink(file.path(path, "R", "hello.R"))
+    }
+    usethis::use_r("createCohorts", open = FALSE)
+    writeLines(createCohortsFun(), file.path(path, "R", "createCohorts.R"))
+    usethis::use_r("runStudy", open = FALSE)
+    writeLines(runStudyFun(n_obj), file.path(path, "R", "runStudy.R"))
+    usethis::use_r("runDiagnostics", open = FALSE)
+    writeLines(runDiagnosticsFun(), file.path(path, "R", "runDiagnostics.R"))
+    usethis::use_r("utils", open = FALSE)
+    usethis::use_r("globals", open = FALSE)
+    usethis::use_r("merge", open = FALSE)
+    for (i in 1:n_obj) {
+      usethis::use_r(paste0("objective", i), open = FALSE)
+    }
+  })
   # man/
   if (!dir.exists(file.path(path, "man"))) {
     dir.create(file.path(path, "man"))
@@ -236,10 +243,9 @@ insertStudyFiles <- function(
 #' @return
 #' No return value.
 insertTests <- function(
-    path = "."
+    path
     ) {
-
-  usethis::use_testthat()
+  withr::with_dir(path, usethis::use_testthat())
 
   if (!dir.exists(file.path(path, "R")) | length(list.files(file.path(path, "R"))) == 0) {
     cli::cli_abort(
@@ -255,7 +261,7 @@ insertTests <- function(
     if (script == "globals.R") {
       next
     } else{                                 # remove ".R"
-      usethis::use_test(substr(script, 1, nchar(script) -2), open = FALSE)
+      withr::with_dir(path, usethis::use_test(substr(script, 1, nchar(script) -2), open = FALSE))
     }
   }
 }
@@ -368,8 +374,7 @@ runStudyFun <- function(n_obj = 3) {
     "#'",
     "#' @param cdm A cdm reference.",
     "#' @param dbname Character string giving the data source name.",
-    "#' @param outputDir Character string giving the base output directory. If `NULL`,",
-    "#' the current working directory is used.",
+      "#' @param outputDir Character string giving the base output directory.",
     "#' @param test Logical indicating whether to run in test mode with a minimum",
     "#' cell count of `0` instead of `5`.",
     "#'",
@@ -384,7 +389,7 @@ runStudyFun <- function(n_obj = 3) {
     "runStudy <- function(",
     "  cdm,",
     "  dbname = 'TEST_DATA',",
-    "  outputDir = NULL,",
+      "  outputDir,",
     "  test = FALSE",
     ") {",
     "",
@@ -436,8 +441,7 @@ runDiagnosticsFun <- function(path = ".") {
     "#' @param cdm A cdm reference.",
     "#' @param dbname Data source name in character.",
     "#' @param outputDir Character string with the base output directory where study",
-    "#' results, logs, and the final zip archive will be written. If `NULL`, the",
-    "#' current working directory is used.",
+    "#' results, logs, and the final zip archive will be written.",
     "#' @param test Logical indicating whether to run in test mode with a minimum",
     "#' cell count of `0` instead of `5`.",
     "#'",
@@ -457,7 +461,7 @@ runDiagnosticsFun <- function(path = ".") {
     "runDiagnostics <- function(",
     "  cdm,",
     "  dbname = 'TEST_DATA',",
-    "  outputDir = NULL,",
+    "  outputDir,",
     "  test = FALSE",
     ") {",
     "",
