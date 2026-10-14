@@ -48,6 +48,14 @@ insertStructure <- function(
       )
     )
   }
+  if (!grepl("P[0-9]{1}C[0-9]{1}[0-9]{3}(C[0-9]{1}[0-9]{3})?", package_name)) {
+    cli::cli_abort(
+      message = c(
+        "x" = "{.arg studyName} doesn't contain a valid study number.",
+        "i" = "Please include in the name the study number in the format \"PX-CY-ZZZ.\""
+      )
+    )
+  }
   if (file.exists(file.path(path, "DESCRIPTION"))) {
     cli::cli_abort("{.path {path}} already contains a package DESCRIPTION file.")
   }
@@ -72,10 +80,10 @@ insertStructure <- function(
   installPackageBundle(path)
 
   cli::cli_alert_info("Inserting documentation files...")
-  insertDocs(studyNumber, path)
+  insertDocs(package_name, path)
 
   cli::cli_alert_info("Inserting study files...")
-  insertStudyFiles(studyNumber, path, n_obj)
+  insertStudyFiles(package_name, path, n_obj)
 
   cli::cli_alert_info("Inserting test files...")
   insertTests(path)
