@@ -119,3 +119,39 @@ test_that("runStudyFun creates a workflow for each objective", {
   expect_true("  objective2_results <- objective2(" %in% workflow)
   expect_false(any(grepl("objective3", workflow)))
 })
+
+test_that("defaultContent functions inserted into README.Rmd, instructions.md and CodeToRun.R", {
+  skip_on_cran()
+  testProject <- withr::local_tempdir()
+  usethis::create_package(
+    testProject,
+    open = FALSE
+  )
+  renv::init(project = testProject, load = FALSE)
+  renv::install(
+    "usethis",
+    project = testProject
+  )
+  usethis::with_project(testProject, {
+    usethis::use_readme_rmd(open = FALSE)
+    invisible(file.create("instructions.md"))
+    invisible(file.create("CodeToRun.R"))
+  })
+
+  studyNumber <- "P1-C1-001"
+
+  path <- file.path(testProject, "README.Rmd")
+  writeLines(defaultContentREADME(studyNumber), path)
+  readLines(path) |>
+    expect_equal(defaultContentREADME(studyNumber))
+
+  path <- file.path(testProject, "instructions.md")
+  writeLines(defaultContentInstructions(studyNumber), path)
+  readLines(path) |>
+    expect_equal(defaultContentInstructions(studyNumber))
+
+  path <- file.path(testProject, "CodeToRun.R")
+  writeLines(defaultContentCodeToRun(studyNumber), path)
+  readLines(path) |>
+    expect_equal(defaultContentCodeToRun(studyNumber))
+})

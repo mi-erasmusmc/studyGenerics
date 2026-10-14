@@ -8,7 +8,7 @@ insertStructure(studyName, path, n_obj = 3)
 }
 \arguments{
 \item{studyName}{Character string identifying the study, for example
-\code{"P1-C1-001"}. Hyphens are removed to create the package name.}
+\code{"P1-C1-001"}. Hyphens and spaces are removed to create the package name.}
 
 \item{path}{Character string identifying an existing study folder in which
 the package will be created.}
