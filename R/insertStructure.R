@@ -260,9 +260,11 @@ insertStudyFiles <- function(
   invisible(file.create(file.path(path, "extras", "CodeToRun.R")))
   writeLines(defaultContentCodeToRun(studyNumber), file.path(path, "extras", "CodeToRun.R"))
   invisible(file.create(file.path(path, "extras", "pullConceptSetsFromAtlas.R")))
-  # metadata
-  # To DO: if there are 2 rproj files, remove the one called °StudyRepo.rproj°
-
+  # project file
+  current_files <- list.files(path)
+  if (length(current_files[stringr::str_detect(current_files, ".Rproj")]) > 1 && "StudyRepoTemplate.Rproj" %in% current_files) {
+    unlink(file.path(path, "StudyRepoTemplate.Rproj"))
+  }
 }
 
 #' Insert default test files
