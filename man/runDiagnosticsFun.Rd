@@ -2,7 +2,7 @@
 % Please edit documentation in R/insertStructure.R
 \name{runDiagnosticsFun}
 \alias{runDiagnosticsFun}
-\title{Load default content for runDiagnostics.R}
+\title{Load default content for \code{runDiagnostics.R}}
 \usage{
 runDiagnosticsFun(path = ".")
 }
@@ -14,5 +14,5 @@ default \code{"."}.}
 A character vector containing the default contents of \code{runDiagnostics.R}.
 }
 \description{
-Load default content for runDiagnostics.R
+Load default content for \code{runDiagnostics.R}
 }

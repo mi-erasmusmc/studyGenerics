@@ -7,11 +7,11 @@
 installCellar(path, project, library, lockfile)
 }
 \arguments{
-\item{path}{Character string giving the cellar path. If omitted, defaults to \code{renv/cellar}.}
+\item{path}{Character string giving the cellar path. This must be supplied explicitly.}
 
 \item{project}{Character string giving the project path. If omitted, defaults to \code{usethis::proj_get()}.}
 
-\item{library}{Character string giving the library path. If omitted, defaults to \code{renv/library}.}
+\item{library}{Character string giving the library path. This must be supplied explicitly.}
 
 \item{lockfile}{Character string giving the lockfile path. If omitted, defaults to \code{renv.lock} at the project base level provided by \code{usethis::proj_get()}.}
 }
@@ -25,6 +25,9 @@ Invisible
 
 \dontrun{
 # It will install all packages in the cellar
-installCellar()
+installCellar(
+  path = file.path(tempdir(), "cellar"),
+  library = file.path(tempdir(), "library")
+)
 }
 }

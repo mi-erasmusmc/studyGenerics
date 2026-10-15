@@ -2,11 +2,10 @@
 #'
 #' @description
 #' Creates a subdirectory for results based on the database name within a
-#' specified output directory. If the output directory is not provided, the
-#' current working directory is used.
+#' specified output directory.
 #'
 #' @param outputDir Character string. The path to the main output folder.
-#'                  If NULL, defaults to the current working directory. Default NULL.
+#'                  This must be supplied explicitly.
 #' @param dbname Character string. The name of the database, used to suffix
 #'               the results folder (e.g., "results_dbname").
 #'
@@ -34,26 +33,23 @@
 #'    )
 #' unlink(outputDir, recursive = TRUE)
 createResultsDir <- function(
-    outputDir = NULL,
+    outputDir,
     dbname
     ) {
+  if (missing(outputDir)) {
+    cli::cli_abort("{.arg outputDir} must be supplied explicitly.")
+  }
   # Set folder location for results ----
   cli::cli_alert_info(
     "Creating locations to save results"
     )
-  if (is.null(outputDir)) {
-    outputDir <- getwd()
-    checkmate::assertDirectoryExists(
-      outputDir
-      )
+  checkmate::assertCharacter(outputDir, len = 1, any.missing = FALSE)
+  if (!dir.exists(outputDir)) {
+    dir.create(outputDir, recursive = TRUE)
+    checkmate::assertDirectoryExists(outputDir)
   } else {
-    if (!dir.exists(outputDir)) {
-      dir.create(outputDir)
-      checkmate::assertDirectoryExists(outputDir)
-    } else {
-      outputDir <- normalizePath(outputDir)
-      checkmate::assertDirectoryExists(outputDir)
-    }
+    outputDir <- normalizePath(outputDir)
+    checkmate::assertDirectoryExists(outputDir)
   }
 resultsDirName <- glue::glue(
     "results_{dbname}"

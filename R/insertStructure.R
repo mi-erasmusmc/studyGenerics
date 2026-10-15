@@ -4,11 +4,10 @@
 #' It includes standard folders, R scripts, test and documentation files and it
 #' installs a default list of DARWIN EU®/OHDSI packages.
 #'
-#' It assumes an active R project has already been created and renv
-#' initialized.
-#'
-#' @param path Character string identifying the path to the study project,
-#' default `"."`.
+#' @param studyName Character string identifying the study, for example
+#' `"P1-C1-001"`. Hyphens and spaces are removed to create the package name.
+#' @param path Character string identifying an existing study folder in which
+#' the package will be created.
 #' @param n_obj Number of study objectives, default `n_obj = 3`.
 #'
 #' @return
@@ -17,21 +16,13 @@
 #' @examples
 #' \dontrun{
 #'
-#' # Creating package structure in current project
-#'
-#' # - Initialize renv
-#' renv::init()
-#'
-#' # - Install package development tools
-#' renv::install(c("usethis",
-#'                 "devtools",
-#'                 "studyGenerics"))
-#'
-#' # - Initialize DESCRIPTION
-#' usethis::use_description()
-#'
-#' # - Initialize package structure
-#' studyGenerics::insertStructure()
+#' # Create the package in an existing study folder
+#' study_path <- file.path(tempdir(), "P1-C1-001")
+#' dir.create(study_path)
+#' studyGenerics::insertStructure(
+#'   studyName = "P1-C1-001",
+#'   path = study_path
+#' )
 #'
 #' # - Initialize NAMESPACE
 #' devtools::document()
@@ -42,32 +33,57 @@
 #'
 #' @export
 insertStructure <- function(
-    path = ".",
+    studyName,
+    path,
     n_obj = 3
   ) {
-
-  # Need an existing package to run the function
-  if (!file.exists(file.path(path, "DESCRIPTION"))) {
+  checkmate::assertCharacter(studyName, len = 1, any.missing = FALSE)
+  checkmate::assertDirectoryExists(path)
+  package_name <- gsub("[-[:space:]/]", "", studyName)
+  if (!grepl("^[A-Za-z][A-Za-z0-9.]*$", package_name)) {
     cli::cli_abort(
       message = c(
-        "!" = "The path doesn't correspond to a package folder.",
-        "x" = "A package must contain a DESCRIPTION file. No DESCRIPTION detected at {.path {path}}.",
-        "i" = "Create a package first with {.fn usethis::create_package} or through the RStudio interface."
+        "x" = "{.arg studyName} must produce a valid R package name.",
+        "i" = "Use a study name beginning with a letter and containing only letters, numbers, periods, and hyphens."
       )
     )
   }
+  if (!grepl("P[0-9]{1}C[0-9]{1}[0-9]{3}(C[0-9]{1}[0-9]{3})?", package_name)) {
+    cli::cli_abort(
+      message = c(
+        "x" = "{.arg studyName} doesn't contain a valid study number.",
+        "i" = "Please include in the name the study number in the format \"PX-CY-ZZZ.\""
+      )
+    )
+  }
+  if (file.exists(file.path(path, "DESCRIPTION"))) {
+    cli::cli_abort("{.path {path}} already contains a package DESCRIPTION file.")
+  }
+
+  usethis::create_package(
+    path = path,
+    fields = list(Package = package_name),
+    check_name = FALSE,
+    open = FALSE
+  )
+  renv::init(project = path, bare = TRUE, load = FALSE, restart = FALSE)
 
   # Set up structure at specified project path
+  studyNumber <- stringr::str_extract(
+    studyName,
+    "P[0-9]{1}-C[0-9]{1}-[0-9]{3}([/|-]C[0-9]{1}-[0-9]{3})?"
+    )
+
   cli::cli_h1("Setting up study package structure")
 
   cli::cli_alert_info("Installing package bundle...")
   installPackageBundle(path)
 
   cli::cli_alert_info("Inserting documentation files...")
-  insertDocs(path)
+  insertDocs(package_name, path)
 
   cli::cli_alert_info("Inserting study files...")
-  insertStudyFiles(path, n_obj)
+  insertStudyFiles(package_name, path, n_obj)
 
   cli::cli_alert_info("Inserting test files...")
   insertTests(path)
@@ -76,7 +92,7 @@ insertStructure <- function(
 }
 
 #' Install default package bundle
-#' 
+#'
 #' Installs a predefined set of DARWIN EU®/OHDSI packages into the study project
 #' and updates their dependencies. The standard package list includes the packages
 #' omopgenerics, PhenotypeR, DrugExposureDiagnostics, CohortConstructor,
@@ -143,9 +159,11 @@ installPackageBundle <- function(path) {
       )
     }
 
-    for (pkg in pkg_names) {
-      usethis::use_package(pkg)
-    }
+    withr::with_dir(path, {
+      for (pkg in pkg_names) {
+        usethis::use_package(pkg)
+      }
+    })
 
     # Update lockfile
     renv::snapshot(
@@ -159,18 +177,33 @@ installPackageBundle <- function(path) {
 }
 
 #' Insert default documentation files
-#' 
+#'
 #' Creates default `NEWS.md`, `README.Rmd` and `LICENSE.md` (Apache License 2.0) files.
 #'
+#' @param  studyNumber Character string identifying the study number, e.g. `"P1-C1-001"`.
 #' @param path A valid path to the study project in character.
 #'
 #' @return
 #' No return value.
-insertDocs <- function(path) {
+insertDocs <- function(
+    studyNumber,
+    path
+    ) {
   withr::with_dir(path, {
+    existing_files <- list.files(path)
+    # NEWS.md
     usethis::use_news_md(open = FALSE)
+    # README.Rms
     usethis::use_readme_rmd(open = FALSE)
-    if ("LICENSE" %in% list.files(path)) {
+    writeLines(defaultContentREADME(studyNumber), file.path(path, "README.Rmd"))
+    # instructions.md
+    if (!"instructions.md" %in% existing_files) {
+      cli::cli_alert_info("There is no\"instructions.md\" file.")
+    } else {
+      writeLines(defaultContentInstructions(studyNumber), file.path(path, "instructions.md"))
+    }
+    # LICENSE.md
+    if ("LICENSE" %in% existing_files) {
       unlink(file.path(path, "LICENSE"))
     }
     usethis::use_apl2_license()
@@ -189,25 +222,28 @@ insertDocs <- function(path) {
 #' @return
 #' No return value.
 insertStudyFiles <- function(
-    path = ".",
+    studyNumber,
+    path,
     n_obj = 3
     ) {
-  # R/
-  if ("hello.R" %in% list.files(file.path(path, "R"))) {
-    unlink(file.path(path, "R", "hello.R"))
-  }
-  usethis::use_r("createCohorts", open = FALSE)
-  writeLines(createCohortsFun(), file.path(path, "R", "createCohorts.R"))
-  usethis::use_r("runStudy", open = FALSE)
-  writeLines(runStudyFun(n_obj), file.path(path, "R", "runStudy.R"))
-  usethis::use_r("runDiagnostics", open = FALSE)
-  writeLines(runDiagnosticsFun(), file.path(path, "R", "runDiagnostics.R"))
-  usethis::use_r("utils", open = FALSE)
-  usethis::use_r("globals", open = FALSE)
-  usethis::use_r("merge", open = FALSE)
-  for (i in 1:n_obj) {
-    usethis::use_r(paste0("objective", i), open = FALSE)
-  }
+  withr::with_dir(path, {
+    # R/
+    if ("hello.R" %in% list.files(file.path(path, "R"))) {
+      unlink(file.path(path, "R", "hello.R"))
+    }
+    usethis::use_r("createCohorts", open = FALSE)
+    writeLines(createCohortsFun(), file.path(path, "R", "createCohorts.R"))
+    usethis::use_r("runStudy", open = FALSE)
+    writeLines(runStudyFun(n_obj), file.path(path, "R", "runStudy.R"))
+    usethis::use_r("runDiagnostics", open = FALSE)
+    writeLines(runDiagnosticsFun(), file.path(path, "R", "runDiagnostics.R"))
+    usethis::use_r("utils", open = FALSE)
+    usethis::use_r("globals", open = FALSE)
+    usethis::use_r("merge", open = FALSE)
+    for (i in 1:n_obj) {
+      usethis::use_r(paste0("objective", i), open = FALSE)
+    }
+  })
   # man/
   if (!dir.exists(file.path(path, "man"))) {
     dir.create(file.path(path, "man"))
@@ -222,7 +258,13 @@ insertStudyFiles <- function(
   # extras/
   dir.create(file.path(path, "extras"))
   invisible(file.create(file.path(path, "extras", "CodeToRun.R")))
+  writeLines(defaultContentCodeToRun(studyNumber), file.path(path, "extras", "CodeToRun.R"))
   invisible(file.create(file.path(path, "extras", "pullConceptSetsFromAtlas.R")))
+  # project file
+  current_files <- list.files(path)
+  if (length(current_files[stringr::str_detect(current_files, ".Rproj")]) > 1 && "StudyRepoTemplate.Rproj" %in% current_files) {
+    unlink(file.path(path, "StudyRepoTemplate.Rproj"))
+  }
 }
 
 #' Insert default test files
@@ -236,10 +278,9 @@ insertStudyFiles <- function(
 #' @return
 #' No return value.
 insertTests <- function(
-    path = "."
+    path
     ) {
-
-  usethis::use_testthat()
+  withr::with_dir(path, usethis::use_testthat())
 
   if (!dir.exists(file.path(path, "R")) | length(list.files(file.path(path, "R"))) == 0) {
     cli::cli_abort(
@@ -255,12 +296,12 @@ insertTests <- function(
     if (script == "globals.R") {
       next
     } else{                                 # remove ".R"
-      usethis::use_test(substr(script, 1, nchar(script) -2), open = FALSE)
+      withr::with_dir(path, usethis::use_test(substr(script, 1, nchar(script) -2), open = FALSE))
     }
   }
 }
 
-#' Load default content for createCohorts.R
+#' Load default content for `createCohorts.R`
 #'
 #' @param path Character string identifying the path to the study project,
 #' default `"."`.
@@ -339,7 +380,7 @@ createCohortsFun <- function(path = ".") {
     )
 }
 
-#' Load default content for runStudy.R
+#' Load default content for `runStudy.R`
 #'
 #' @param n_obj Number of study objectives to include in the workflow,
 #' default `3`.
@@ -368,8 +409,7 @@ runStudyFun <- function(n_obj = 3) {
     "#'",
     "#' @param cdm A cdm reference.",
     "#' @param dbname Character string giving the data source name.",
-    "#' @param outputDir Character string giving the base output directory. If `NULL`,",
-    "#' the current working directory is used.",
+      "#' @param outputDir Character string giving the base output directory.",
     "#' @param test Logical indicating whether to run in test mode with a minimum",
     "#' cell count of `0` instead of `5`.",
     "#'",
@@ -384,7 +424,7 @@ runStudyFun <- function(n_obj = 3) {
     "runStudy <- function(",
     "  cdm,",
     "  dbname = 'TEST_DATA',",
-    "  outputDir = NULL,",
+      "  outputDir,",
     "  test = FALSE",
     ") {",
     "",
@@ -418,7 +458,7 @@ runStudyFun <- function(n_obj = 3) {
   )
 }
 
-#' Load default content for runDiagnostics.R
+#' Load default content for `runDiagnostics.R`
 #'
 #' @param path Character string identifying the path to the study project,
 #' default `"."`.
@@ -436,8 +476,7 @@ runDiagnosticsFun <- function(path = ".") {
     "#' @param cdm A cdm reference.",
     "#' @param dbname Data source name in character.",
     "#' @param outputDir Character string with the base output directory where study",
-    "#' results, logs, and the final zip archive will be written. If `NULL`, the",
-    "#' current working directory is used.",
+    "#' results, logs, and the final zip archive will be written.",
     "#' @param test Logical indicating whether to run in test mode with a minimum",
     "#' cell count of `0` instead of `5`.",
     "#'",
@@ -457,7 +496,7 @@ runDiagnosticsFun <- function(path = ".") {
     "runDiagnostics <- function(",
     "  cdm,",
     "  dbname = 'TEST_DATA',",
-    "  outputDir = NULL,",
+    "  outputDir,",
     "  test = FALSE",
     ") {",
     "",
@@ -592,5 +631,271 @@ runDiagnosticsFun <- function(path = ".") {
     "  checkmate::assertFileExists(zipFileName)",
     "  ParallelLogger::logInfo(\"-- Thank you for running the diagnostics!\")",
     "}"
+  )
+}
+
+#' Load default content for `README.Rmd`
+#'
+#' @param studyNumber Character string identifying the study number, e.g. `"P1-C1-001"`.
+#'
+#' @return
+#' A character vector containing the default contents of `README.Rmd`, to be
+#' rendered into `README.md` through .
+defaultContentREADME <- function(studyNumber) {
+  c(
+    "![](man/figures/darwin-eu_logo.png)",
+    "",
+    "[Study title]",
+    "=============",
+    "",
+    paste0("**DARWIN EU ID:** ", studyNumber),
+    "",
+    "**HMA-EMA Study Catalogue:** **[EUPAS-](add link)**",
+    "",
+    "**Results Explorer:** **[Web Application](add link)**",
+    "",
+    "**Study Description:**",
+    "",
+    "(add text from HMA-EMA Study Catalogue here)",
+    "",
+    "**Instructions:**",
+    "",
+    "The instructions on how to run the study code are provided in the [instructions.md](instructions.md) file.",
+    "",
+    "**Disclaimer:**",
+    "",
+    "This study code is developed for execution on the selected data sources of the DARWIN EU Data Network as described in the study protocol.",
+    "While the DARWIN EU Coordination Centre does not provide support to external users of this code, we welcome feedback via our email address (enquiries@darwin-eu.org).",
+    "",
+    "**License:**",
+    "",
+    "This software is distributed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.",
+    "",
+    "For more information about DARWIN EU<sup>®</sup> see [www.darwin-eu.org](https://www.darwin-eu.org).",
+    "",
+    "Copyright 2026 European Medicines Agency."
+  )
+}
+
+#' Load default content for `instructions.md`
+#'
+#' @param studyNumber Character string identifying the study number, e.g. `"P1-C1-001"`.
+#'
+#' @return
+#' A character vector containing the default contents of `instructions.md`.
+defaultContentInstructions <- function(studyNumber) {
+  c(
+    "# Instructions",
+    "",
+    "The example execution code is also available in `extras/CodeToRun.R`.",
+    "",
+    "## 1. Install Dependencies",
+    "",
+    "Make sure `renv` is installed:",
+    "",
+    "```r",
+    "install.packages(\"renv\")",
+    "```",
+    "",
+    "Restore the project library from the lock file:",
+    "",
+    "```r",
+    "renv::init()",
+    "renv::restore()",
+    "```",
+    "",
+    "## 2. Install the Package",
+    "",
+    "Install the package from the project source",
+    "",
+    "In RStudio, use `Build` -> `Install and Restart`, or install it from the project root with:",
+    "",
+    "```r",
+    "devtools::install()",
+    "```",
+    "",
+    "Then load the package:",
+    "",
+    "```r",
+    paste0("library(", studyNumber, ")"),
+    "```",
+    "",
+    "## 3. Configure the Database Connection",
+    "",
+    "Set the connection details for your environment:",
+    "",
+    "```r",
+    "dbms <- Sys.getenv(\"dbms\")",
+    "server <- Sys.getenv(\"host\")",
+    "user <- Sys.getenv(\"user\")",
+    "password <- Sys.getenv(\"password\")",
+    "port <- Sys.getenv(\"port\")",
+    "```",
+    "",
+    "Set the output location and CDM details:",
+    "",
+    "```r",
+    "outputDir <- \"...\"",
+    "cdmDatabaseSchema <- \"...\"",
+    "cohortDatabaseSchema <- \"...\"",
+    "cohortTable <- \"...\"",
+    "dbname <- \"...\"",
+    "```",
+    "",
+    "Create the database connection and CDM reference:",
+    "",
+    "```r",
+    "conn <- DBI::dbConnect(",
+      "dbms = dbms,",
+      "server = server,",
+      "user = user,",
+      "password = password,",
+      "port = port",
+    ")",
+    "",
+    "cdm <- CDMConnector::cdmFromCon(",
+      "con = conn,",
+      "cdmSchema = cdmDatabaseSchema,",
+      "writeSchema = cohortDatabaseSchema,",
+      "cdmName = dbname",
+    ")",
+    "```",
+    "",
+    "## 4. Run the Study",
+    "",
+    "Execute the study with the required options:",
+    "",
+    "```r",
+    paste0(studyNumber, "::runStudy("),
+    "  ...",
+    ")",
+    "```",
+    "",
+    "## 5. Review the Results",
+    "",
+    "# If the study was successful, use the code below to review the results.",
+    "",
+    "```",
+    "...",
+    "```",
+    "",
+    "## 6. Return Results to the CC",
+    "",
+    paste0("After reviewing the outputs, please upload the ZIP file to the `", studyNumber, "` folder in the Data Transfer Zone (DTZ).")
+  )
+}
+
+#' Load default content for `CodeToRun.R`
+#'
+#' @param studyNumber Character string identifying the study number, e.g. `"P1-C1-001"`.
+#'
+#' @return
+#' A character vector containing the default contents of `extras/CodeToRun.R`.
+defaultContentCodeToRun <- function(studyNumber) {
+  c(
+    "# *******************************************************",
+    paste0("# ", studyNumber, ": Code to Run"),
+    "# *******************************************************",
+    "",
+    "# This script mirrors the execution steps described in instructions.md.",
+    "# Update the placeholder values before running the study.",
+    "",
+    "# *******************************************************",
+    "# SECTION 1: Install dependencies",
+    "# ******************************************************",
+    "",
+    "# Install renv if needed",
+    "install.packages(\"renv\")",
+    "",
+    "# Build or restore the project library from the lock file",
+    "renv::init()",
+    "renv::restore()",
+    "",
+    "# *******************************************************",
+    "# SECTION 2: Install and load the package",
+    "# *******************************************************",
+    "",
+    "# In RStudio, use Build -> Install and Restart",
+    "# Or install from the project root with:",
+    "devtools::install()",
+    "",
+    "# Then load the package",
+    paste0("library(", studyNumber, ")"),
+    "",
+    "# *******************************************************",
+    "# SECTION 3: Configure the database connection",
+    "# *******************************************************",
+    "",
+    "# The name/acronym for the database.",
+    "# Choose yours between \"BCR\", \"IQVIA LPD Belgium\", \"UZA\", \"NAJS\", \"DK-DHR\",\"EBB\",",
+    "# \"HARMONY Platform\", \"HARMONY-ALL\", \"HARMONY-AML\", \"HARMONY-CML\", \"HARMONY-MM\", ",
+    "# \"FinOMOP-ACI Varha\", \"FinOMOP-HUS\", \"FinOMOP-TaUH Pirha\", \"FinOMOP-THL\",",
+    "# \"APHM\", \"CDW Bordeaux\", \"SNDS\", \"InGef RDB\", \"IQVIA DA Germany\", \"UMD\", \"PGH\",",
+    "# \"SUCD\", \"Pedianet\", \"POLIMI\", \"LDH\", \"CRN\", \"NLHR\", \"NLHR@UiO:PERINATAL\",",
+    "# \"EMDB-ULSEDV\", \"EMDB-ULSGE\", \"EMDB-ULSRA\", \"ULSM-RT\", \"BIFAP\", \"H12O\",",
+    "# \"HUVM\", \"IMASIS\", \"PRISIB\", \"SIDIAP\", \"VID\", \"HI-SPEED\", \"IPCI\",",
+    "# \"NCR\", \"CPRD AURUM\", \"CPRD Aurum Linked\", \"CPRD GOLD\", \"UKBB\", \"IQVIA US - AmbEMR\",",
+    "# \"IQVIA US - PMTX+\"",
+    "",
+    "dbname <- \"\"",
+    "",
+    "# Database connection details",
+    "# In this study we also use the DBI package to connect to the database",
+    "# set up the dbConnect details below",
+    "# https://darwin-eu.github.io/CDMConnector/articles/DBI_connection_examples.html",
+    "# for more details.",
+    "# you may need to install another package for this",
+    "# e.g. for postgres",
+    "# db <- dbConnect(",
+    "#   RPostgres::Postgres(),",
+    "#   dbname = server_dbi,",
+    "#   port = port,",
+    "#   host = host,",
+    "#   user = user,",
+    "#   password = password",
+    "# )",
+    "db <- DBI::dbConnect()",
+    "",
+    "# The name of the schema that contains the OMOP CDM with patient-level data",
+    "cdm_schema <- \"\"",
+    "",
+    "# A prefix for all permanent tables in the database",
+    "write_prefix <- \"\"",
+    "",
+    "# The name of the schema where results tables will be created",
+    "write_schema <- \"\"",
+    "",
+    "# The name of the schema where the achilles tables are",
+    "achilles_schema <- \"\"",
+    "",
+    "# minimum counts that can be displayed according to data governance",
+    "minCellCount <- 5",
+    "",
+    "# Create cdm object ----",
+    "cdm <- CDMConnector::cdmFromCon(",
+      "con = db,",
+      "cdmSchema = cdm_schema,",
+      "writeSchema = write_schema,",
+      "writePrefix = write_prefix,",
+      "cdmName = db_name,",
+      "achillesSchema = achilles_schema",
+    ")",
+    "",
+    "# *******************************************************",
+    "# SECTION 4: Run the code",
+    "# *******************************************************",
+    "",
+    "# Execute the diagnostics or the study code",
+    paste0("# ", studyNumber, "::runStudy(...)"),
+    "",
+    "# *******************************************************",
+    "# SECTION 5: Review the results",
+    "# *******************************************************",
+    "",
+    "# Diagnostics results",
+    "# ...",
+    "#",
+    "# Study results",
+    "# ..."
   )
 }

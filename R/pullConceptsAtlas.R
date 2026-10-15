@@ -2,7 +2,7 @@
 #'
 #' Retrieves each concept set definition from the ATLAS WebAPI, cleans the
 #' concept set name for use as a file name and writes the JSON definition to
-#' `inst/concept_sets/<conceptSetType>/`.
+#' a caller-supplied output directory.
 #'
 #' @details
 #' Requires the optional CRAN packages `httr`, `RJSONIO`, `lubridate`, and `rlang`.
@@ -14,7 +14,9 @@
 #'
 #' @param conceptSetList A numeric vector of ATLAS concept set IDs to download.
 #' @param conceptSetType A character string used to group the downloaded concept
-#' set JSON files under `inst/concept_sets/`.
+#' set JSON files under `outputDir/`.
+#' @param outputDir Character string identifying the directory in which the
+#' `<conceptSetType>` folder will be created.
 #' @param baseUrl A character string with the base URL of the ATLAS WebAPI.
 #' @param deletePrevious A logical value indicating whether to delete existing files in
 #' the target `<conceptSetType>` folder before downloading the new concept sets.
@@ -27,17 +29,16 @@
 #' `conceptSetId`, `originalName`, `cleanName`, and `fileName`.
 #'
 #' @importFrom checkmate assertCharacter assertDouble
-#' @importFrom here here
 #' @importFrom jsonlite toJSON
 #' @importFrom glue glue
 #' @importFrom dplyr tibble bind_rows
 #' @importFrom stringr str_to_lower str_remove str_replace_all
 #' @importFrom ParallelLogger logInfo
-#' 
+#'
 #' @export
-#' 
+#'
 #' @examples
-#' 
+#'
 #' \dontrun{
 #' # Requires a connection to the ATLAS WebAPI
 #' conceptSetList <- c(12345)
@@ -45,22 +46,28 @@
 #' pullConceptsAtlas(
 #'    conceptSetList = conceptSetList,
 #'    conceptSetType = conceptSetType,
+#'    outputDir = file.path(tempdir(), "concept_sets"),
 #'    baseUrl = "https://atlas.darwin-eu.org/WebAPI",
 #'    deletePrevious = TRUE,
-#'    patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_") 
+#'    patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_")
 #' )
 #' }
 pullConceptsAtlas <- function(
     conceptSetList,
     conceptSetType,
+    outputDir,
     baseUrl = "https://atlas.darwin-eu.org/WebAPI",
     deletePrevious = TRUE,
     patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_"),
     authHeader = Sys.getenv("ATLAS_TOKEN")
   ) {
 
+  if (missing(outputDir)) {
+    cli::cli_abort("{.arg outputDir} must be supplied explicitly.")
+  }
   checkmate::assertDouble(conceptSetList)
   checkmate::assertCharacter(conceptSetType)
+  checkmate::assertCharacter(outputDir, len = 1, any.missing = FALSE)
   checkmate::assertCharacter(baseUrl)
   checkmate::assertLogical(deletePrevious)
   checkmate::assertCharacter(patternToRemove)
@@ -87,7 +94,7 @@ pullConceptsAtlas <- function(
   )
 
   # Folder management
-  folder_path <- here::here("inst", "concept_sets", conceptSetType)
+  folder_path <- file.path(outputDir, conceptSetType)
   if (!dir.exists(folder_path)) {
     ParallelLogger::logInfo(glue::glue("Creating folder {folder_path}"))
     dir.create(folder_path, recursive = TRUE)
@@ -119,7 +126,7 @@ pullConceptsAtlas <- function(
       stringr::str_replace_all(
         c(
           "^\\s+|\\s+$" = "",  # remove leading or trailing whitespaces
-          "^[0-9]+_" = "",     # remove initial sequence of digits followed by _
+          "^[0-9]+" = "",      # remove initial sequence of digits
           "[\\s()]" = "_"      # replace inner whitespaces, ( or ) with _
         )
       )
@@ -130,6 +137,7 @@ pullConceptsAtlas <- function(
     clean_name <- clean_name |>
       stringr::str_replace_all(
         c(
+          "-+|–+" = "_",       # replace - (hyphen) and – (dash) with _
           "_+" = "_",          # replace multiple _ with single _
           "^_|_$" = ""         # remove any leading or trailing _ if any
         )
