@@ -2,7 +2,7 @@
 % Please edit documentation in R/insertStructure.R
 \name{runStudyFun}
 \alias{runStudyFun}
-\title{Load default content for runStudy.R}
+\title{Load default content for \code{runStudy.R}}
 \usage{
 runStudyFun(n_obj = 3)
 }
@@ -14,5 +14,5 @@ default \code{3}.}
 A character vector containing the default contents of \code{runStudy.R}.
 }
 \description{
-Load default content for runStudy.R
+Load default content for \code{runStudy.R}
 }

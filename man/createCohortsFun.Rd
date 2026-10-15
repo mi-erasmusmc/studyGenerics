@@ -2,7 +2,7 @@
 % Please edit documentation in R/insertStructure.R
 \name{createCohortsFun}
 \alias{createCohortsFun}
-\title{Load default content for createCohorts.R}
+\title{Load default content for \code{createCohorts.R}}
 \usage{
 createCohortsFun(path = ".")
 }
@@ -14,5 +14,5 @@ default \code{"."}.}
 A character vector containing the default contents of \code{createCohorts.R}.
 }
 \description{
-Load default content for createCohorts.R
+Load default content for \code{createCohorts.R}
 }

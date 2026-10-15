@@ -4,9 +4,11 @@
 \alias{insertDocs}
 \title{Insert default documentation files}
 \usage{
-insertDocs(path)
+insertDocs(studyNumber, path)
 }
 \arguments{
+\item{studyNumber}{Character string identifying the study number, e.g. \code{"P1-C1-001"}.}
+
 \item{path}{A valid path to the study project in character.}
 }
 \value{
