@@ -238,16 +238,6 @@
       ],
       "Hash": "f8122473e9a49e00d0642f78235ca5e3"
     },
-    "here": {
-      "Package": "here",
-      "Version": "1.0.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "rprojroot"
-      ],
-      "Hash": "e5114f2abe04168238181913a8572358"
-    },
     "httr2": {
       "Package": "httr2",
       "Version": "1.2.2",
@@ -285,12 +275,6 @@
         "methods"
       ],
       "Hash": "b0776f526d36d8bd4a3344a88fe165c4"
-    },
-    "jsonvalidate": {
-      "Package": "jsonvalidate",
-      "Version": "1.5.0",
-      "Source": "Repository",
-      "Repository": "CRAN"
     },
     "lifecycle": {
       "Package": "lifecycle",
