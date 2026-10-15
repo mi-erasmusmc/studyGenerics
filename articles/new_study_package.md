@@ -5,45 +5,22 @@ Use
 to set up a new OMOP study package with common folders, starter scripts,
 tests, and package dependencies.
 
-## Before you start
+## Create the study package
 
-Create an empty R package and make sure you have internet access. The
-setup installs the standard study-package dependencies.
-
-## 1. Create an empty package
-
-Create a package with `usethis`, or use **File \> New Project** in
-RStudio.
+Choose a new, empty directory and supply it explicitly. The example uses
+a temporary directory so it does not write to the current working
+directory or a home directory. Make sure you have internet access
+because the setup installs the standard study-package dependencies.
+`n_obj` sets the number of objective scripts to create.
 
 ``` r
 
-usethis::create_package(
-  path = "~/P1C1001"
-)
-```
-
-## 2. Initialize the environment
-
-Inside the new package, initialize `renv` and install `studyGenerics`.
-
-``` r
-
-renv::init()
-
-renv::install("mi-erasmusmc/studyGenerics")
-```
-
-## 3. Insert the study structure
-
-Run
-[`insertStructure()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertStructure.md)
-from the package directory. `n_obj` sets the number of objective scripts
-to create.
-
-``` r
+study_path <- file.path(tempdir(), "P1-C1-001")
+dir.create(study_path)
 
 studyGenerics::insertStructure(
-  path = ".",
+  studyName = "P1-C1-001",
+  path = study_path,
   n_obj = 3
 )
 ```
@@ -72,7 +49,7 @@ The package will include:
     ├── NEWS.md
     └── README.Rmd
 
-## 4. Next steps
+## Next steps
 
 Add concept sets to `inst/concept_sets/`, develop the study code in
 `R/`, then generate documentation with `devtools::document()` and check

@@ -12,8 +12,8 @@ installCellar(path, project, library, lockfile)
 
 - path:
 
-  Character string giving the cellar path. If omitted, defaults to
-  `renv/cellar`.
+  Character string giving the cellar path. This must be supplied
+  explicitly.
 
 - project:
 
@@ -22,8 +22,8 @@ installCellar(path, project, library, lockfile)
 
 - library:
 
-  Character string giving the library path. If omitted, defaults to
-  `renv/library`.
+  Character string giving the library path. This must be supplied
+  explicitly.
 
 - lockfile:
 
@@ -41,6 +41,9 @@ Invisible
 
 if (FALSE) { # \dontrun{
 # It will install all packages in the cellar
-installCellar()
+installCellar(
+  path = file.path(tempdir(), "cellar"),
+  library = file.path(tempdir(), "library")
+)
 } # }
 ```

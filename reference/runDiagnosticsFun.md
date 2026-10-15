@@ -1,6 +1,6 @@
-# Load default content for runDiagnostics.R
+# Load default content for `runDiagnostics.R`
 
-Load default content for runDiagnostics.R
+Load default content for `runDiagnostics.R`
 
 ## Usage
 

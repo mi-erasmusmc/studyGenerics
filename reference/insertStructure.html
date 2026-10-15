@@ -11,7 +11,7 @@ installs a default list of DARWIN EU®/OHDSI packages."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">studyGenerics</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,16 +50,21 @@ installs a default list of DARWIN EU®/OHDSI packages.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">insertStructure</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span>, n_obj <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">insertStructure</span><span class="op">(</span><span class="va">studyName</span>, <span class="va">path</span>, n_obj <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
-<dd><p>Character string identifying the path to the study project,
-default <code>"."</code>.</p></dd>
+<dl><dt id="arg-studyname">studyName<a class="anchor" aria-label="anchor" href="#arg-studyname"></a></dt>
+<dd><p>Character string identifying the study, for example
+<code>"P1-C1-001"</code>. Hyphens and spaces are removed to create the package name.</p></dd>
+
+
+<dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
+<dd><p>Character string identifying an existing study folder in which
+the package will be created.</p></dd>
 
 
 <dt id="arg-n-obj">n_obj<a class="anchor" aria-label="anchor" href="#arg-n-obj"></a></dt>
@@ -70,31 +75,18 @@ default <code>"."</code>.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>No return value.</p>
     </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>It assumes an active R project has already been created and renv
-initialized.</p>
-    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Creating package structure in current project</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># - Initialize renv</span></span></span>
-<span class="r-in"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/renv/reference/init.html" class="external-link">init</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># - Install package development tools</span></span></span>
-<span class="r-in"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/renv/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"usethis"</span>,</span></span>
-<span class="r-in"><span>                <span class="st">"devtools"</span>,</span></span>
-<span class="r-in"><span>                <span class="st">"studyGenerics"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># - Initialize DESCRIPTION</span></span></span>
-<span class="r-in"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_description.html" class="external-link">use_description</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># - Initialize package structure</span></span></span>
-<span class="r-in"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu">insertStructure</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Create the package in an existing study folder</span></span></span>
+<span class="r-in"><span><span class="va">study_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"P1-C1-001"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">study_path</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu">insertStructure</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  studyName <span class="op">=</span> <span class="st">"P1-C1-001"</span>,</span></span>
+<span class="r-in"><span>  path <span class="op">=</span> <span class="va">study_path</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># - Initialize NAMESPACE</span></span></span>
 <span class="r-in"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">document</span><span class="op">(</span><span class="op">)</span></span></span>

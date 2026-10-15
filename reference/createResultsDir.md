@@ -1,21 +1,20 @@
 # Create directory for analysis results
 
 Creates a subdirectory for results based on the database name within a
-specified output directory. If the output directory is not provided, the
-current working directory is used.
+specified output directory.
 
 ## Usage
 
 ``` r
-createResultsDir(outputDir = NULL, dbname)
+createResultsDir(outputDir, dbname)
 ```
 
 ## Arguments
 
 - outputDir:
 
-  Character string. The path to the main output folder. If NULL,
-  defaults to the current working directory. Default NULL.
+  Character string. The path to the main output folder. This must be
+  supplied explicitly.
 
 - dbname:
 

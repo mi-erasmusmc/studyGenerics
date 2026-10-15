@@ -1,6 +1,6 @@
-# Load default content for runStudy.R
+# Load default content for `runStudy.R`
 
-Load default content for runStudy.R
+Load default content for `runStudy.R`
 
 ## Usage
 

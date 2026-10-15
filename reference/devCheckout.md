@@ -5,19 +5,25 @@ Checks out the `develop` branch and pulls changes from its remote.
 ## Usage
 
 ``` r
-devCheckout()
+devCheckout(verbose = FALSE)
 ```
+
+## Arguments
+
+- verbose:
+
+  Logical. Whether to show Git pull progress. Defaults to `FALSE`; a
+  concise completion message is always shown.
 
 ## Value
 
-Git log messages after checking out and pulling 'develop'
+Invisibly, the result of pulling `develop`.
 
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
 # Requires access to the configured Git remote
-devCheckout(
-)
+devCheckout()
 } # }
 ```

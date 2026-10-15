@@ -6,7 +6,7 @@ with a default test file for each script found in the `R` folder.
 ## Usage
 
 ``` r
-insertTests(path = ".")
+insertTests(path)
 ```
 
 ## Arguments

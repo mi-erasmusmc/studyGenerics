@@ -1,6 +1,6 @@
-# Load default content for createCohorts.R
+# Load default content for `createCohorts.R`
 
-Load default content for createCohorts.R
+Load default content for `createCohorts.R`
 
 ## Usage
 

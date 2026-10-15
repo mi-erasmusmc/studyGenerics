@@ -6,10 +6,14 @@ Creates default `NEWS.md`, `README.Rmd` and `LICENSE.md` (Apache License
 ## Usage
 
 ``` r
-insertDocs(path)
+insertDocs(studyNumber, path)
 ```
 
 ## Arguments
+
+- studyNumber:
+
+  Character string identifying the study number, e.g. `"P1-C1-001"`.
 
 - path:
 

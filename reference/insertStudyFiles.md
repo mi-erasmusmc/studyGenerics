@@ -6,7 +6,7 @@ with ready files for standard study functions.
 ## Usage
 
 ``` r
-insertStudyFiles(path = ".", n_obj = 3)
+insertStudyFiles(studyNumber, path, n_obj = 3)
 ```
 
 ## Arguments

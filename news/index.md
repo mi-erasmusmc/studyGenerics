@@ -1,5 +1,11 @@
 # Changelog
 
+## studyGenerics 0.2.0
+
+- [`insertStructure()`](https://mi-erasmusmc.github.io/studyGenerics/reference/insertStructure.md)
+  update. It accepts the location and study number as an argument to
+  fillout documentation.
+
 ## studyGenerics 0.1.5
 
 - Dependency on R \>= 4.2.0 added to DESCRIPTION.

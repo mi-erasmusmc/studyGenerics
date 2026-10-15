@@ -17,10 +17,27 @@
   they are not.
 
 - [`createCohortsFun()`](https://mi-erasmusmc.github.io/studyGenerics/reference/createCohortsFun.md)
-  : Load default content for createCohorts.R
+  :
+
+  Load default content for `createCohorts.R`
 
 - [`createResultsDir()`](https://mi-erasmusmc.github.io/studyGenerics/reference/createResultsDir.md)
   : Create directory for analysis results
+
+- [`defaultContentCodeToRun()`](https://mi-erasmusmc.github.io/studyGenerics/reference/defaultContentCodeToRun.md)
+  :
+
+  Load default content for `CodeToRun.R`
+
+- [`defaultContentInstructions()`](https://mi-erasmusmc.github.io/studyGenerics/reference/defaultContentInstructions.md)
+  :
+
+  Load default content for `instructions.md`
+
+- [`defaultContentREADME()`](https://mi-erasmusmc.github.io/studyGenerics/reference/defaultContentREADME.md)
+  :
+
+  Load default content for `README.Rmd`
 
 - [`devCheckout()`](https://mi-erasmusmc.github.io/studyGenerics/reference/devCheckout.md)
   :
@@ -73,10 +90,14 @@
   the current branch.
 
 - [`runDiagnosticsFun()`](https://mi-erasmusmc.github.io/studyGenerics/reference/runDiagnosticsFun.md)
-  : Load default content for runDiagnostics.R
+  :
+
+  Load default content for `runDiagnostics.R`
 
 - [`runStudyFun()`](https://mi-erasmusmc.github.io/studyGenerics/reference/runStudyFun.md)
-  : Load default content for runStudy.R
+  :
+
+  Load default content for `runStudy.R`
 
 - [`setLoggers()`](https://mi-erasmusmc.github.io/studyGenerics/reference/setLoggers.md)
   : Configure study loggers that write text files to the results

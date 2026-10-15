@@ -2,7 +2,7 @@
 
 Retrieves each concept set definition from the ATLAS WebAPI, cleans the
 concept set name for use as a file name and writes the JSON definition
-to `inst/concept_sets/<conceptSetType>/`.
+to a caller-supplied output directory.
 
 ## Usage
 
@@ -10,6 +10,7 @@ to `inst/concept_sets/<conceptSetType>/`.
 pullConceptsAtlas(
   conceptSetList,
   conceptSetType,
+  outputDir,
   baseUrl = "https://atlas.darwin-eu.org/WebAPI",
   deletePrevious = TRUE,
   patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_"),
@@ -26,7 +27,12 @@ pullConceptsAtlas(
 - conceptSetType:
 
   A character string used to group the downloaded concept set JSON files
-  under `inst/concept_sets/`.
+  under `outputDir/`.
+
+- outputDir:
+
+  Character string identifying the directory in which the
+  `<conceptSetType>` folder will be created.
 
 - baseUrl:
 
@@ -75,9 +81,10 @@ conceptSetType <- "example"
 pullConceptsAtlas(
    conceptSetList = conceptSetList,
    conceptSetType = conceptSetType,
+   outputDir = file.path(tempdir(), "concept_sets"),
    baseUrl = "https://atlas.darwin-eu.org/WebAPI",
    deletePrevious = TRUE,
-   patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_") 
+   patternToRemove = c("p[0-9]{1}_c[0-9]{1}_[0-9]{3}_")
 )
 } # }
 ```

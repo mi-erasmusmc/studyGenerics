@@ -13,8 +13,8 @@ packageCellar(path, project, lockfile, type = "complete")
 
 - path:
 
-  Character string giving the cellar path. If omitted, defaults to
-  `renv/cellar`.
+  Character string giving the cellar path. This must be supplied
+  explicitly.
 
 - project:
 
@@ -42,6 +42,6 @@ Invisible
 
 if (FALSE) { # \dontrun{
 # It will download the tar files for every package in the renv.lock
-packageCellar()
+packageCellar(path = file.path(tempdir(), "cellar"))
 } # }
 ```

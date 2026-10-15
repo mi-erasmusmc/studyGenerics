@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">studyGenerics</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,8 @@
 <p>Create the standard study-package folders, scripts, tests, and documentation. Use <code>n_obj</code> to set the number of objective scripts.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/insertStructure.html">insertStructure</a></span><span class="op">(</span></span>
-<span>  path <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  studyName <span class="op">=</span> <span class="st">"P1-C1-001"</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"/path/to/P1-C1-001"</span>,</span>
 <span>  n_obj <span class="op">=</span> <span class="fl">3</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>It adds the following files and folders to an existing study package:</p>
@@ -104,11 +105,12 @@
 <div class="section level3">
 <h3 id="download-concept-sets-from-atlas">Download concept sets from ATLAS<a class="anchor" aria-label="anchor" href="#download-concept-sets-from-atlas"></a>
 </h3>
-<p>Use <code><a href="reference/pullConceptsAtlas.html">pullConceptsAtlas()</a></code> to save ATLAS concept-set definitions in <code>inst/concept_sets/&lt;conceptSetType&gt;/</code>. It requires access to the ATLAS WebAPI.</p>
+<p>Use <code><a href="reference/pullConceptsAtlas.html">pullConceptsAtlas()</a></code> to save ATLAS concept-set definitions in an explicit output directory. It requires access to the ATLAS WebAPI.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/pullConceptsAtlas.html">pullConceptsAtlas</a></span><span class="op">(</span></span>
 <span>  conceptSetList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>,</span>
 <span>  conceptSetType <span class="op">=</span> <span class="st">"example"</span>,</span>
+<span>  outputDir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"concept_sets"</span><span class="op">)</span>,</span>
 <span>  baseUrl <span class="op">=</span> <span class="st">"https://atlas.darwin-eu.org/WebAPI"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -156,11 +158,14 @@
 </h3>
 <p>Save packages from <code>renv.lock</code> to <code>renv/cellar</code>, then use that cellar to restore the environment on a machine without internet access.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Save packages in renv/cellar</span></span>
-<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/packageCellar.html">packageCellar</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Save packages in an explicit cellar directory</span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/packageCellar.html">packageCellar</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"cellar"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Restore packages from renv/cellar</span></span>
-<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/installCellar.html">installCellar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Restore packages into an explicit library directory</span></span>
+<span><span class="fu">studyGenerics</span><span class="fu">::</span><span class="fu"><a href="reference/installCellar.html">installCellar</a></span><span class="op">(</span></span>
+<span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"cellar"</span><span class="op">)</span>,</span>
+<span>  library <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"library"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="version-control-workflow">Version control workflow<a class="anchor" aria-label="anchor" href="#version-control-workflow"></a>
