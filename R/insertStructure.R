@@ -773,7 +773,7 @@ defaultContentInstructions <- function(studyNumber) {
     "",
     "## 5. Review the Results",
     "",
-    "# If the study was successful, use the code below to review the results.",
+    "If the study was successful, use the code below to review the results.",
     "",
     "```",
     "...",
