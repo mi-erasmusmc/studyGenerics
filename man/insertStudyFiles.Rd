@@ -7,8 +7,9 @@
 insertStudyFiles(studyNumber, path, n_obj = 3)
 }
 \arguments{
-\item{path}{Character string identifying the path to the study project,
-default \code{"."}.}
+\item{studyNumber}{Character string identifying the study number, e.g. \code{"P1-C1-001"}.}
+
+\item{path}{Character string identifying the path to the study project.}
 
 \item{n_obj}{Number of study objectives, default \code{n_obj = 3}.}
 }

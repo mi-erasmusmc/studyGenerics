@@ -137,7 +137,7 @@ pullConceptsAtlas <- function(
     clean_name <- clean_name |>
       stringr::str_replace_all(
         c(
-          "-+|–+" = "_",       # replace - (hyphen) and – (dash) with _
+          "-+|\u2013+" = "_",       # replace - (hyphen) and \u2013 (dash) with _
           "_+" = "_",          # replace multiple _ with single _
           "^_|_$" = ""         # remove any leading or trailing _ if any
         )

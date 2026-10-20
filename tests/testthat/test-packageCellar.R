@@ -218,20 +218,17 @@ test_that("installCellar", {
     "data",
     "renv.lock"
   )
-  unlink(
-    renv::paths$root("cellar"),
-    recursive = TRUE
-  )
   testProject <- withr::local_tempdir()
   renv::init(
     project = testProject,
     load = FALSE
-  ) 
+  )
   file.copy(
     from = testLockfile,
     to = testProject,
     overwrite = TRUE
   )
+  envBefore <- Sys.getenv("RENV_PATHS_LIBRARY")
   # EXECUTION -------
   usethis::with_project(testProject, {
     cellar_path <- file.path(testProject, "cellar")
@@ -239,8 +236,16 @@ test_that("installCellar", {
     packageCellar(path = cellar_path)
      # TEST ------------
     expect_no_error({
-      installCellar(path = cellar_path, library = library_path)
+      installCellar(
+        path = cellar_path,
+        project = testProject,
+        library = library_path
+      )
     })
+    renv::settings$use.cache(project = testProject) |>
+      expect_true()
+    Sys.getenv("RENV_PATHS_LIBRARY") |>
+      expect_equal(envBefore)
     testProject <- usethis::proj_path()
     testLibrary <- library_path
     lockfileData <- renv::lockfile_read(
