@@ -1,7 +1,12 @@
+# studyGenerics 0.2.1
+
+* `packageCellar` and `installCellar()` requires specific path argument.
+
+* `defaultContentInstructions()`, removed extra header from.  
+
 # studyGenerics 0.2.0
 
 * `insertStructure()` update. It accepts the location and study number as an argument to fillout documentation.
-* `installCellar()` requires an explicit `project`, no longer writes renv settings to the project and restores environment variables on exit.
 
 # studyGenerics 0.1.5
 
