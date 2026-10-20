@@ -144,6 +144,7 @@ studyGenerics::packageCellar(path = file.path(tempdir(), "cellar"))
 # Restore packages into an explicit library directory
 studyGenerics::installCellar(
   path = file.path(tempdir(), "cellar"),
+  project = usethis::proj_get(),
   library = file.path(tempdir(), "library")
 )
 ```

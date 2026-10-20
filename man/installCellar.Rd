@@ -2,24 +2,24 @@
 % Please edit documentation in R/packageCellar.R
 \name{installCellar}
 \alias{installCellar}
-\title{\code{installCellar()} install files already saved in a cellar}
+\title{\code{installCellar()} installs files already saved in a cellar}
 \usage{
 installCellar(path, project, library, lockfile)
 }
 \arguments{
 \item{path}{Character string giving the cellar path. This must be supplied explicitly.}
 
-\item{project}{Character string giving the project path. If omitted, defaults to \code{usethis::proj_get()}.}
+\item{project}{Character string giving the project path. This must be supplied explicitly.}
 
 \item{library}{Character string giving the library path. This must be supplied explicitly.}
 
-\item{lockfile}{Character string giving the lockfile path. If omitted, defaults to \code{renv.lock} at the project base level provided by \code{usethis::proj_get()}.}
+\item{lockfile}{Character string giving the lockfile path. If omitted, defaults to \code{renv.lock} at the base level of \code{project}.}
 }
 \value{
 Invisible
 }
 \description{
-\code{installCellar()} install files already saved in a cellar
+\code{installCellar()} installs files already saved in a cellar
 }
 \examples{
 
@@ -27,6 +27,7 @@ Invisible
 # It will install all packages in the cellar
 installCellar(
   path = file.path(tempdir(), "cellar"),
+  project = file.path(tempdir(), "project"),
   library = file.path(tempdir(), "library")
 )
 }

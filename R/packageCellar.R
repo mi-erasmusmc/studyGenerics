@@ -155,25 +155,25 @@ downloadGithub <- function(
   )
 }
 
-#' `installCellar()` install files already saved in a cellar
+#' `installCellar()` installs files already saved in a cellar
 #'
 #' @param path Character string giving the cellar path. This must be supplied explicitly.
-#' @param project Character string giving the project path. If omitted, defaults to `usethis::proj_get()`.
+#' @param project Character string giving the project path. This must be supplied explicitly.
 #' @param library Character string giving the library path. This must be supplied explicitly.
-#' @param lockfile Character string giving the lockfile path. If omitted, defaults to `renv.lock` at the project base level provided by `usethis::proj_get()`.
-#'  
+#' @param lockfile Character string giving the lockfile path. If omitted, defaults to `renv.lock` at the base level of `project`.
+#'
 #' @returns Invisible
 #'
 #' @importFrom checkmate assertFileExists assertDirectoryExists
-#' @importFrom usethis proj_get
 #' @export
-#' 
+#'
 #' @examples
-#' 
+#'
 #' \dontrun{
 #' # It will install all packages in the cellar
 #' installCellar(
 #'   path = file.path(tempdir(), "cellar"),
+#'   project = file.path(tempdir(), "project"),
 #'   library = file.path(tempdir(), "library")
 #' )
 #' }
@@ -184,8 +184,9 @@ installCellar <- function(
   lockfile
 ) {
   if (missing(project)) {
-    project <- usethis::proj_get()
+    cli::cli_abort("{.arg project} must be supplied explicitly.")
   }
+  checkmate::assertDirectoryExists(project)
   if (missing(path)) {
     cli::cli_abort("{.arg path} must be supplied explicitly.")
   }
@@ -215,16 +216,17 @@ installCellar <- function(
     )
   }
   cli::cli_alert_warning(
-    "renv use of cache set to FALSE"
+    "renv cache disabled during installation"
   )
-  renv::settings$use.cache(
-    FALSE,
-    project = project
+  withr::local_envvar(
+    c(
+      RENV_CONFIG_CACHE_ENABLED = "FALSE",
+      RENV_PATHS_ROOT = library,
+      RENV_PATHS_LIBRARY = library,
+      RENV_PATHS_LIBRARY_ROOT = library,
+      RENV_PATHS_LOCKFILE = lockfile
+    )
   )
-  Sys.setenv(RENV_PATHS_ROOT = library)
-  Sys.setenv(RENV_PATHS_LIBRARY = library)
-  Sys.setenv(RENV_PATHS_LIBRARY_ROOT = library)
-  Sys.setenv(RENV_PATHS_LOCKFILE = lockfile)  	 
   renv::restore(
     project = project,
     library = library,
