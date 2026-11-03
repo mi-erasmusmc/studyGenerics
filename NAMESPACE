@@ -47,11 +47,6 @@ importFrom(glue,
   glue_collapse
 )
 importFrom(jsonlite,toJSON)
-importFrom(renv,
-  lockfile_read,
-  lockfile_validate,
-  retrieve
-)
 importFrom(stringr,
   str_detect,
   str_remove,
