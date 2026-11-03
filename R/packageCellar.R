@@ -1,3 +1,8 @@
+# Do not use `@importFrom renv` anywhere in this package: always call `renv::fn()`.
+# Loading the renv namespace while the package is installed can drop the user's
+# renv project library from `.libPaths()`, so later imports (e.g. stringr) are
+# reported as missing and `remotes::install_github()` fails. See issue #181.
+
 #' `packageCellar()` saves files from a renv.lock file into the 'cellar' folder in `renv`
 #'
 #' @param path Character string giving the cellar path. This must be supplied explicitly.
@@ -7,7 +12,6 @@
 #' @returns Invisible
 #'
 #' @importFrom checkmate assertFileExists assertDirectoryExists assertChoice assertList
-#' @importFrom renv lockfile_validate retrieve lockfile_read 
 #' @importFrom usethis proj_get
 #' @export
 #' 
